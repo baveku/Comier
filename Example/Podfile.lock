@@ -1,0 +1,93 @@
+PODS:
+  - Comier (0.1.0):
+    - RxCocoa
+    - RxSwift
+    - Swinject
+    - Texture
+    - Texture/IGListKit
+  - IGListDiffKit (4.0.0)
+  - IGListKit (4.0.0):
+    - IGListDiffKit (= 4.0.0)
+  - PINCache (3.0.3):
+    - PINCache/Arc-exception-safe (= 3.0.3)
+    - PINCache/Core (= 3.0.3)
+  - PINCache/Arc-exception-safe (3.0.3):
+    - PINCache/Core
+  - PINCache/Core (3.0.3):
+    - PINOperation (~> 1.2.1)
+  - PINOperation (1.2.1)
+  - PINRemoteImage/Core (3.0.3):
+    - PINOperation
+  - PINRemoteImage/iOS (3.0.3):
+    - PINRemoteImage/Core
+  - PINRemoteImage/PINCache (3.0.3):
+    - PINCache (~> 3.0.3)
+    - PINRemoteImage/Core
+  - RxCocoa (5.1.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.1.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.1)
+  - Swinject (2.7.1)
+  - Texture (3.0.0):
+    - Texture/AssetsLibrary (= 3.0.0)
+    - Texture/Core (= 3.0.0)
+    - Texture/MapKit (= 3.0.0)
+    - Texture/Photos (= 3.0.0)
+    - Texture/PINRemoteImage (= 3.0.0)
+    - Texture/Video (= 3.0.0)
+  - Texture/AssetsLibrary (3.0.0):
+    - Texture/Core
+  - Texture/Core (3.0.0)
+  - Texture/IGListKit (3.0.0):
+    - IGListDiffKit (~> 4.0)
+    - IGListKit (~> 4.0)
+    - Texture/Core
+  - Texture/MapKit (3.0.0):
+    - Texture/Core
+  - Texture/Photos (3.0.0):
+    - Texture/Core
+  - Texture/PINRemoteImage (3.0.0):
+    - PINRemoteImage/iOS (~> 3.0.0)
+    - PINRemoteImage/PINCache
+    - Texture/Core
+  - Texture/Video (3.0.0):
+    - Texture/Core
+
+DEPENDENCIES:
+  - Comier (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - IGListDiffKit
+    - IGListKit
+    - PINCache
+    - PINOperation
+    - PINRemoteImage
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - Swinject
+    - Texture
+
+EXTERNAL SOURCES:
+  Comier:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Comier: 7b5c3fe920d2f04dc88799ded85db6af294196bd
+  IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
+  IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
+  PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
+  PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
+  PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
+  Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
+
+PODFILE CHECKSUM: 3c5a030d2b6aa4d22f597d5a851d8d9364c00ed3
+
+COCOAPODS: 1.10.0
