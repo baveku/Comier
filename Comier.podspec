@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Comier'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'AppBase for TextureLib'
   s.swift_version = '5.3'
 
