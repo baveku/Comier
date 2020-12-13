@@ -1,5 +1,5 @@
 PODS:
-  - Comier (0.1.2):
+  - Comier (0.1.3):
     - RxCocoa
     - RxSwift
     - Swinject
@@ -76,7 +76,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Comier: 3dbfda820b9efad203165b52b371aeb162c353d1
+  Comier: 8b29d4c2282364b2f810590eea531adc24051a90
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086

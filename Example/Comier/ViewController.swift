@@ -23,6 +23,7 @@ class ViewController: COListViewController<Lii> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Hallo"
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         collectionNode.view.collectionViewLayout = flowLayout
@@ -51,6 +52,7 @@ class ViewController: COListViewController<Lii> {
         button.style.height = ASDimensionMake(60)
         button.style.width = ASDimensionMake("100%")
         stack.children = [collectionNode, button]
+        
         return stack
     }
 }
@@ -102,12 +104,10 @@ class NumberCellNode: COCellNode<NumberSectionModel> {
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let stack = ASStackLayoutSpec.vertical()
-        stack.children = [valueNode]
-        stack.justifyContent = .center
-        stack.alignItems = .center
-        stack.style.height = ASDimensionMake(80)
-        stack.style.width = ASDimensionMake(UIScreen.width)
-        return stack
+        LayoutSpec {
+            HStackLayout(justifyContent: .center, alignItems: .center) {
+                valueNode
+            }.height(80).width(UIScreen.width)
+        }
     }
 }

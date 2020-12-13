@@ -1,0 +1,3 @@
+[submodule "TextureSwiftSupport"]
+	path = TextureSwiftSupport
+	url = https://github.com/TextureCommunity/TextureSwiftSupport
