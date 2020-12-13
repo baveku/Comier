@@ -14,6 +14,10 @@ open class COSectionController: ListSectionController, ASSectionController {
         return {() in return ASCellNode()}
     }
     
+    open func nodeForItem(at index: Int) -> ASCellNode {
+        return ASCellNode()
+    }
+    
     open override func numberOfItems() -> Int {
         return 1
     }

@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Comier'
-  s.version          = '0.1.2'
-  s.summary          = 'AppBase for TextureLib'
+  s.version          = '0.1.3'
+  s.summary          = 'MVVM-AppBase for Texture + IGListKit'
   s.swift_version = '5.3'
 
 # This description is used to generate tags and improve search results.
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-BaseApp use TextureGroup
+MVVM with TextureGroup + IGListKit
                        DESC
 
   s.homepage         = 'https://github.com/baveku/Comier'
@@ -32,17 +32,11 @@ BaseApp use TextureGroup
   s.ios.deployment_target = '10.0'
 
   s.source_files = 'Comier/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'Comier' => ['Comier/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'RxSwift'
   s.dependency 'RxCocoa'
   s.dependency 'Swinject'
   s.dependency 'Texture'
   s.dependency 'Texture/IGListKit'
+  
 end

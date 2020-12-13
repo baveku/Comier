@@ -11,7 +11,7 @@ import AsyncDisplayKit
 
 public protocol COListSectionControllerDatasource: class {
     func viewModels(for object: Any) -> [ListDiffable]
-    func nodeBlockForViewModel(at viewModel: ListDiffable) -> ASCellNodeBlock
+    func nodeBlockForViewModel(at viewModel: ListDiffable) -> ASCellNode
 }
 
 public protocol COListSectionControllerDelegate: class {
@@ -30,7 +30,19 @@ open class COListSectionController: COSectionController {
     public weak var delegate: COListSectionControllerDelegate? = nil
     
     public override func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
-        return dataSource?.nodeBlockForViewModel(at: _innerViewModels[index]) ?? { COCellNode<ListDiffable>()}
+        let block: ASCellNodeBlock = { [weak self] in
+            guard let self = self else {return COCellNode<ListDiffable>()}
+            let cell = self.dataSource?.nodeBlockForViewModel(at: self._innerViewModels[index])
+            if let cell = cell as? ListBindable {
+                cell.bindViewModel(self._innerViewModels[index])
+            }
+            
+            if let cell = cell as? COCellNode<ListDiffable> {
+                cell.collectionContext = self.collectionContext
+            }
+            return cell ?? COCellNode<ListDiffable>()
+        }
+        return block
     }
     
     public override func numberOfItems() -> Int {
@@ -43,12 +55,30 @@ open class COListSectionController: COSectionController {
     public override func didSelectItem(at index: Int) {
         delegate?.didSelected(at: _innerViewModels[index])
     }
+    
+    public override func sizeForItem(at index: Int) -> CGSize {
+        let size = ASIGListSectionControllerMethods.sizeForItem(at: index)
+        print(size)
+        return size
+    }
+    
+    public override func cellForItem(at index: Int) -> UICollectionViewCell {
+        return ASIGListSectionControllerMethods.cellForItem(at: index, sectionController: self)
+    }
 }
 
 open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
+    
+    public weak var collectionContext: ListCollectionContext? = nil
+    
     public func bindViewModel(_ viewModel: Any) {
         guard let vm = viewModel as? M else {return}
         binding(vm)
+    }
+    
+    public override init() {
+        super.init()
+        self.automaticallyManagesSubnodes = true
     }
     
     open func binding(_ viewModel: M) {}

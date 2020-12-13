@@ -26,7 +26,8 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: COViewControlle
     }
     
     open var collectionNode: ASCollectionNode = {
-        let node = ASCollectionNode(collectionViewLayout: UICollectionViewLayout())
+        let node = ASCollectionNode(collectionViewLayout: UICollectionViewFlowLayout())
+        node.style.flexGrow = 1
         return node
     }()
     
@@ -42,41 +43,10 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: COViewControlle
         self.viewModel.bindToAdapter(adapter: adapter).disposed(by: disposeBag)
     }
     
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
-    open override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
-    
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
-    
-    open override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let stack = ASStackLayoutSpec.vertical()
+        stack.style.flexGrow = 1
         stack.children = [collectionNode]
-        return stack
+        return ASInsetLayoutSpec(insets: self.safeAreaInset, child: stack)
     }
 }

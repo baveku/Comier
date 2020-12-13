@@ -33,12 +33,10 @@ open class COViewController<VM: ViewModel>: ASDKViewController<ASDisplayNode>, I
         self.viewModel = viewModel
         super.init(node: ASDisplayNode())
         self.node.automaticallyManagesSubnodes = true
-        node.backgroundColor = .white
+        self.node.backgroundColor = .white
         self.node.layoutSpecBlock = {[weak self] (node, size) in
             guard let self = self else {return ASLayoutSpec()}
-            let enableSafeArea = self.enableSafeArea
-            let spec = self.layoutSpecThatFits(size)
-            return enableSafeArea ? ASInsetLayoutSpec(insets: self.safeAreaInset, child: spec) : spec
+            return self.layoutSpecThatFits(size)
         }
     }
     
@@ -54,7 +52,7 @@ open class COViewController<VM: ViewModel>: ASDKViewController<ASDisplayNode>, I
     open func bindToViewModel() {}
     
     open func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return ASStackLayoutSpec.vertical()
+        return ASLayoutSpec()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
