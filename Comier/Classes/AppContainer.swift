@@ -10,18 +10,13 @@ import Swinject
 
 public typealias AppContainer = Container
 
-open class COInjector: NSObject {
-    public static let container = AppContainer()
+open class Injector: NSObject {
+    public let container = AppContainer()
     open func registerManagers() {}
     open func registerViewModels() {}
     open func registerViewControllers() {}
     
     /**
-     Register Dependency With Manager: Managers. ViewModels. ViewControllers
-     - Use:
-        - Make Subclass from InjectManager
-        - Create a Object in AppDelegate
-     ~~~
      // Make Manager Object:
      let injector = COInjector()
      

@@ -25,7 +25,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
         })
     }
 	
-    public func mapDataToElement() -> [Element] {
+    open func mapDataToElement() -> [Element] {
 		return []
 	}
 	

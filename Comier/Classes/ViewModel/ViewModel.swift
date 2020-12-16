@@ -7,11 +7,13 @@
 //
 
 import Foundation
+import RxSwift
 
 public typealias ViewModel = BaseViewModel & IViewModel
 
 open class BaseViewModel: NSObject {
     // MARK: - Properties
+    let disposeBag = DisposeBag()
 
     let appViewModel: AppViewModel
 
@@ -21,7 +23,7 @@ open class BaseViewModel: NSObject {
         viewModelDidLoad()
     }
 
-    public func viewModelDidLoad() {
+    open func viewModelDidLoad() {
 
     }
 }
