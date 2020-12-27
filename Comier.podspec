@@ -29,7 +29,7 @@ MVVM with TextureGroup + IGListKit + Swinject + Reactive Programing
   s.source           = { :git => 'https://github.com/baveku/Comier.git', :tag => s.version.to_s, :submodules => true }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.platform = :ios, "10.0"
 
   s.source_files = 'Comier/Classes/**/*', "TextureSwiftSupport/TextureSwiftSupport", "TextureSwiftSupport/TextureSwiftSupport/**/*.swift"
   s.frameworks = 'UIKit'

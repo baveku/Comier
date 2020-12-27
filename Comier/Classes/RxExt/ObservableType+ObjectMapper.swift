@@ -12,7 +12,7 @@ import Moya
 import ObjectMapper
 
 /// Extension for processing Responses into Mappable objects through ObjectMapper
-extension ObservableType where E == Response {
+extension ObservableType where Element == Response {
 
   /// Maps data received from the signal into an object
   /// which implements the Mappable protocol and returns the result back
@@ -53,7 +53,7 @@ extension ObservableType where E == Response {
 
 
 // MARK: - ImmutableMappable
-extension ObservableType where E == Response {
+extension ObservableType where Element == Response {
 
   /// Maps data received from the signal into an object
   /// which implements the ImmutableMappable protocol and returns the result back
