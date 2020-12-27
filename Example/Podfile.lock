@@ -1,6 +1,10 @@
 PODS:
-  - Comier (0.1.6):
+  - Alamofire (5.4.1)
+  - Comier (0.1.8):
+    - Moya
+    - Moya/RxSwift
     - RxCocoa
+    - RxRelay
     - RxSwift
     - Swinject
     - Texture
@@ -8,6 +12,13 @@ PODS:
   - IGListDiffKit (4.0.0)
   - IGListKit (4.0.0):
     - IGListDiffKit (= 4.0.0)
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - Moya/RxSwift (14.0.0):
+    - Moya/Core
+    - RxSwift (~> 5.0)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
     - PINCache/Core (= 3.0.3)
@@ -60,8 +71,10 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - IGListDiffKit
     - IGListKit
+    - Moya
     - PINCache
     - PINOperation
     - PINRemoteImage
@@ -76,9 +89,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Comier: 43175f2866e3e01dca41163c5725750423b6ef1e
+  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  Comier: 2fa9aec774a06288c99f4c7516c49bbc3724508a
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
