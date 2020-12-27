@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Comier'
-  s.version          = '0.2.0'
+  s.version          = '0.2.1'
   s.summary          = 'MVVM-AppBase for Texture + IGListKit'
   s.swift_version = '5.3'
 
@@ -29,7 +29,7 @@ MVVM with TextureGroup + IGListKit + Swinject + Reactive Programing
   s.source           = { :git => 'https://github.com/baveku/Comier.git', :tag => s.version.to_s, :submodules => true }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.platform = :ios, "10.0"
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'Comier/Classes/**/*', "TextureSwiftSupport/TextureSwiftSupport", "TextureSwiftSupport/TextureSwiftSupport/**/*.swift"
   s.frameworks = 'UIKit'
@@ -38,7 +38,7 @@ MVVM with TextureGroup + IGListKit + Swinject + Reactive Programing
   s.dependency 'Swinject'
   s.dependency 'Texture'
   s.dependency 'Texture/IGListKit'
-  s.dependency 'Moya'
-  s.dependency 'Moya/RxSwift'
+  s.dependency 'Moya', '>= 14.0.0'
+  s.dependency 'Moya/RxSwift', '>= 14.0.0'
   s.dependency 'ObjectMapper'
 end
