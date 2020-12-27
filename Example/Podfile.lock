@@ -1,10 +1,9 @@
 PODS:
   - Alamofire (5.4.1)
-  - Comier (0.1.8):
+  - Comier (0.1.9):
     - Moya
     - Moya/RxSwift
     - RxCocoa
-    - RxRelay
     - RxSwift
     - Swinject
     - Texture
@@ -90,7 +89,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Comier: 2fa9aec774a06288c99f4c7516c49bbc3724508a
+  Comier: 7a1235c74c1f513cae5301bb62d22c1a19b6803e
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916

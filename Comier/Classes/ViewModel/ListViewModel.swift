@@ -9,7 +9,7 @@
 import Foundation
 import IGListKit
 import RxSwift
-import RxRelay
+import RxCocoa
 
 public typealias ListViewModel<Element: ListDiffable> = BaseListViewModel<Element>
 
