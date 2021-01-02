@@ -20,7 +20,7 @@ extension UIScreen {
 class Lii: ListViewModel<ListDiffable> {}
 
 class ViewController: COListViewController<Lii> {
-
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Hallo"
@@ -28,7 +28,7 @@ class ViewController: COListViewController<Lii> {
         flowLayout.scrollDirection = .vertical
         collectionNode.view.collectionViewLayout = flowLayout
         // Do any additional setup after loading the view, typically from a nib.
-        self.viewModel.elements.accept([NumberSectionModel(value: 0)])
+		self.viewModel.elements.accept([NumberSectionModel(value: 0, string: "An j day")])
     }
     
     override func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
@@ -43,7 +43,7 @@ class ViewController: COListViewController<Lii> {
     }()
     
     @objc func reload() {
-        adapter.reloadData(completion: nil)
+		self.viewModel.elements.accept([NumberSectionModel(value: 0, string: "An cc j day")])
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -64,10 +64,11 @@ class ListNumberSection: COListSectionController {
     }
 }
 
-extension ListNumberSection: COListSectionControllerDatasource {
-    func viewModels(for object: Any) -> [ListDiffable] {
-        return [NumberSectionModel(value: 0), NumberSectionModel(value: 1), NumberSectionModel(value: 2)]
-    }
+extension ListNumberSection: COListSectionControllerDataSource {
+	func viewModels(for object: Any) -> [ListDiffable] {
+		guard let object = object as? NumberSectionModel else {return []}
+		return [NumberSectionModel(value: 0, string: object.string), NumberSectionModel(value: 1, string: object.string), NumberSectionModel(value: 2, string: object.string)]
+	}
     
     func nodeBlockForViewModel(at viewModel: ListDiffable) -> ASCellNode {
         return NumberCellNode()
@@ -76,9 +77,11 @@ extension ListNumberSection: COListSectionControllerDatasource {
 
 class NumberSectionModel: ListDiffable {
     let value: Int
+	let string: String
     
-    init(value: Int) {
+	init(value: Int, string: String) {
         self.value = value
+		self.string = string
     }
     
     func diffIdentifier() -> NSObjectProtocol {
@@ -87,7 +90,7 @@ class NumberSectionModel: ListDiffable {
     
     func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
         guard let object = object as? NumberSectionModel else{return false}
-        return value == object.value
+		return value == object.value && string == object.string
     }
 }
 
@@ -95,7 +98,7 @@ class NumberCellNode: COCellNode<NumberSectionModel> {
     let valueNode = ASTextNode()
     
     override func binding(_ viewModel: NumberSectionModel) {
-        valueNode.attributedText = NSAttributedString(string: "\(viewModel.value)")
+		valueNode.attributedText = NSAttributedString(string: "\(viewModel.value) \(viewModel.string)")
     }
     
     override func didLoad() {
