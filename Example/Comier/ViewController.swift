@@ -67,7 +67,8 @@ class ListNumberSection: ASListBindingSectionController<NumberSectionModel> {
 extension ListNumberSection: ASListBindingDataSource {
 	func viewModels(for object: Any) -> [ListDiffable] {
 		guard let object = object as? NumberSectionModel else {return []}
-		return [NumberSectionModel(value: 0, string: object.string), NumberSectionModel(value: 1, string: object.string), NumberSectionModel(value: 2, string: object.string)]
+		let item = [NumberSectionModel(value: 0, string: object.string), NumberSectionModel(value: 1, string: object.string), NumberSectionModel(value: 2, string: object.string)]
+		return item.shuffled()
 	}
     
     func nodeBlockForViewModel(at viewModel: ListDiffable) -> ASCellNode {
