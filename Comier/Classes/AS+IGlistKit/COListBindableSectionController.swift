@@ -10,16 +10,16 @@ import IGListKit
 import IGListDiffKit
 import AsyncDisplayKit
 
-public protocol COListSectionControllerDataSource: class {
+public protocol ASListBindingDataSource: class {
 	func viewModels(for object: Any) -> [ListDiffable]
 	func nodeBlockForViewModel(at viewModel: ListDiffable) -> ASCellNode
 }
 
-public protocol COListSectionControllerDelegate: class {
+public protocol ASListBindingDelegate: class {
 	func didSelected(at viewModel: ListDiffable)
 }
 
-extension COListSectionControllerDelegate {
+extension ASListBindingDelegate {
 	func didSelected(at viewModel: ListDiffable) {}
 }
 
@@ -29,13 +29,13 @@ enum SectionState {
 	case applied
 }
 
-open class COListSectionController: COSectionController {
+open class ASListBindingSectionController<Element: ListDiffable>: COSectionController {
 	private var viewModels: [ListDiffable] = []
-	var object: ListDiffable? = nil
+	var object: Element? = nil
 	var state: SectionState = .idle
 	
-	public weak var dataSource: COListSectionControllerDataSource? = nil
-	public weak var delegate: COListSectionControllerDelegate? = nil
+	public weak var dataSource: ASListBindingDataSource? = nil
+	public weak var delegate: ASListBindingDelegate? = nil
 	
 	public override func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
 		let block: ASCellNodeBlock = { [weak self] in
@@ -59,7 +59,7 @@ open class COListSectionController: COSectionController {
 	
 	public override func didUpdate(to object: Any) {
 		let oldObject = self.object
-		self.object = object as? ListDiffable
+		self.object = object as? Element
 		
 		if oldObject == nil {
 			let viewModels = self.dataSource?.viewModels(for: object)
