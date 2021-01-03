@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.4.1)
-  - Comier (0.2.1):
+  - Comier (0.2.5):
     - Moya (>= 14.0.0)
     - Moya/RxSwift (>= 14.0.0)
     - ObjectMapper
@@ -92,7 +92,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Comier: 4ade23352fa3338ce33bf29188cb1b5b0a59c462
+  Comier: 2211da4c845425027f4c8c24f65bee81cf679f3b
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916

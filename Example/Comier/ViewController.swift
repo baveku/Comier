@@ -57,14 +57,14 @@ class ViewController: COListViewController<Lii> {
     }
 }
 
-class ListNumberSection: COListSectionController {
+class ListNumberSection: ASListBindingSectionController<NumberSectionModel> {
     override init() {
         super.init()
         self.dataSource = self
     }
 }
 
-extension ListNumberSection: COListSectionControllerDataSource {
+extension ListNumberSection: ASListBindingDataSource {
 	func viewModels(for object: Any) -> [ListDiffable] {
 		guard let object = object as? NumberSectionModel else {return []}
 		return [NumberSectionModel(value: 0, string: object.string), NumberSectionModel(value: 1, string: object.string), NumberSectionModel(value: 2, string: object.string)]
