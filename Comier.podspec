@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Comier'
-  s.version          = '0.2.5'
+  s.version          = '0.2.6'
   s.summary          = 'MVVM-AppBase for Texture + IGListKit'
   s.swift_version = '5.3'
 
@@ -31,7 +31,7 @@ MVVM with TextureGroup + IGListKit + Swinject + Reactive Programing
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = 'Comier/Classes/**/*', "TextureSwiftSupport/TextureSwiftSupport", "TextureSwiftSupport/TextureSwiftSupport/**/*.swift"
+  s.source_files = 'Comier/Classes/**/*', "TextureSwiftSupport/TextureSwiftSupport", "TextureSwiftSupport/TextureSwiftSupport/**/*.swift, RxCocoa-Texture/RxCocoa-Texture, RxCocoa-Texture/RxCocoa-Texture/**/*.swift"
   s.frameworks = 'UIKit'
   s.dependency 'RxSwift'
   s.dependency 'RxCocoa'
