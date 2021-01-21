@@ -13,9 +13,9 @@ public typealias ViewModel = BaseViewModel & IViewModel
 
 open class BaseViewModel: NSObject {
     // MARK: - Properties
-    let disposeBag = DisposeBag()
+    public let disposeBag = DisposeBag()
 
-    let appViewModel: AppViewModel
+    public let appViewModel: AppViewModel
 
     public required init(appViewModel: AppViewModel) {
         self.appViewModel = appViewModel
