@@ -102,15 +102,20 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
             self.viewModels = filterVM
             result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
-            result?.updates.enumerated().forEach({ (oldUpdateIndex, stop) in
-                let id = oldViewModels[oldUpdateIndex].diffIdentifier()
-                let indexAfterUpdate = result?.newIndex(forIdentifier: id)
-                if let indexAfterUpdate = indexAfterUpdate {
-                    let cell = collectionContext?.cellForItem(at: oldUpdateIndex, sectionController: self) as? _ASCollectionViewCell
-                    let node = cell?.node as? ListBindable
-                    node?.bindViewModel(self.viewModels[indexAfterUpdate])
+            
+            if let updates = result?.updates {
+                for item in updates.enumerated() {
+                    print(item)
+                    let (offset, index) = item
+                    let id = oldViewModels[index].diffIdentifier()
+                    let indexAfterUpdate = result?.newIndex(forIdentifier: id)
+                    if let indexAfterUpdate = indexAfterUpdate {
+                        let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
+                        let node = cell?.node as? ListBindable
+                        node?.bindViewModel(self.viewModels[indexAfterUpdate])
+                    }
                 }
-            })
+            }
             
             if let ex = self.collectionContext?.experiments, let updates = result?.updates, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
                 batchContext.invalidateLayout(in: self, at: updates)
@@ -140,8 +145,11 @@ open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
     
     public weak var collectionContext: ListCollectionContext? = nil
     
+    public var viewModel: M!
+    
     public func bindViewModel(_ viewModel: Any) {
         guard let vm = viewModel as? M else {return}
+        self.viewModel = vm
         binding(vm)
     }
     
