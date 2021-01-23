@@ -107,14 +107,19 @@ public final class AppViewModel: NSObject, IViewModel {
     }
     
     public func viewModelDidLoad() {
-        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActiveNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(willTerminateNotification), name: UIApplication.willTerminateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActiveNotification), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userDidTakeScreenshotNotification), name: UIApplication.userDidTakeScreenshotNotification, object: nil)
     }
     
-    @objc func didBecomeActiveNotification() {
+    @objc func didBecomeActive() {
         appEvent.onNext(.didBecomeActive)
+    }
+    
+    @objc func didBackground() {
+        appEvent.onNext(.didBackground)
     }
     
     @objc func willTerminateNotification() {
