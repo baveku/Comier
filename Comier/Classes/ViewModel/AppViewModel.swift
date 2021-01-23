@@ -135,4 +135,8 @@ public final class AppViewModel: NSObject, IViewModel {
     }
     
     public let appEvent = PublishSubject<Action>()
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
