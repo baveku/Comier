@@ -19,20 +19,8 @@ open class ASDisplayNodePlus: ASDisplayNode {
         self.backgroundColor = .white
     }
     
-    public var transitionBlock: ((ASSizeRange, Bool, Bool, (() -> Void)?) -> Void)? = nil
     public var animateLayoutTransitionBlock: ((ASContextTransitioning) -> Void)? = nil
     public var didCompleteLayoutTransitionBlock: ((ASContextTransitioning) -> Void)? = nil
-    
-    open override func transitionLayout(with constrainedSize: ASSizeRange, animated: Bool, shouldMeasureAsync: Bool, measurementCompletion completion: (() -> Void)? = nil) {
-        guard let block = transitionBlock else {
-            return super.transitionLayout(
-                with: constrainedSize,
-                animated: animated,
-                shouldMeasureAsync: shouldMeasureAsync,
-                measurementCompletion: completion)
-        }
-        block(constrainedSize, animated, shouldMeasureAsync, completion)
-    }
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         super.layoutSpecThatFits(constrainedSize)
@@ -86,10 +74,6 @@ open class COViewController<VM: ViewModel>: ASDKViewController<ASDisplayNode>, I
         }
         
         if useCustomTransitionAnimation {
-            mainNode.transitionBlock = { [weak self] (size, animated, shouldMeasureAsync, completion) in
-                guard let self = self else {return}
-                self.transitionLayout(with: size, animated: animated, shouldMeasureAsync: shouldMeasureAsync, measurementCompletion: completion)
-            }
             
             mainNode.animateLayoutTransitionBlock = { [weak self] context in
                 self?.animateLayoutTransition(context)
@@ -160,7 +144,9 @@ open class COViewController<VM: ViewModel>: ASDKViewController<ASDisplayNode>, I
         }
     }
     
-    open func transitionLayout(with constrainedSize: ASSizeRange, animated: Bool, shouldMeasureAsync: Bool, measurementCompletion completion: (() -> Void)? = nil) {}
+    open func transitionLayout(animated: Bool = true, shouldMeasureAsync: Bool = false, completion: (() -> Void)? = nil) {
+        self.node.transitionLayout(withAnimation: animated, shouldMeasureAsync: shouldMeasureAsync, measurementCompletion: completion)
+    }
     open func animateLayoutTransition(_ context: ASContextTransitioning) {}
     open func didCompleteLayoutTransition(_ context: ASContextTransitioning) {}
 }
