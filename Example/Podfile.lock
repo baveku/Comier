@@ -1,10 +1,11 @@
 PODS:
   - Alamofire (5.4.1)
-  - Comier (0.2.8):
+  - Comier (0.2.9):
     - Moya (>= 14.0.0)
     - Moya/RxSwift (>= 14.0.0)
     - ObjectMapper
     - RxCocoa
+    - RxKeyboard
     - RxSwift
     - Swinject
     - Texture
@@ -38,6 +39,9 @@ PODS:
   - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
+  - RxKeyboard (1.0.0):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
   - RxRelay (5.1.1):
     - RxSwift (~> 5)
   - RxSwift (5.1.1)
@@ -81,6 +85,7 @@ SPEC REPOS:
     - PINOperation
     - PINRemoteImage
     - RxCocoa
+    - RxKeyboard
     - RxRelay
     - RxSwift
     - Swinject
@@ -92,7 +97,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Comier: bd0d2baf5b17ac142c88c37f9948b25be8b6f3ee
+  Comier: 649758eef70c28e990febd3f4963fbd60f767cf2
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
@@ -101,6 +106,7 @@ SPEC CHECKSUMS:
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxKeyboard: 6683c4344304a00f943c158bd8a43ce5469c82a7
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
