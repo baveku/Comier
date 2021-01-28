@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Comier'
-  s.version          = '0.2.9'
+  s.version          = '0.3.0'
   s.summary          = 'MVVM-AppBase for Texture + IGListKit'
   s.swift_version = '5.3'
 
@@ -41,4 +41,5 @@ MVVM with TextureGroup + IGListKit + Swinject + Reactive Programing
   s.dependency 'Moya', '>= 14.0.0'
   s.dependency 'Moya/RxSwift', '>= 14.0.0'
   s.dependency 'ObjectMapper'
+  s.dependency 'RxKeyboard'
 end

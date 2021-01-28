@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import UserNotifications
+import RxKeyboard
 
 public final class AppViewModel: NSObject, IViewModel {
     
@@ -17,6 +18,7 @@ public final class AppViewModel: NSObject, IViewModel {
         case didBecomeActive
         case willTerminate
         case takeSnapshot
+        case willChangeKeyboardHeight(CGFloat)
     }
     
     public let disposeBag = DisposeBag()
@@ -112,6 +114,9 @@ public final class AppViewModel: NSObject, IViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActiveNotification), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userDidTakeScreenshotNotification), name: UIApplication.userDidTakeScreenshotNotification, object: nil)
+        RxKeyboard.instance.willShowVisibleHeight.drive(onNext: { [weak self] (height) in
+            self?.appEvent.onNext(.willChangeKeyboardHeight(height))
+        }) => disposeBag
     }
     
     @objc func didBecomeActive() {
