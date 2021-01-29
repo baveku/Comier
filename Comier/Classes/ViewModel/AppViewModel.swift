@@ -114,7 +114,7 @@ public final class AppViewModel: NSObject, IViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActiveNotification), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userDidTakeScreenshotNotification), name: UIApplication.userDidTakeScreenshotNotification, object: nil)
-        RxKeyboard.instance.willShowVisibleHeight.drive(onNext: { [weak self] (height) in
+        RxKeyboard.instance.visibleHeight.drive(onNext: { [weak self] (height) in
             self?.appEvent.onNext(.willChangeKeyboardHeight(height))
         }) => disposeBag
     }
