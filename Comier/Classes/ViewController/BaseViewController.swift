@@ -12,6 +12,7 @@ import RxSwift
 public let ASBlank = ASStackLayoutSpec.vertical
 
 open class ASDisplayNodePlus: ASDisplayNode {
+    var nodeLayoutBlock: (() -> Void)? = nil
     
     public override init() {
         super.init()
@@ -28,6 +29,7 @@ open class ASDisplayNodePlus: ASDisplayNode {
     
     open override func layout() {
         super.layout()
+        nodeLayoutBlock?()
     }
     
     open override func animateLayoutTransition(_ context: ASContextTransitioning) {
@@ -71,6 +73,10 @@ open class COViewController<VM: ViewModel>: ASDKViewController<ASDisplayNode>, I
         mainNode.layoutSpecBlock = {[weak self] (node, size) in
             guard let self = self else {return ASLayoutSpec()}
             return self.layoutSpecThatFits(size)
+        }
+        
+        mainNode.nodeLayoutBlock = { [weak self] in
+            self?.nodeDidLayout()
         }
         
         if useCustomTransitionAnimation {
@@ -149,4 +155,10 @@ open class COViewController<VM: ViewModel>: ASDKViewController<ASDisplayNode>, I
     }
     open func animateLayoutTransition(_ context: ASContextTransitioning) {}
     open func didCompleteLayoutTransition(_ context: ASContextTransitioning) {}
+    
+    public var nodeHeight: CGFloat {
+        return self.node.calculatedSize.height
+    }
+    
+    open func nodeDidLayout() {}
 }
