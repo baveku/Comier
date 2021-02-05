@@ -148,6 +148,7 @@ open class COViewController<VM: ViewModel>: ASDKViewController<ASDisplayNode>, I
         } else {
             // Fallback on earlier versions
         }
+        self.node.setNeedsLayout()
     }
     
     open func transitionLayout(animated: Bool = true, shouldMeasureAsync: Bool = false, completion: (() -> Void)? = nil) {
