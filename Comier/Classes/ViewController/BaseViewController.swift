@@ -43,11 +43,61 @@ open class ASDisplayNodePlus: ASDisplayNode {
     }
 }
 
-open class COViewController<VM: ViewModel>: ASDKViewController<ASDisplayNode>, IViewModelViewController {
+open class COViewController<VM: ViewModel>: BViewController, IViewModelViewController {
     public typealias IViewModelType = VM
-    
-    public let disposeBag = DisposeBag()
     public var viewModel: VM
+    
+    open override var safeAreaInset: UIEdgeInsets {
+        if #available(iOS 11.0, *) {
+            return UIApplication.shared.keyWindow?.safeAreaInsets ?? .zero
+        }
+        
+        return .zero
+    }
+    
+    open override var enableSafeArea: Bool {
+        return true
+    }
+    
+    public required init(viewModel: VM) {
+        self.viewModel = viewModel
+        super.init()
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("Comier doen't not support Xib + Storyboard, please use code to make beautiful layout")
+    }
+    
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        bindToViewModel()
+    }
+    
+    open override func bindToViewModel() {}
+    
+    open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        return ASLayoutSpec()
+    }
+    
+    open override func viewSafeAreaInsetsDidChange() {
+        if #available(iOS 11.0, *) {
+            super.viewSafeAreaInsetsDidChange()
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    open override func transitionLayout(animated: Bool = true, shouldMeasureAsync: Bool = false, completion: (() -> Void)? = nil) {
+        self.node.transitionLayout(withAnimation: animated, shouldMeasureAsync: shouldMeasureAsync, measurementCompletion: completion)
+    }
+    open override func animateLayoutTransition(_ context: ASContextTransitioning) {}
+    open override func didCompleteLayoutTransition(_ context: ASContextTransitioning) {}
+    
+    open override func nodeDidLayout() {}
+}
+
+open class BViewController: ASDKViewController<ASDisplayNode> {
+    public let disposeBag = DisposeBag()
     
     open var safeAreaInset: UIEdgeInsets {
         if #available(iOS 11.0, *) {
@@ -61,12 +111,9 @@ open class COViewController<VM: ViewModel>: ASDKViewController<ASDisplayNode>, I
         return true
     }
     
-    open var useCustomTransitionAnimation: Bool {
-        return false
-    }
+    public var useCustomTransitionAnimation: Bool = false
     
-    public required init(viewModel: VM) {
-        self.viewModel = viewModel
+    override init() {
         let mainNode = ASDisplayNodePlus()
         super.init(node: mainNode)
         mainNode.backgroundColor = .white
@@ -104,51 +151,6 @@ open class COViewController<VM: ViewModel>: ASDKViewController<ASDisplayNode>, I
     
     open func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         return ASLayoutSpec()
-    }
-    
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
-    open override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
-    
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
-    
-    open override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    open override func loadView() {
-        super.loadView()
-    }
-    
-    open override func loadViewIfNeeded() {
-        super.loadViewIfNeeded()
-    }
-    
-    open override func viewSafeAreaInsetsDidChange() {
-        if #available(iOS 11.0, *) {
-            super.viewSafeAreaInsetsDidChange()
-        } else {
-            // Fallback on earlier versions
-        }
-        self.node.setNeedsLayout()
     }
     
     open func transitionLayout(animated: Bool = true, shouldMeasureAsync: Bool = false, completion: (() -> Void)? = nil) {
