@@ -91,7 +91,7 @@ open class BViewController: ASDKViewController<ASDisplayNode> {
         return false
     }
     
-    override init() {
+    public override init() {
         let mainNode = ASDisplayNodePlus()
         super.init(node: mainNode)
         mainNode.backgroundColor = .white
