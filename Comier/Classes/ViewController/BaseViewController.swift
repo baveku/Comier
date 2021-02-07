@@ -47,18 +47,6 @@ open class COViewController<VM: ViewModel>: BViewController, IViewModelViewContr
     public typealias IViewModelType = VM
     public var viewModel: VM
     
-    open override var safeAreaInset: UIEdgeInsets {
-        if #available(iOS 11.0, *) {
-            return UIApplication.shared.keyWindow?.safeAreaInsets ?? .zero
-        }
-        
-        return .zero
-    }
-    
-    open override var enableSafeArea: Bool {
-        return true
-    }
-    
     public required init(viewModel: VM) {
         self.viewModel = viewModel
         super.init()
@@ -99,19 +87,9 @@ open class COViewController<VM: ViewModel>: BViewController, IViewModelViewContr
 open class BViewController: ASDKViewController<ASDisplayNode> {
     public let disposeBag = DisposeBag()
     
-    open var safeAreaInset: UIEdgeInsets {
-        if #available(iOS 11.0, *) {
-            return UIApplication.shared.keyWindow?.safeAreaInsets ?? .zero
-        }
-        
-        return .zero
+    open var useCustomTransitionAnimation: Bool {
+        return false
     }
-    
-    open var enableSafeArea: Bool {
-        return true
-    }
-    
-    public var useCustomTransitionAnimation: Bool = false
     
     override init() {
         let mainNode = ASDisplayNodePlus()
