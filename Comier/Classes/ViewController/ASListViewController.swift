@@ -42,10 +42,11 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: COViewControlle
     }
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let stack = ASStackLayoutSpec.vertical()
-        stack.style.flexGrow = 1
-        stack.children = [collectionNode]
-        return ASInsetLayoutSpec(insets: self.safeAreaInset, child: stack)
+        LayoutSpec {
+            VStackLayout {
+                collectionNode.flexGrow(1)
+            }.useSafeAreaInset()
+        }
     }
     
     open override func viewDidLoad() {
