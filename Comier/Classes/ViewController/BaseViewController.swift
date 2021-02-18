@@ -8,6 +8,7 @@
 import Foundation
 import AsyncDisplayKit
 import RxSwift
+import FDFullscreenPopGesture
 
 public let ASBlank = ASStackLayoutSpec.vertical
 
@@ -43,7 +44,7 @@ open class ASDisplayNodePlus: ASDisplayNode {
     }
 }
 
-open class COViewController<VM: ViewModel>: BViewController, IViewModelViewController {
+open class UIViewModelController<VM: ViewModel>: BaseASViewController, IViewModelViewController {
     public typealias IViewModelType = VM
     public var viewModel: VM
     
@@ -55,13 +56,6 @@ open class COViewController<VM: ViewModel>: BViewController, IViewModelViewContr
     required public init?(coder: NSCoder) {
         fatalError("Comier doen't not support Xib + Storyboard, please use code to make beautiful layout")
     }
-    
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-        bindToViewModel()
-    }
-    
-    open override func bindToViewModel() {}
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         return ASLayoutSpec()
@@ -84,7 +78,7 @@ open class COViewController<VM: ViewModel>: BViewController, IViewModelViewContr
     open override func nodeDidLayout() {}
 }
 
-open class BViewController: ASDKViewController<ASDisplayNode> {
+open class BaseASViewController: ASDKViewController<ASDisplayNode> {
     public let disposeBag = DisposeBag()
     
     open var useCustomTransitionAnimation: Bool {
@@ -122,6 +116,7 @@ open class BViewController: ASDKViewController<ASDisplayNode> {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
+        fd_prefersNavigationBarHidden = true
         bindToViewModel()
     }
     
@@ -142,4 +137,11 @@ open class BViewController: ASDKViewController<ASDisplayNode> {
     }
     
     open func nodeDidLayout() {}
+}
+
+open class UIBaseViewController: UIViewController {
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        fd_prefersNavigationBarHidden = true
+    }
 }

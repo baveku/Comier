@@ -10,7 +10,7 @@ import UIKit
 import AsyncDisplayKit
 import RxSwift
 
-open class ListViewController<LVM: ListViewModel<ListDiffable>>: COViewController<LVM>, ListAdapterDataSource {
+open class ListViewController<LVM: ListViewModel<ListDiffable>>: UIViewModelController<LVM>, ListAdapterDataSource {
     open func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return viewModel.elements.value
     }
