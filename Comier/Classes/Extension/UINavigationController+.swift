@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-extension UINavigationController {
+public extension UINavigationController {
     func pushViewController(_ vc: UIViewController, animated: Bool, completion: (() -> Void)? = nil) {
         pushViewController(vc, animated: animated)
         callCompletion(animated: animated, completion: completion)
