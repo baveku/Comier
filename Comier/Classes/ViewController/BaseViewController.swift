@@ -44,7 +44,7 @@ open class ASDisplayNodePlus: ASDisplayNode {
     }
 }
 
-open class UIViewModelController<VM: ViewModel>: BaseASViewController, IViewModelViewController {
+open class ASViewModelController<VM: ViewModel>: BaseASViewController, IViewModelViewController {
     public typealias IViewModelType = VM
     public var viewModel: VM
     
@@ -139,7 +139,7 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
     open func nodeDidLayout() {}
 }
 
-open class UIBaseViewController: UIViewController {
+open class BaseViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         fd_prefersNavigationBarHidden = true

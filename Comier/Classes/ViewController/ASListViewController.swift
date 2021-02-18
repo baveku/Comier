@@ -10,7 +10,7 @@ import UIKit
 import AsyncDisplayKit
 import RxSwift
 
-open class ListViewController<LVM: ListViewModel<ListDiffable>>: UIViewModelController<LVM>, ListAdapterDataSource {
+open class ListViewController<LVM: ListViewModel<ListDiffable>>: ASViewModelController<LVM>, ListAdapterDataSource {
     open func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return viewModel.elements.value
     }
@@ -47,34 +47,6 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: UIViewModelCont
                 collectionNode.flexGrow(1)
             }.useSafeAreaInset()
         }
-    }
-    
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
-    open override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
-    
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
     }
     
     open override func transitionLayout(animated: Bool = true, shouldMeasureAsync: Bool = false, completion: (() -> Void)? = nil) {
