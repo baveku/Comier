@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (5.4.1)
-  - Comier (0.2.9):
+  - Comier (0.3.2):
+    - FDFullscreenPopGesture (>= 1.1)
     - Moya (>= 14.0.0)
     - Moya/RxSwift (>= 14.0.0)
     - ObjectMapper
@@ -10,6 +11,7 @@ PODS:
     - Swinject
     - Texture
     - Texture/IGListKit
+  - FDFullscreenPopGesture (1.1)
   - IGListDiffKit (4.0.0)
   - IGListKit (4.0.0):
     - IGListDiffKit (= 4.0.0)
@@ -77,6 +79,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - FDFullscreenPopGesture
     - IGListDiffKit
     - IGListKit
     - Moya
@@ -97,7 +100,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Comier: 649758eef70c28e990febd3f4963fbd60f767cf2
+  Comier: d4c55ee8853dd5d6536408d2c3735c1842e6a96b
+  FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
