@@ -85,6 +85,17 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         return false
     }
     
+    private var firstLoad = true
+    open func layoutFirstLoad() {}
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if firstLoad {
+            firstLoad = false
+            layoutFirstLoad()
+        }
+    }
+    
     public override init() {
         let mainNode = ASDisplayNodePlus()
         super.init(node: mainNode)
