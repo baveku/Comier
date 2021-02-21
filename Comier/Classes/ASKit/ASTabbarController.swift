@@ -22,6 +22,10 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
         self.tabItems = items
     }
     
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
         pageNode.showsVerticalScrollIndicator = false
