@@ -15,7 +15,7 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
     public var viewControllers: [UIViewController]
     let pageNode = ASPagerNode()
     
-    init(items: [ASTabItem], viewControllers: [UIViewController]) {
+    public init(items: [ASTabItem], viewControllers: [UIViewController]) {
         self.tabbarNode = ASTabbarNode(items: items)
         self.viewControllers = viewControllers
         super.init()
@@ -36,7 +36,7 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
         tabbarNode.delegate = self
     }
     
-    override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         LayoutSpec {
             VStackLayout(alignItems: .stretch) {
                 pageNode.flexGrow(1)
@@ -46,11 +46,11 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
     }
     
     // MARK: - Page Delegate Datasources
-    public func numberOfPages(in pagerNode: ASPagerNode) -> Int {
+    open func numberOfPages(in pagerNode: ASPagerNode) -> Int {
         return tabbarNode.tabItems.count
     }
     
-    public func pagerNode(_ pagerNode: ASPagerNode, nodeBlockAt index: Int) -> ASCellNodeBlock {
+    open func pagerNode(_ pagerNode: ASPagerNode, nodeBlockAt index: Int) -> ASCellNodeBlock {
         let block = { () -> ASCellNode in
             let node = ASCellNode { () -> UIViewController in
                 return self.viewControllers[index]
@@ -60,7 +60,7 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
         return block
     }
     
-    public func tabbar(_ tab: ASTabbarNode, didSelectTab atIndex: Int, willReload flag: Bool) {
+    open func tabbar(_ tab: ASTabbarNode, didSelectTab atIndex: Int, willReload flag: Bool) {
         pageNode.scrollToPage(at: atIndex, animated: false)
     }
 }
