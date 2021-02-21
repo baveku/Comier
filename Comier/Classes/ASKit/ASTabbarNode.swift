@@ -109,7 +109,16 @@ open class ASTabbarNode: ASDisplayNode {
     }()
     
     public func setColor(normal: UIColor, selected: UIColor) {
-        
+        tabItems.forEach { (item) in
+            item.setColor(normal: normal, selected: selected)
+        }
+        indicator.backgroundColor = selected
+    }
+    
+    public func setFont(_ font: UIFont) {
+        tabItems.forEach { (item) in
+            item.setFont(font)
+        }
     }
     
     private var leftPaddingIndicator: CGFloat {
