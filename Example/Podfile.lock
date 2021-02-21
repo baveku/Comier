@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.4.1)
-  - Comier (0.3.2):
+  - Comier (0.3.4):
     - FDFullscreenPopGesture (>= 1.1)
     - Moya (>= 14.0.0)
     - Moya/RxSwift (>= 14.0.0)
@@ -100,7 +100,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Comier: d4c55ee8853dd5d6536408d2c3735c1842e6a96b
+  Comier: c4c0a2f771b5e9b7b047ae8773db1dae2d523a08
   FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
