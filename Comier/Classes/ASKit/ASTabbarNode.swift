@@ -16,6 +16,7 @@ open class ASTabItem: ASControlNode {
     
     public let titleNode: ASTextNode = {
         let node = ASTextNode()
+        node.textColorFollowsTintColor = true
         return node
     }()
     
@@ -25,7 +26,7 @@ open class ASTabItem: ASControlNode {
     public init(title: String, icon: UIImage?) {
         super.init()
         automaticallyManagesSubnodes = true
-        self.mutableAttributeStr = NSMutableAttributedString(string: title)
+        self.mutableAttributeStr = NSMutableAttributedString(string: title).alignment(.center)
         titleNode.attributedText = mutableAttributeStr
         iconNode.image = icon
         setSelected(false)
@@ -47,13 +48,15 @@ open class ASTabItem: ASControlNode {
     public func setSelected(_ selected: Bool) {
         let color: UIColor = selected ? selectedTabColor : deselectedTabColor
         iconNode.tintColor = color
-        titleNode.attributedText = mutableAttributeStr.color(color)
+        titleNode.tintColor = color
     }
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         LayoutSpec {
-            VStackLayout(justifyContent: .center, alignItems: .center) {
-                iconNode.preferredSize(.init(width: 24, height: 24))
+            VStackLayout(justifyContent: .center, alignItems: .stretch) {
+                CenterLayout {
+                    iconNode.preferredSize(.init(width: 24, height: 24))
+                }
                 titleNode
             }.flexGrow(1)
         }
@@ -121,10 +124,6 @@ open class ASTabbarNode: ASDisplayNode {
         }
     }
     
-    private var leftPaddingIndicator: CGFloat {
-        return CGFloat(selectedIndex) * frame.width / CGFloat(tabItems.count)
-    }
-    
     public override func animateLayoutTransition(_ context: ASContextTransitioning) {
         let finalFrame = context.finalFrame(for: indicator)
         UIView.animate(withDuration: 0.1) {
@@ -133,20 +132,20 @@ open class ASTabbarNode: ASDisplayNode {
     }
     
     public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        indicator.style.flexGrow = 1
-        var spacers: [AnyLayout] = tabItems.map{_ in
-            return AnyLayout(SpacerLayout())
-        }
-        spacers[selectedIndex] = AnyLayout(indicator)
-        
-        return LayoutSpec {
+        LayoutSpec {
             VStackLayout(alignItems: .stretch) {
                 divider.height(1)
-                HStackLayout(spacing: 8, justifyContent: .spaceAround) {
-                    spacers
-                }.height(2).padding(.init(top: 0, left: 8, bottom: 0, right: 8))
-                HStackLayout(alignItems: .stretch) {
-                    tabItems.map({$0.flexGrow(1)})
+                HStackLayout {
+                    tabItems.enumerated().map { (er) -> AnyLayout in
+                        return AnyLayout(VStackLayout(alignItems: .stretch) {
+                            if er.offset == selectedIndex {
+                                indicator.height(2).padding(.init(top: 0, left: 16, bottom: 0, right: 16))
+                            } else {
+                                VStackLayout{}.height(2)
+                            }
+                            er.element.flexGrow(1)
+                        }.flexGrow(1))
+                    }.map({$0.flexBasis(fraction: CGFloat(1/tabItems.count))})
                 }.flexGrow(1)
             }.flexGrow(1)
         }
