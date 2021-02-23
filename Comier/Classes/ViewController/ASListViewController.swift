@@ -40,9 +40,9 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: ASViewModelCont
         super.bindToViewModel()
         self.viewModel.bindToAdapter(adapter: adapter).disposed(by: disposeBag)
     }
-    
-    @objc open override func injected() {
-        self.node.setNeedsLayout()
+
+    @objc open override func updateUI() {
+        super.updateUI()
         self.adapter.performUpdates(animated: false, completion: nil)
     }
     

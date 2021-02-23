@@ -9,12 +9,45 @@ import Foundation
 import AsyncDisplayKit
 
 open class JBDisplayNode: ASDisplayNode {
-    @objc open func injected() {
+    @objc open func hotReload() {
         self.setNeedsLayout()
     }
     
     public override init() {
         super.init()
         automaticallyManagesSubnodes = true
+    }
+    
+    open override func didLoad() {
+        super.didLoad()
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(hotReload),
+            name: Notification.Name("INJECTION_BUNDLE_NOTIFICATION"), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+}
+
+class JBControlNode: ASControlNode {
+    @objc open func hotReload() {
+        self.setNeedsLayout()
+    }
+    
+    public override init() {
+        super.init()
+        automaticallyManagesSubnodes = true
+    }
+    
+    open override func didLoad() {
+        super.didLoad()
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(hotReload),
+            name: Notification.Name("INJECTION_BUNDLE_NOTIFICATION"), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

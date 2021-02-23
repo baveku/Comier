@@ -67,7 +67,7 @@ public protocol ASTabbarDelegate: class {
     func tabbar(_ tab: ASTabbarNode, didSelectTab atIndex: Int, willReload flag: Bool)
 }
 
-open class ASTabbarNode: ASDisplayNode {
+open class ASTabbarNode: JBDisplayNode {
     
     weak var delegate: ASTabbarDelegate? = nil
     

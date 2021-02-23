@@ -96,10 +96,6 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         }
     }
     
-    @objc open func injected() {
-        self.node.setNeedsLayout()
-    }
-    
     public override init() {
         let mainNode = ASDisplayNodePlus()
         super.init(node: mainNode)
@@ -133,6 +129,13 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         super.viewDidLoad()
         fd_prefersNavigationBarHidden = true
         bindToViewModel()
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(updateUI),
+            name: Notification.Name("INJECTION_BUNDLE_NOTIFICATION"), object: nil)
+    }
+    
+    @objc open func updateUI() {
+        self.node.setNeedsLayout()
     }
     
     open func bindToViewModel() {}
@@ -152,6 +155,10 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
     }
     
     open func nodeDidLayout() {}
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 open class BaseViewController: UIViewController {
