@@ -13,7 +13,7 @@ open class JBDisplayNode: ASDisplayNode {
         self.setNeedsLayout()
     }
     
-    override init() {
+    public override init() {
         super.init()
         automaticallyManagesSubnodes = true
     }
