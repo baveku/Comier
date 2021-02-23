@@ -96,6 +96,10 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         }
     }
     
+    @objc open func injected() {
+        self.node.setNeedsLayout()
+    }
+    
     public override init() {
         let mainNode = ASDisplayNodePlus()
         super.init(node: mainNode)

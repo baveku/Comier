@@ -41,6 +41,11 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: ASViewModelCont
         self.viewModel.bindToAdapter(adapter: adapter).disposed(by: disposeBag)
     }
     
+    @objc open override func injected() {
+        self.node.setNeedsLayout()
+        self.adapter.performUpdates(animated: false, completion: nil)
+    }
+    
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         LayoutSpec {
             VStackLayout {
