@@ -8,6 +8,8 @@
 import Foundation
 import AsyncDisplayKit
 import UIKit
+import RxSwift
+import RxCocoa
 
 open class BSButtonNode: ASButtonNode {
     public let activity: ASDisplayNode = {
@@ -53,5 +55,13 @@ open class BSButtonNode: ASButtonNode {
                 stack
             }
         }
+    }
+}
+
+extension Reactive where Base: BSButtonNode {
+    func subscribe(_ value: BehaviorRelay<Bool>) -> Disposable {
+        return value.subscribe(onNext: { [weak base](loading) in
+            loading ? base?.startLoading() : base?.stopLoading()
+        })
     }
 }
