@@ -58,7 +58,7 @@ open class BSButtonNode: ASButtonNode {
     }
 }
 
-extension Reactive where Base: BSButtonNode {
+public extension Reactive where Base: BSButtonNode {
     func subscribe(_ value: BehaviorRelay<Bool>) -> Disposable {
         return value.subscribe(onNext: { [weak base](loading) in
             loading ? base?.startLoading() : base?.stopLoading()
