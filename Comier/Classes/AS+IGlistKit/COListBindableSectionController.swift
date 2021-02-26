@@ -44,10 +44,10 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             if let cell = cell as? ListBindable {
                 cell.bindViewModel(self.viewModels[index])
             }
-            
-            if let cell = cell as? COCellNode<ListDiffable> {
-                cell.collectionContext = self.collectionContext
+            DispatchQueue.main.async {
+                (cell as? ICOCell)?.context = self.collectionContext
             }
+            
             return cell ?? COCellNode<ListDiffable>()
         }
         return block
@@ -73,7 +73,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         delegate?.didSelected(at: viewModels[index])
     }
     
-    public override func sizeForItem(at index: Int) -> CGSize {
+    open override func sizeForItem(at index: Int) -> CGSize {
         let size = ASIGListSectionControllerMethods.sizeForItem(at: index)
         return size
     }
@@ -141,9 +141,13 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     }
 }
 
-open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
+public protocol ICOCell: class {
+    var context: ListCollectionContext? {get set}
+}
+
+open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable, ICOCell {
     
-    public weak var collectionContext: ListCollectionContext? = nil
+    public weak var context: ListCollectionContext? = nil
     
     public var viewModel: M!
     
