@@ -44,10 +44,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             if let cell = cell as? ListBindable {
                 cell.bindViewModel(self.viewModels[index])
             }
-            DispatchQueue.main.async {
-                (cell as? ICOCell)?.context = self.collectionContext
-            }
-            
+            (cell as? ICOCell)?.context = self.collectionContext
             return cell ?? COCellNode<ListDiffable>()
         }
         return block
