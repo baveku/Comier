@@ -44,7 +44,6 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             if let cell = cell as? ListBindable {
                 cell.bindViewModel(self.viewModels[index])
             }
-            (cell as? ICOCell)?.context = self.collectionContext
             return cell ?? COCellNode<ListDiffable>()
         }
         return block
@@ -138,14 +137,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     }
 }
 
-public protocol ICOCell: class {
-    var context: ListCollectionContext? {get set}
-}
-
-open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable, ICOCell {
-    
-    public weak var context: ListCollectionContext? = nil
-    
+open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
     public var viewModel: M!
     
     public func bindViewModel(_ viewModel: Any) {
