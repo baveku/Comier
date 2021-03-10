@@ -30,8 +30,8 @@ enum SectionState {
 }
 
 open class ASListBindingSectionController<Element: ListDiffable>: COSectionController {
-    private var viewModels: [ListDiffable] = []
-    var object: Element? = nil
+    public var viewModels: [ListDiffable] = []
+    public var object: Element? = nil
     var state: SectionState = .idle
     
     public weak var dataSource: ASListBindingDataSource? = nil
