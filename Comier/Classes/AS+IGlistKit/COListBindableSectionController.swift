@@ -78,7 +78,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         return ASIGListSectionControllerMethods.cellForItem(at: index, sectionController: self)
     }
     
-    func updateAnimated(animated: Bool, completion: ((Bool) -> Void)? = nil) {
+    public func updateAnimated(animated: Bool, completion: ((Bool) -> Void)? = nil) {
         if self.state != .idle {
             completion?(false)
             return
