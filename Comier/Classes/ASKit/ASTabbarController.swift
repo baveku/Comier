@@ -52,7 +52,8 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
     
     open func pagerNode(_ pagerNode: ASPagerNode, nodeBlockAt index: Int) -> ASCellNodeBlock {
         let block = { () -> ASCellNode in
-            let node = ASCellNode { () -> UIViewController in
+            let node = ASCellNode { [weak self] () -> UIViewController in
+                guard let self = self else {return UIViewController()}
                 return self.viewControllers[index]
             } didLoad: { (node) in}
             return node
