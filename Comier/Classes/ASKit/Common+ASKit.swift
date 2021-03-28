@@ -15,8 +15,8 @@ import NVActivityIndicatorView
 open class ASActivityButtonNode: ASButtonNode {
     public let activity: ASDisplayNode = {
         let ac = ASDisplayNode { () -> UIView in
-            let view = NVActivityIndicatorView(frame: .init(x: 0, y: 0, width: 24, height: 24), type: .circleStrokeSpin)
-            return UIActivityIndicatorView(style: .white)
+            let view = NVActivityIndicatorView(frame: .init(x: 0, y: 0, width: 24, height: 24), type: .circleStrokeSpin, padding: 0)
+            return view
         }
         
         return ac
@@ -54,7 +54,7 @@ open class ASActivityButtonNode: ASButtonNode {
             if isLoading {
                 stack.overlay({
                     HStackLayout(justifyContent: .center, alignItems: .center) {
-                        activity
+                        activity.preferredSize(.init(width: 24, height: 24))
                     }
                 }())
             } else {
