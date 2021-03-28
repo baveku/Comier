@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Comier'
-  s.version          = '0.3.7'
+  s.version          = '0.3.8'
   s.summary          = 'MVVM-AppBase for Texture + IGListKit'
   s.swift_version = '5.3'
 
@@ -43,4 +43,5 @@ MVVM with TextureGroup + IGListKit + Swinject + Reactive Programing
   s.dependency 'ObjectMapper'
   s.dependency 'RxKeyboard'
   s.dependency 'FDFullscreenPopGesture', '>= 1.1'
+  s.dependency 'NVActivityIndicatorView'
 end

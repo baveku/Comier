@@ -10,18 +10,20 @@ import AsyncDisplayKit
 import UIKit
 import RxSwift
 import RxCocoa
+import NVActivityIndicatorView
 
-open class BSButtonNode: ASButtonNode {
+open class ASActivityButtonNode: ASButtonNode {
     public let activity: ASDisplayNode = {
         let ac = ASDisplayNode { () -> UIView in
+            let view = NVActivityIndicatorView(frame: .init(x: 0, y: 0, width: 24, height: 24), type: .circleStrokeSpin)
             return UIActivityIndicatorView(style: .white)
         }
         
         return ac
     }()
     
-    public var activityView: UIActivityIndicatorView {
-        return activity.view as! UIActivityIndicatorView
+    public var activityView: NVActivityIndicatorView {
+        return activity.view as! NVActivityIndicatorView
     }
     
     public var isLoading = false
@@ -42,6 +44,10 @@ open class BSButtonNode: ASButtonNode {
         self.setNeedsLayout()
     }
     
+    public func setAnimationType(_ type: NVActivityIndicatorType) {
+        activityView.type = type
+    }
+    
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let stack = super.layoutSpecThatFits(constrainedSize)
         return LayoutSpec {
@@ -58,7 +64,7 @@ open class BSButtonNode: ASButtonNode {
     }
 }
 
-public extension Reactive where Base: BSButtonNode {
+public extension Reactive where Base: ASActivityButtonNode {
     func subscribe(_ value: BehaviorRelay<Bool>) -> Disposable {
         return value.subscribe(onNext: { [weak base](loading) in
             loading ? base?.startLoading() : base?.stopLoading()

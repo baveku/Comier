@@ -1,9 +1,10 @@
 PODS:
   - Alamofire (5.4.1)
-  - Comier (0.3.4):
+  - Comier (0.3.7):
     - FDFullscreenPopGesture (>= 1.1)
     - Moya (>= 14.0.0)
     - Moya/RxSwift (>= 14.0.0)
+    - NVActivityIndicatorView
     - ObjectMapper
     - RxCocoa
     - RxKeyboard
@@ -22,6 +23,9 @@ PODS:
   - Moya/RxSwift (14.0.0):
     - Moya/Core
     - RxSwift (~> 5.0)
+  - NVActivityIndicatorView (5.1.1):
+    - NVActivityIndicatorView/Base (= 5.1.1)
+  - NVActivityIndicatorView/Base (5.1.1)
   - ObjectMapper (4.2.0)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
@@ -83,6 +87,7 @@ SPEC REPOS:
     - IGListDiffKit
     - IGListKit
     - Moya
+    - NVActivityIndicatorView
     - ObjectMapper
     - PINCache
     - PINOperation
@@ -100,11 +105,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Comier: c4c0a2f771b5e9b7b047ae8773db1dae2d523a08
+  Comier: 6eaf63e59860caf35083c238a6ab93f958f2e95a
   FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
