@@ -16,10 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let injector = Injector()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        window = UIWindow()
-        window?.rootViewController = UINavigationController(rootViewController: ViewController(viewModel: Lii(appViewModel: AppViewModel())))
-        window?.makeKeyAndVisible()
         injector.configure()
+        window = UIWindow(frame: UIScreen.bounds)
+        let vc = RootViewController(viewModel: .init(appViewModel: AppViewModel()))
+        window?.rootViewController = UINavigationController(rootViewController: vc)
+        window?.makeKeyAndVisible()
         return true
     }
 

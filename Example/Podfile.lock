@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.4.1)
-  - Comier (0.3.7):
+  - Comier (0.3.9):
     - FDFullscreenPopGesture (>= 1.1)
     - Moya (>= 14.0.0)
     - Moya/RxSwift (>= 14.0.0)
@@ -50,7 +50,7 @@ PODS:
     - RxSwift (~> 5.0)
   - RxRelay (5.1.1):
     - RxSwift (~> 5)
-  - RxSwift (5.1.1)
+  - RxSwift (5.1.2)
   - Swinject (2.7.1)
   - Texture (3.0.0):
     - Texture/AssetsLibrary (= 3.0.0)
@@ -102,10 +102,11 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Comier:
     :path: "../"
+    :submodules: true
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Comier: 6eaf63e59860caf35083c238a6ab93f958f2e95a
+  Comier: e9a57f21ad30ac963c707997c6bef9187c497bd3
   FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
@@ -118,10 +119,10 @@ SPEC CHECKSUMS:
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxKeyboard: 6683c4344304a00f943c158bd8a43ce5469c82a7
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
-  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
 
-PODFILE CHECKSUM: 3c5a030d2b6aa4d22f597d5a851d8d9364c00ed3
+PODFILE CHECKSUM: 812db252c933fdbc3deb99c8a35d56275a9087ae
 
 COCOAPODS: 1.10.1

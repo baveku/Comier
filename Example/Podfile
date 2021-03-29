@@ -3,7 +3,7 @@ use_frameworks!
 platform :ios, '10.0'
 
 target 'Comier_Example' do
-  pod 'Comier', :path => '../'
+  pod 'Comier', :path => '../', :submodules => true
 
   target 'Comier_Tests' do
     inherit! :search_paths

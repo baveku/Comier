@@ -19,11 +19,9 @@ extension UIScreen {
 
 class Lii: ListViewModel<ListDiffable> {}
 
-class ViewController: COListViewController<Lii> {
-	
+class RootViewController: ListViewController<Lii> {
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Hallo"
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         collectionNode.view.collectionViewLayout = flowLayout
@@ -47,13 +45,11 @@ class ViewController: COListViewController<Lii> {
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let stack = ASStackLayoutSpec.vertical()
-        stack.style.flexGrow = 1
-        button.style.height = ASDimensionMake(60)
-        button.style.width = ASDimensionMake("100%")
-        stack.children = [collectionNode, button]
-        
-        return stack
+        LayoutSpec {
+            VStackLayout {
+                collectionNode.flexGrow(1)
+            }.useSafeAreaInset()
+        }
     }
 }
 
@@ -99,7 +95,7 @@ class NumberCellNode: COCellNode<NumberSectionModel> {
     let valueNode = ASTextNode()
     
     override func binding(_ viewModel: NumberSectionModel) {
-		valueNode.attributedText = NSAttributedString(string: "\(viewModel.value) \(viewModel.string)")
+        valueNode.attributedText = NSMutableAttributedString(string: "1232133").alignment(.center).color(.black).font(UIFont.systemFont(ofSize: 14)).lineBreak(.byCharWrapping).lineSpacing(1).lineHeight(multiple: 1.3)
     }
     
     override func didLoad() {

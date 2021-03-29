@@ -77,9 +77,12 @@ extension NSMutableAttributedString {
     }
     
     fileprivate var paragraphStyle: NSMutableParagraphStyle? {
-        return attributes(at: 0, effectiveRange: nil)[NSAttributedString.Key.paragraphStyle] as? NSMutableParagraphStyle
+        if length > 0 {
+            return attributes(at: 0, effectiveRange: nil)[NSAttributedString.Key.paragraphStyle] as? NSMutableParagraphStyle
+        } else {
+            return nil
+        }
     }
-    
 }
 
 // MARK: - Font

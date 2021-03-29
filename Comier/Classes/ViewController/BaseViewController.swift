@@ -24,10 +24,6 @@ open class ASDisplayNodePlus: ASDisplayNode {
     public var animateLayoutTransitionBlock: ((ASContextTransitioning) -> Void)? = nil
     public var didCompleteLayoutTransitionBlock: ((ASContextTransitioning) -> Void)? = nil
     
-    open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        super.layoutSpecThatFits(constrainedSize)
-    }
-    
     open override func layout() {
         super.layout()
         nodeLayoutBlock?()
@@ -100,8 +96,9 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         let mainNode = ASDisplayNodePlus()
         super.init(node: mainNode)
         mainNode.backgroundColor = .white
-        mainNode.layoutSpecBlock = {[weak self] (node, size) in
-            guard let self = self else {return ASLayoutSpec()}
+        
+        mainNode.layoutSpecBlock = { [weak self] (node, size) in
+            guard let self = self else {return ASStackLayoutSpec()}
             return self.layoutSpecThatFits(size)
         }
         
