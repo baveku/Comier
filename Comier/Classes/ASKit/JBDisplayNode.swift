@@ -30,7 +30,7 @@ open class JBDisplayNode: ASDisplayNode {
     }
 }
 
-class JBControlNode: ASControlNode {
+open class JBControlNode: ASControlNode {
     @objc open func hotReload() {
         self.setNeedsLayout()
     }
