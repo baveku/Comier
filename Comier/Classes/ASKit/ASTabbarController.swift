@@ -31,6 +31,8 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
         fatalError("init(coder:) has not been implemented")
     }
     
+    var doubleTaps = [UITapGestureRecognizer]()
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
         pageNode.showsVerticalScrollIndicator = false
@@ -42,6 +44,8 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
         tabItems.forEach { (item) in
             let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapTabbarItemAction(_:)))
             tap.numberOfTapsRequired = 2
+            tap.isEnabled = false
+            doubleTaps.append(tap)
             item.view.addGestureRecognizer(tap)
         }
     }
@@ -74,21 +78,25 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
     open func tabbar(_ tab: ASTabbarNode, didSelectTab atIndex: Int, willReload flag: Bool) {
         pageNode.scrollToPage(at: atIndex, animated: false)
         let vc = viewControllers[atIndex]
+        doubleTaps.enumerated().forEach { (ind, tap) in
+            tap.isEnabled = ind == atIndex
+        }
+        
         if let delegate = vc as? ASTabbarChildVCDelegate {
             delegate.tabbar(self, didSelect: vc)
         }
     }
     
-    @objc open func doubleTapTabbarItemAction(_ item: ASTabItem) {
-        let vc = getViewController(by: item)
+    @objc open func doubleTapTabbarItemAction(_ sender: UITapGestureRecognizer) {
+        let vc = getViewController(by: sender)
         if let delegate = vc as? ASTabbarChildVCDelegate {
             delegate.tabbar(self, doubleTap: vc)
         }
     }
     
-    func getViewController(by item: ASTabItem) -> UIViewController {
+    func getViewController(by item: UITapGestureRecognizer) -> UIViewController {
         var viewController: UIViewController!
-        tabItems.enumerated().forEach { (ind, target) in
+        doubleTaps.enumerated().forEach { (ind, target) in
             if target == item {
                 viewController = viewControllers[ind]
             }
