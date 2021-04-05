@@ -8,6 +8,11 @@
 import Foundation
 import AsyncDisplayKit
 
+public protocol ASTabbarChildVCDelegate {
+    func tabbar(_ vc: ASTabbarViewController, doubleTap vc: UIViewController)
+    func tabbar(_ vc: ASTabbarViewController, didSelect vc: UIViewController)
+}
+
 open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPagerDataSource, ASTabbarDelegate {
     public var tabItems: [ASTabItem] = []
     
@@ -34,6 +39,11 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
         pageNode.setDelegate(self)
         pageNode.view.isScrollEnabled = false
         tabbarNode.delegate = self
+        tabItems.forEach { (item) in
+            let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapTabbarItemAction(_:)))
+            tap.numberOfTapsRequired = 2
+            item.view.addGestureRecognizer(tap)
+        }
     }
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -63,5 +73,27 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
     
     open func tabbar(_ tab: ASTabbarNode, didSelectTab atIndex: Int, willReload flag: Bool) {
         pageNode.scrollToPage(at: atIndex, animated: false)
+        let vc = viewControllers[atIndex]
+        if let delegate = vc as? ASTabbarChildVCDelegate {
+            delegate.tabbar(self, didSelect: vc)
+        }
+    }
+    
+    @objc open func doubleTapTabbarItemAction(_ item: ASTabItem) {
+        let vc = getViewController(by: item)
+        if let delegate = vc as? ASTabbarChildVCDelegate {
+            delegate.tabbar(self, doubleTap: vc)
+        }
+    }
+    
+    func getViewController(by item: ASTabItem) -> UIViewController {
+        var viewController: UIViewController!
+        tabItems.enumerated().forEach { (ind, target) in
+            if target == item {
+                viewController = viewControllers[ind]
+            }
+        }
+        
+        return viewController
     }
 }
