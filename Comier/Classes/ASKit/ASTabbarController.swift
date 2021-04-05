@@ -9,8 +9,8 @@ import Foundation
 import AsyncDisplayKit
 
 public protocol ASTabbarChildVCDelegate {
-    func tabbar(_ vc: ASTabbarViewController, doubleTap vc: UIViewController)
-    func tabbar(_ vc: ASTabbarViewController, didSelect vc: UIViewController)
+    func tabbar(_ tabVC: ASTabbarViewController, doubleTap vc: UIViewController)
+    func tabbar(_ tabVC: ASTabbarViewController, didSelect vc: UIViewController)
 }
 
 open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPagerDataSource, ASTabbarDelegate {
