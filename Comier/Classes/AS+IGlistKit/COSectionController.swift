@@ -49,4 +49,8 @@ open class COSectionController: ListSectionController, ASSectionController, List
     open func nodeBlockForSupplementaryElement(ofKind elementKind: String, at index: Int) -> ASCellNodeBlock {
         return { ASCellNode()}
     }
+    
+    open func sizeRangeForSupplementaryElement(ofKind elementKind: String, at index: Int) -> ASSizeRange {
+        return ASSizeRangeUnconstrained
+    }
 }
