@@ -9,7 +9,19 @@ import Foundation
 import IGListKit
 import AsyncDisplayKit
 
-open class COSectionController: ListSectionController, ASSectionController {
+open class COSectionController: ListSectionController, ASSectionController, ListSupplementaryViewSource, ASSupplementaryNodeSource {
+    open func supportedElementKinds() -> [String] {
+        return []
+    }
+    
+    public func viewForSupplementaryElement(ofKind elementKind: String, at index: Int) -> UICollectionReusableView {
+        return ASIGListSupplementaryViewSourceMethods.viewForSupplementaryElement(ofKind: elementKind, at: index, sectionController: self)
+    }
+    
+    public func sizeForSupplementaryView(ofKind elementKind: String, at index: Int) -> CGSize {
+        return ASIGListSupplementaryViewSourceMethods.sizeForSupplementaryView(ofKind: elementKind, at: index)
+    }
+    
     open func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
         return {() in return ASCellNode()}
     }
@@ -32,5 +44,9 @@ open class COSectionController: ListSectionController, ASSectionController {
     
     public override func cellForItem(at index: Int) -> UICollectionViewCell {
         return ASIGListSectionControllerMethods.cellForItem(at: index, sectionController: self)
+    }
+    
+    open func nodeBlockForSupplementaryElement(ofKind elementKind: String, at index: Int) -> ASCellNodeBlock {
+        return { ASCellNode()}
     }
 }
