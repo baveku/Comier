@@ -23,7 +23,7 @@ public extension UIScreen {
     
     private class func getScreenSafeArea() -> UIEdgeInsets {
         if #available(iOS 11.0, *) {
-            return  UIApplication.shared.windows[0].safeAreaInsets
+            return  UIApplication.shared.keyWindow?.safeAreaInsets ?? .zero
         } else {
             return .zero
         }
