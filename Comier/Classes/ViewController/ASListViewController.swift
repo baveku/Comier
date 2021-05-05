@@ -38,12 +38,16 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: ASViewModelCont
     
     open override func bindToViewModel() {
         super.bindToViewModel()
-        self.viewModel.bindToAdapter(adapter: adapter).disposed(by: disposeBag)
+        self.viewModel.bindToAdapter(adapter: adapter) { [weak self] finished in
+            self?.adapterDidPerformUpdate(finished)
+        }.disposed(by: disposeBag)
     }
 
     @objc open override func updateUI() {
         super.updateUI()
-        self.adapter.performUpdates(animated: false, completion: nil)
+        self.adapter.performUpdates(animated: false) { [weak self] finished in
+            self?.adapterDidPerformUpdate(finished)
+        }
     }
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -53,6 +57,8 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: ASViewModelCont
             }.useSafeAreaInset()
         }
     }
+    
+    open func adapterDidPerformUpdate(_ finished: Bool) {}
     
     open override func transitionLayout(animated: Bool = true, shouldMeasureAsync: Bool = false, completion: (() -> Void)? = nil) {
         self.node.transitionLayout(withAnimation: animated, shouldMeasureAsync: shouldMeasureAsync, measurementCompletion: completion)

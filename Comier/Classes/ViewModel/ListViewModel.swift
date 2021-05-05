@@ -18,10 +18,10 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
     public let elements = BehaviorRelay<[Element]>(value: [])
     public var performUpdatesAnimated: Bool = false
 
-    public func bindToAdapter(adapter: ListAdapter) -> Disposable {
+    public func bindToAdapter(adapter: ListAdapter, completion: ((Bool) -> Void)? = nil) -> Disposable {
         return elements.subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
-            adapter.performUpdates(animated: self.performUpdatesAnimated, completion: nil)
+            adapter.performUpdates(animated: self.performUpdatesAnimated, completion: completion)
         })
     }
 	
