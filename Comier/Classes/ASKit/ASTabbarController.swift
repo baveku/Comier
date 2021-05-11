@@ -9,7 +9,6 @@ import Foundation
 import AsyncDisplayKit
 
 public protocol ASTabbarChildVCDelegate {
-    func tabbar(_ tabVC: ASTabbarViewController, doubleTap vc: UIViewController)
     func tabbar(_ tabVC: ASTabbarViewController, didSelect vc: UIViewController)
 }
 
@@ -31,8 +30,6 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
         fatalError("init(coder:) has not been implemented")
     }
     
-    var doubleTaps = [UITapGestureRecognizer]()
-    
     open override func viewDidLoad() {
         super.viewDidLoad()
         pageNode.showsVerticalScrollIndicator = false
@@ -41,13 +38,6 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
         pageNode.setDelegate(self)
         pageNode.view.isScrollEnabled = false
         tabbarNode.delegate = self
-        tabItems.forEach { (item) in
-            let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapTabbarItemAction(_:)))
-            tap.numberOfTapsRequired = 2
-            tap.isEnabled = false
-            doubleTaps.append(tap)
-            item.view.addGestureRecognizer(tap)
-        }
     }
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -78,30 +68,8 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
     open func tabbar(_ tab: ASTabbarNode, didSelectTab atIndex: Int, willReload flag: Bool) {
         pageNode.scrollToPage(at: atIndex, animated: false)
         let vc = viewControllers[atIndex]
-        doubleTaps.enumerated().forEach { (ind, tap) in
-            tap.isEnabled = ind == atIndex
-        }
-        
         if let delegate = vc as? ASTabbarChildVCDelegate {
             delegate.tabbar(self, didSelect: vc)
         }
-    }
-    
-    @objc open func doubleTapTabbarItemAction(_ sender: UITapGestureRecognizer) {
-        let vc = getViewController(by: sender)
-        if let delegate = vc as? ASTabbarChildVCDelegate {
-            delegate.tabbar(self, doubleTap: vc)
-        }
-    }
-    
-    func getViewController(by item: UITapGestureRecognizer) -> UIViewController {
-        var viewController: UIViewController!
-        doubleTaps.enumerated().forEach { (ind, target) in
-            if target == item {
-                viewController = viewControllers[ind]
-            }
-        }
-        
-        return viewController
     }
 }
