@@ -9,7 +9,7 @@ import Foundation
 import AsyncDisplayKit
 
 public protocol ASTabbarChildVCDelegate {
-    func tabbar(_ tabVC: ASTabbarViewController, didSelect vc: UIViewController)
+    func tabbar(_ tabVC: ASTabbarViewController, didSelect vc: UIViewController, canReload: Bool)
 }
 
 open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPagerDataSource, ASTabbarDelegate {
@@ -69,7 +69,7 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
         pageNode.scrollToPage(at: atIndex, animated: false)
         let vc = viewControllers[atIndex]
         if let delegate = vc as? ASTabbarChildVCDelegate {
-            delegate.tabbar(self, didSelect: vc)
+            delegate.tabbar(self, didSelect: vc, canReload: flag)
         }
     }
 }

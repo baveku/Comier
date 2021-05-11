@@ -93,11 +93,12 @@ open class ASTabbarNode: JBDisplayNode {
     
     public func setSelectedTab(at index: Int) {
         tabItems.enumerated().forEach {$0.element.setSelected($0.offset == index)}
+        let snapshotSelectedIndex = selectedIndex
         if selectedIndex != index {
             self.selectedIndex = index
             self.transitionLayout(withAnimation: true, shouldMeasureAsync: false, measurementCompletion: nil)
         }
-        delegate?.tabbar(self, didSelectTab: index, willReload: selectedIndex == index)
+        delegate?.tabbar(self, didSelectTab: index, willReload: snapshotSelectedIndex == index)
     }
     
     public let indicator: ASCornerNode = {
