@@ -43,6 +43,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         let block: ASCellNodeBlock = { [weak self] in
             guard let self = self else {return COCellNode<ListDiffable>()}
             let cell = self.dataSource?.nodeBlockForViewModel(at: self.viewModels[index])
+            cell?.neverShowPlaceholders = true
             if let cell = cell as? ListBindable {
                 cell.bindViewModel(self.viewModels[index])
             }
@@ -55,6 +56,8 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         return viewModels.count
     }
     
+    open var willUpdateWithAnimation = true
+    
     open override func didUpdate(to object: Any) {
         let oldObject = self.object
         self.object = object as? Element
@@ -63,7 +66,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             let viewModels = self.dataSource?.viewModels(for: object)
             self.viewModels = objectsWithDuplicateIdentifiersRemoved(viewModels) ?? []
         } else {
-            self.updateAnimated(animated: true)
+            self.updateAnimated(animated: willUpdateWithAnimation)
         }
     }
     
@@ -93,8 +96,11 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         
         var result: ListIndexSetResult? = nil
         var oldViewModels: [ListDiffable] = []
-        
-        let collectionContext = self.collectionContext;
+        let collectionContext = collectionContext
+        if !animated {
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+        }
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
             oldViewModels = self.viewModels
@@ -105,33 +111,34 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             self.viewModels = filterVM
             result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
             
-            if let updates = result?.updates {
-                for item in updates.enumerated() {
-                    print(item)
-                    let (offset, index) = item
-                    let id = oldViewModels[index].diffIdentifier()
-                    let indexAfterUpdate = result?.newIndex(forIdentifier: id)
-                    if let indexAfterUpdate = indexAfterUpdate {
-                        let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
-                        let node = cell?.node as? ListBindable
-                        node?.bindViewModel(self.viewModels[indexAfterUpdate])
-                    }
-                }
-            }
-            
             if let ex = self.collectionContext?.experiments, let updates = result?.updates, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
                 batchContext.invalidateLayout(in: self, at: updates)
-            }
-            if let deletes = result?.deletes {
-                batchContext.delete(in: self, at: deletes)
             }
             
             if let inserts = result?.inserts {
                 batchContext.insert(in: self, at: inserts)
             }
+            
+            if let deletes = result?.deletes {
+                batchContext.delete(in: self, at: deletes)
+            }
+            
             if let moves = result?.moves {
                 for move in moves {
                     batchContext.move(in: self, from: move.from, to: move.to)
+                }
+            }
+            
+            if let updates = result?.updates {
+                for item in updates.enumerated() {
+                    let (_, index) = item
+                    let id = oldViewModels[index].diffIdentifier()
+                    let indexAfterUpdate = result?.newIndex(forIdentifier: id)
+                    if let indexAfterUpdate = indexAfterUpdate {
+                        let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
+                        let node = cell?.node as? ListBindable & ASCellNode
+                        node?.bindViewModel(self.viewModels[indexAfterUpdate])
+                    }
                 }
             }
             
@@ -139,6 +146,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         }, completion: { (finished) in
             self.state = .idle
             completion?(finished)
+            CATransaction.commit()
         })
     }
 }
@@ -155,6 +163,7 @@ open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
     public override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
+        neverShowPlaceholders = true
     }
     
     open func binding(_ viewModel: M) {}
