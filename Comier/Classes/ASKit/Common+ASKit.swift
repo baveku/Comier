@@ -32,6 +32,7 @@ open class ASActivityButtonNode: ASButtonNode {
         guard !isLoading else {return}
         isLoading = true
         titleNode.alpha = 0
+        imageNode.alpha = 0
         activityView.startAnimating()
         self.setNeedsLayout()
     }
@@ -40,6 +41,7 @@ open class ASActivityButtonNode: ASButtonNode {
         guard isLoading else {return}
         isLoading = false
         titleNode.alpha = 1
+        imageNode.alpha = 1
         activityView.stopAnimating()
         self.setNeedsLayout()
     }
