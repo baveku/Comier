@@ -98,8 +98,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         var oldViewModels: [ListDiffable] = []
         let collectionContext = collectionContext
         if !animated {
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
+            UIView.setAnimationsEnabled(false)
         }
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
@@ -146,7 +145,9 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         }, completion: { (finished) in
             self.state = .idle
             completion?(finished)
-            CATransaction.commit()
+            if !animated {
+                UIView.setAnimationsEnabled(true)
+            }
         })
     }
 }
