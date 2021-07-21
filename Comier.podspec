@@ -8,9 +8,9 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Comier'
-  s.version          = '0.4.2'
-  s.summary          = 'MVVM-AppBase for Texture + IGListKit'
-  s.swift_version = '5.3'
+  s.version          = '0.5.0'
+  s.summary          = 'MVVM-AppBase for Texture + IGListKit + DifferenceKit'
+  s.swift_version = '5.4'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-MVVM with TextureGroup + IGListKit + Swinject + Reactive Programing
+MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Programing
                        DESC
 
   s.homepage         = 'https://github.com/baveku/Comier'
@@ -44,4 +44,5 @@ MVVM with TextureGroup + IGListKit + Swinject + Reactive Programing
   s.dependency 'RxKeyboard'
   s.dependency 'FDFullscreenPopGesture', '>= 1.1'
   s.dependency 'NVActivityIndicatorView'
+  s.dependency 'DifferenceKit'
 end

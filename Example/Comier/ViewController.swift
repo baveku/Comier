@@ -26,7 +26,7 @@ class RootViewController: ListViewController<Lii> {
         flowLayout.scrollDirection = .vertical
         collectionNode.view.collectionViewLayout = flowLayout
         // Do any additional setup after loading the view, typically from a nib.
-		self.viewModel.elements.accept([NumberSectionModel(value: 0, string: "An j day")])
+		self.viewModel.elements.accept([NumberSectionModel(value: 0, string: "Demo")])
     }
     
     override func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
@@ -41,7 +41,7 @@ class RootViewController: ListViewController<Lii> {
     }()
     
     @objc func reload() {
-		self.viewModel.elements.accept([NumberSectionModel(value: 0, string: "An cc j day")])
+		self.viewModel.elements.accept([NumberSectionModel(value: 0, string: "Demo")])
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
