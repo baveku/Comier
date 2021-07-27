@@ -51,3 +51,10 @@ open class JBControlNode: ASControlNode {
         NotificationCenter.default.removeObserver(self)
     }
 }
+
+open class ASMCellNode: ASCellNode {
+    public override init() {
+        super.init()
+        automaticallyManagesSubnodes = true
+    }
+}
