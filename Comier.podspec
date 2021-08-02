@@ -31,7 +31,7 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = "Comier/Classes/**/*", "TextureSwiftSupport/TextureSwiftSupport", "TextureSwiftSupport/Sources/**/*.swift", "RxCocoa-Texture/RxCocoa-Texture", "RxCocoa-Texture/RxCocoa-Texture/**/*.swift"
+  s.source_files = "Comier/Classes/**/*", "RxCocoa-Texture/RxCocoa-Texture", "RxCocoa-Texture/RxCocoa-Texture/**/*.swift"
   s.frameworks = 'UIKit'
   s.dependency 'RxSwift'
   s.dependency 'RxCocoa'
@@ -45,4 +45,5 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
   s.dependency 'FDFullscreenPopGesture', '>= 1.1'
   s.dependency 'NVActivityIndicatorView'
   s.dependency 'DifferenceKit'
+  s.dependency 'TextureSwiftSupport'
 end

@@ -8,9 +8,10 @@
 import Foundation
 import UIKit
 import AsyncDisplayKit
+import TextureSwiftSupport
 
 public extension _ASLayoutElementType {
-    func useSafeAreaInset() -> Comier.InsetLayout<Self> {
+    func useSafeAreaInset() -> InsetLayout<Self> {
         return self.padding(UIScreen.safeAreaInsets)
     }
 }

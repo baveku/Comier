@@ -7,6 +7,7 @@
 
 import Foundation
 import AsyncDisplayKit
+import TextureSwiftSupport
 
 open class ASTabItem: ASControlNode {
     public let iconNode: ASImageNode = {
