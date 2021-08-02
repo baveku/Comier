@@ -1,6 +1,0 @@
-[submodule "TextureSwiftSupport"]
-	path = TextureSwiftSupport
-	url = https://github.com/TextureCommunity/TextureSwiftSupport
-[submodule "RxCocoa-Texture"]
-	path = RxCocoa-Texture
-	url = https://github.com/RxSwiftCommunity/RxCocoa-Texture

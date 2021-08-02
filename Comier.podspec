@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Comier'
-  s.version          = '0.5.2'
+  s.version          = '0.6.0'
   s.summary          = 'MVVM-AppBase for Texture + IGListKit + DifferenceKit'
   s.swift_version = '5.4'
 
@@ -31,7 +31,7 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = "Comier/Classes/**/*", "TextureSwiftSupport/TextureSwiftSupport", "TextureSwiftSupport/TextureSwiftSupport/**/*.swift", "RxCocoa-Texture/RxCocoa-Texture", "RxCocoa-Texture/RxCocoa-Texture/**/*.swift"
+  s.source_files = "Comier/Classes/**/*"
   s.frameworks = 'UIKit'
   s.dependency 'RxSwift'
   s.dependency 'RxCocoa'
@@ -45,4 +45,6 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
   s.dependency 'FDFullscreenPopGesture', '>= 1.1'
   s.dependency 'NVActivityIndicatorView'
   s.dependency 'DifferenceKit'
+  s.dependency 'TextureSwiftSupport'
+  s.dependency 'RxCocoa-Texture'
 end
