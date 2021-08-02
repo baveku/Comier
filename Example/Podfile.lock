@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.4.1)
-  - Comier (0.5.0):
+  - Comier (0.6.1):
     - DifferenceKit
     - FDFullscreenPopGesture (>= 1.1)
     - Moya (>= 14.0.0)
@@ -114,7 +114,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Comier: 938e8081b6f79aefe8e023f8eb8b0b2e06a9876f
+  Comier: 12a8f334e939230b468c94f1db9f4e52fa1a17fc
   DifferenceKit: 5659c430bb7fe45876fa32ce5cba5d6167f0c805
   FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
