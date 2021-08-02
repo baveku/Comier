@@ -10,7 +10,6 @@ import UIKit
 import Comier
 import IGListKit
 import AsyncDisplayKit
-import TextureSwiftSupport
 
 extension UIScreen {
     static let bounds = main.bounds

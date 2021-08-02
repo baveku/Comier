@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.4.1)
-  - Comier (0.6.1):
+  - Comier (0.6.2):
     - DifferenceKit
     - FDFullscreenPopGesture (>= 1.1)
     - Moya (>= 14.0.0)
@@ -13,7 +13,6 @@ PODS:
     - Swinject
     - Texture
     - Texture/IGListKit
-    - TextureSwiftSupport
   - DifferenceKit (1.2.0):
     - DifferenceKit/Core (= 1.2.0)
     - DifferenceKit/UIKitExtension (= 1.2.0)
@@ -84,21 +83,6 @@ PODS:
     - Texture/Core
   - Texture/Video (3.0.0):
     - Texture/Core
-  - TextureSwiftSupport (3.11.0):
-    - Texture/Core (>= 3)
-    - TextureSwiftSupport/Components (= 3.11.0)
-    - TextureSwiftSupport/Experiments (= 3.11.0)
-    - TextureSwiftSupport/Extensions (= 3.11.0)
-    - TextureSwiftSupport/LayoutSpecBuilders (= 3.11.0)
-  - TextureSwiftSupport/Components (3.11.0):
-    - Texture/Core (>= 3)
-    - TextureSwiftSupport/LayoutSpecBuilders
-  - TextureSwiftSupport/Experiments (3.11.0):
-    - Texture/Core (>= 3)
-  - TextureSwiftSupport/Extensions (3.11.0):
-    - Texture/Core (>= 3)
-  - TextureSwiftSupport/LayoutSpecBuilders (3.11.0):
-    - Texture/Core (>= 3)
 
 DEPENDENCIES:
   - Comier (from `../`)
@@ -122,7 +106,6 @@ SPEC REPOS:
     - RxSwift
     - Swinject
     - Texture
-    - TextureSwiftSupport
 
 EXTERNAL SOURCES:
   Comier:
@@ -131,7 +114,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Comier: db1c797ead7ade6ee19e4a25ba81b5c2a0d1d9f2
+  Comier: bd05da73dfe23725ce7d80950cc7a22a8401c233
   DifferenceKit: 5659c430bb7fe45876fa32ce5cba5d6167f0c805
   FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
@@ -148,7 +131,6 @@ SPEC CHECKSUMS:
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
-  TextureSwiftSupport: b97859d0f3016f1af2f276bf6d987e916b23b150
 
 PODFILE CHECKSUM: 812db252c933fdbc3deb99c8a35d56275a9087ae
 
