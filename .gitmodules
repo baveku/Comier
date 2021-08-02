@@ -2,3 +2,6 @@
 	path = RxCocoa-Texture
 	url = https://github.com/RxSwiftCommunity/RxCocoa-Texture
 	branch = master
+[submodule "TextureSwiftSupport"]
+	path = TextureSwiftSupport
+	url = https://github.com/baveku/TextureSwiftSupport

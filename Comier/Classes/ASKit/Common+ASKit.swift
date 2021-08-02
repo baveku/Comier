@@ -11,7 +11,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import NVActivityIndicatorView
-import TextureSwiftSupport
 
 open class ASActivityButtonNode: ASButtonNode {
     public let activity: ASDisplayNode = {

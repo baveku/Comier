@@ -7,7 +7,6 @@
 
 import Foundation
 import AsyncDisplayKit
-import TextureSwiftSupport
 
 public protocol ASTabbarChildVCDelegate {
     func tabbar(_ tabVC: ASTabbarViewController, didSelect vc: UIViewController, canReload: Bool)

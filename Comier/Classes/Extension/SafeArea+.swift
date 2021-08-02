@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import AsyncDisplayKit
-import TextureSwiftSupport
 
 public extension _ASLayoutElementType {
     func useSafeAreaInset() -> InsetLayout<Self> {
