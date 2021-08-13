@@ -152,7 +152,7 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
     }
     
     open func nodeDidLayout() {}
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
