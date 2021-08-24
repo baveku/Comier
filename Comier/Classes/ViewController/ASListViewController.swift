@@ -71,5 +71,5 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: ASViewModelCont
         return self.node.calculatedSize.height
     }
     
-    open override func nodeDidLayout() {}
+    open override func nodeLayout() {}
 }

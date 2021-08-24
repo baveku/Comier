@@ -14,6 +14,7 @@ public let ASBlank = ASStackLayoutSpec.vertical
 
 open class ASDisplayNodePlus: ASDisplayNode {
     var nodeLayoutBlock: (() -> Void)? = nil
+    var nodeLayoutDidFinishedBlock: (() -> Void)? = nil
     
     public override init() {
         super.init()
@@ -37,6 +38,12 @@ open class ASDisplayNodePlus: ASDisplayNode {
     open override func didCompleteLayoutTransition(_ context: ASContextTransitioning) {
         guard let block = didCompleteLayoutTransitionBlock else {return super.didCompleteLayoutTransition(context)}
         block(context)
+    }
+    
+    open override func layoutDidFinish() {
+        super.layoutDidFinish()
+        guard let block = nodeLayoutDidFinishedBlock else {return}
+        block()
     }
 }
 
@@ -71,7 +78,8 @@ open class ASViewModelController<VM: ViewModel>: BaseASViewController, IViewMode
     open override func animateLayoutTransition(_ context: ASContextTransitioning) {}
     open override func didCompleteLayoutTransition(_ context: ASContextTransitioning) {}
     
-    open override func nodeDidLayout() {}
+    open override func nodeLayout() {}
+    open override func nodeLayoutDidFinish() {}
 }
 
 open class BaseASViewController: ASDKViewController<ASDisplayNode> {
@@ -103,7 +111,11 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         }
         
         mainNode.nodeLayoutBlock = { [weak self] in
-            self?.nodeDidLayout()
+            self?.nodeLayout()
+        }
+        
+        mainNode.nodeLayoutDidFinishedBlock = { [weak self] in
+            self?.nodeLayoutDidFinish()
         }
         
         if useCustomTransitionAnimation {
@@ -151,7 +163,8 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         return self.node.calculatedSize.height
     }
     
-    open func nodeDidLayout() {}
+    open func nodeLayout() {}
+    open func nodeLayoutDidFinish() {}
 
     deinit {
         NotificationCenter.default.removeObserver(self)
