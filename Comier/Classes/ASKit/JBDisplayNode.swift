@@ -58,3 +58,22 @@ open class ASMCellNode: ASCellNode {
         automaticallyManagesSubnodes = true
     }
 }
+
+open class ASMNode: ASDisplayNode {
+    public override init() {
+        super.init()
+        automaticallyManagesSubnodes = true
+        automaticallyRelayoutOnSafeAreaChanges = true
+        automaticallyRelayoutOnLayoutMarginsChanges = true
+    }
+}
+
+open class ASMScrollNode: ASScrollNode {
+    public override init() {
+        super.init()
+        automaticallyManagesSubnodes = true
+        automaticallyManagesContentSize = true
+        automaticallyRelayoutOnSafeAreaChanges = true
+        automaticallyRelayoutOnLayoutMarginsChanges = true
+    }
+}
