@@ -68,6 +68,15 @@ open class ASMNode: ASDisplayNode {
     }
 }
 
+open class ASMControlNode: ASControlNode {
+    public override init() {
+        super.init()
+        automaticallyManagesSubnodes = true
+        automaticallyRelayoutOnSafeAreaChanges = true
+        automaticallyRelayoutOnLayoutMarginsChanges = true
+    }
+}
+
 open class ASMScrollNode: ASScrollNode {
     public override init() {
         super.init()
