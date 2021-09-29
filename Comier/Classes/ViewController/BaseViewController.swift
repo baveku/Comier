@@ -8,7 +8,6 @@
 import Foundation
 import AsyncDisplayKit
 import RxSwift
-import FDFullscreenPopGesture
 
 public let ASBlank = ASStackLayoutSpec.vertical
 

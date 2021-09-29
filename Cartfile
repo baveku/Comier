@@ -12,8 +12,10 @@
 #   s.dependency 'DifferenceKit'
 
 github "ReactiveX/RxSwift"
-github "TextureGroup/Texture"
 github "Moya/Moya"
 github "ra1028/DifferenceKit"
 github "tristanhimmelman/ObjectMapper"
 github "ninjaprox/NVActivityIndicatorView"
+github "Swinject/Swinject"
+github "baveku/Texture"
+github "baveku/IGListKit"

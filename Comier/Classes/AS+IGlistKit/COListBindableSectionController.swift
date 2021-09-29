@@ -134,8 +134,8 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                     let id = oldViewModels[index].diffIdentifier()
                     let indexAfterUpdate = result?.newIndex(forIdentifier: id)
                     if let indexAfterUpdate = indexAfterUpdate {
-                        let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
-                        let node = cell?.node as? ListBindable & ASCellNode
+                        let cell = collectionContext?.cellForItem(at: index, sectionController: self)
+                        let node = (cell?.contentView as? _ASDisplayView)?.asyncdisplaykit_node as? ListBindable & ASCellNode
                         node?.bindViewModel(self.viewModels[indexAfterUpdate])
                     }
                 }
