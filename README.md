@@ -22,7 +22,7 @@ pod 'Comier'
 ```
 
 ### Using Carthage
-Add cartfile
+Add to Cartfile
 ```
 github 'baveku/Comier' 'carthage'
 ```
