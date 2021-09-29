@@ -116,7 +116,7 @@
 		FBF8D5B227045CFB0099E432 /* ASTextNode+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D56927045CFB0099E432 /* ASTextNode+Rx.swift */; };
 		FBF8D5B327045CFB0099E432 /* ASControlNode+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D56A27045CFB0099E432 /* ASControlNode+Rx.swift */; };
 		FBF8D5B427045CFB0099E432 /* Comier-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = FBF8D56B27045CFB0099E432 /* Comier-Bridging-Header.h */; };
-		FBF8D5B527045CFB0099E432 /* FDFullscreenPopGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = FBF8D56D27045CFB0099E432 /* FDFullscreenPopGesture.h */; };
+		FBF8D5B527045CFB0099E432 /* FDFullscreenPopGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = FBF8D56D27045CFB0099E432 /* FDFullscreenPopGesture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FBF8D5B627045CFB0099E432 /* FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D56E27045CFB0099E432 /* FDFullscreenPopGesture.m */; };
 		FBF8D5B727045CFB0099E432 /* RxKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D57027045CFB0099E432 /* RxKeyboard.swift */; };
 /* End PBXBuildFile section */
@@ -618,8 +618,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBF8D5B427045CFB0099E432 /* Comier-Bridging-Header.h in Headers */,
 				FBF8D5B527045CFB0099E432 /* FDFullscreenPopGesture.h in Headers */,
+				FBF8D5B427045CFB0099E432 /* Comier-Bridging-Header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
