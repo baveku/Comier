@@ -1,0 +1,19 @@
+# s.dependency 'RxSwift'
+#   s.dependency 'RxCocoa'
+#   s.dependency 'Swinject'
+#   s.dependency 'Texture', '>= 3.1.0'
+#   s.dependency 'Texture/IGListKit'
+#   s.dependency 'Moya', '>= 14.0.0'
+#   s.dependency 'Moya/RxSwift', '>= 14.0.0'
+#   s.dependency 'ObjectMapper'
+#   s.dependency 'RxKeyboard'
+#   s.dependency 'FDFullscreenPopGesture', '>= 1.1'
+#   s.dependency 'NVActivityIndicatorView'
+#   s.dependency 'DifferenceKit'
+
+github "ReactiveX/RxSwift"
+github "TextureGroup/Texture"
+github "Moya/Moya"
+github "ra1028/DifferenceKit"
+github "tristanhimmelman/ObjectMapper"
+github "ninjaprox/NVActivityIndicatorView"
