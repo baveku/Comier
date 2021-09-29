@@ -1,8 +1,6 @@
 # Comier
 
-[![CI Status](https://img.shields.io/travis/baveku/Comier.svg?style=flat)](https://travis-ci.org/baveku/Comier)
 [![Version](https://img.shields.io/cocoapods/v/Comier.svg?style=flat)](https://cocoapods.org/pods/Comier)
-[![License](https://img.shields.io/cocoapods/l/Comier.svg?style=flat)](https://cocoapods.org/pods/Comier)
 [![Platform](https://img.shields.io/cocoapods/p/Comier.svg?style=flat)](https://cocoapods.org/pods/Comier)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
