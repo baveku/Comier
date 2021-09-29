@@ -35,7 +35,7 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
   s.dependency 'RxSwift'
   s.dependency 'RxCocoa'
   s.dependency 'Swinject'
-  s.dependency 'Texture', '>= 3.1.0'
+  s.dependency 'Texture',
   s.dependency 'Texture/IGListKit'
   s.dependency 'Moya', '>= 14.0.0'
   s.dependency 'Moya/RxSwift', '>= 14.0.0'

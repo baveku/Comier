@@ -57,10 +57,11 @@ class ListNumberSection: ASListBindingSectionController<NumberSectionModel> {
     override init() {
         super.init()
         self.dataSource = self
+        delegate = self
     }
 }
 
-extension ListNumberSection: ASListBindingDataSource {
+extension ListNumberSection: ASListBindingDataSource, ASListBindingDelegate {
 	func viewModels(for object: Any) -> [ListDiffable] {
 		guard let object = object as? NumberSectionModel else {return []}
 		let item = [NumberSectionModel(value: 0, string: object.string), NumberSectionModel(value: 1, string: object.string), NumberSectionModel(value: 2, string: object.string)]
@@ -69,6 +70,11 @@ extension ListNumberSection: ASListBindingDataSource {
     
     func nodeBlockForViewModel(at viewModel: ListDiffable) -> ASCellNode {
         return NumberCellNode()
+    }
+    
+    func didSelected(at viewModel: ListDiffable) {
+        let vc = BaseViewController()
+        viewController?.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
