@@ -9,9 +9,7 @@
 import Foundation
 import RxSwift
 
-public typealias ViewModel = BaseViewModel & IViewModel
-
-open class BaseViewModel: NSObject {
+open class ViewModel: NSObject, IViewModel {
     // MARK: - Properties
     public let disposeBag = DisposeBag()
 
