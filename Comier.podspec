@@ -29,7 +29,7 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
 #   s.social_media_url = 'https://twitter.com'
 
   s.ios.deployment_target = '10.0'
-  s.xcconfig = { 'SWIFT_OBJC_BRIDGING_HEADER' => '${POD_ROOT}/Comier/Extensions/BridgingHeader.h' }
+  s.public_header_files = 'Comier/Extensions/**/*.h'
   s.source_files = "Comier/Classes/**/*", "Comier/Extensions/**/*"
   s.frameworks = 'UIKit'
   s.dependency 'RxSwift'

@@ -115,7 +115,6 @@
 		FBF8D5B127045CFB0099E432 /* Driver+ASSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D56827045CFB0099E432 /* Driver+ASSubscription.swift */; };
 		FBF8D5B227045CFB0099E432 /* ASTextNode+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D56927045CFB0099E432 /* ASTextNode+Rx.swift */; };
 		FBF8D5B327045CFB0099E432 /* ASControlNode+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D56A27045CFB0099E432 /* ASControlNode+Rx.swift */; };
-		FBF8D5B427045CFB0099E432 /* Comier-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = FBF8D56B27045CFB0099E432 /* Comier-Bridging-Header.h */; };
 		FBF8D5B527045CFB0099E432 /* FDFullscreenPopGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = FBF8D56D27045CFB0099E432 /* FDFullscreenPopGesture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FBF8D5B627045CFB0099E432 /* FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D56E27045CFB0099E432 /* FDFullscreenPopGesture.m */; };
 		FBF8D5B727045CFB0099E432 /* RxKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D57027045CFB0099E432 /* RxKeyboard.swift */; };
@@ -231,7 +230,6 @@
 		FBF8D56827045CFB0099E432 /* Driver+ASSubscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Driver+ASSubscription.swift"; sourceTree = "<group>"; };
 		FBF8D56927045CFB0099E432 /* ASTextNode+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ASTextNode+Rx.swift"; sourceTree = "<group>"; };
 		FBF8D56A27045CFB0099E432 /* ASControlNode+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ASControlNode+Rx.swift"; sourceTree = "<group>"; };
-		FBF8D56B27045CFB0099E432 /* Comier-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Comier-Bridging-Header.h"; path = "Comier/Extensions/Comier-Bridging-Header.h"; sourceTree = "<group>"; };
 		FBF8D56D27045CFB0099E432 /* FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDFullscreenPopGesture.h; sourceTree = "<group>"; };
 		FBF8D56E27045CFB0099E432 /* FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDFullscreenPopGesture.m; sourceTree = "<group>"; };
 		FBF8D57027045CFB0099E432 /* RxKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxKeyboard.swift; sourceTree = "<group>"; };
@@ -288,7 +286,6 @@
 		FBF8D4C82704554F0099E432 = {
 			isa = PBXGroup;
 			children = (
-				FBF8D56B27045CFB0099E432 /* Comier-Bridging-Header.h */,
 				FBF8D56C27045CFB0099E432 /* FDFullscreenPopGesture */,
 				FBF8D55E27045CFB0099E432 /* RxCocoa-Texture */,
 				FBF8D56F27045CFB0099E432 /* RxKeyboard */,
@@ -619,7 +616,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBF8D5B527045CFB0099E432 /* FDFullscreenPopGesture.h in Headers */,
-				FBF8D5B427045CFB0099E432 /* Comier-Bridging-Header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,12 +942,13 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MODULEMAP_FILE = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.josbach.Comier;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Comier/Extensions/Comier-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -989,11 +986,12 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.josbach.Comier;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Comier/Extensions/Comier-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
