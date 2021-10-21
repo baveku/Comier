@@ -10,12 +10,12 @@ import IGListKit
 import IGListDiffKit
 import AsyncDisplayKit
 
-public protocol ASListBindingDataSource: class {
+public protocol ASListBindingDataSource: AnyObject {
     func viewModels(for object: Any) -> [ListDiffable]
     func nodeBlockForViewModel(at viewModel: ListDiffable) -> ASCellNode
 }
 
-public protocol ASListBindingDelegate: class {
+public protocol ASListBindingDelegate: AnyObject {
     func didSelected(at viewModel: ListDiffable)
     func didDeselected(at viewModel: ListDiffable)
 }
@@ -134,9 +134,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                     let id = oldViewModels[index].diffIdentifier()
                     let indexAfterUpdate = result?.newIndex(forIdentifier: id)
                     if let indexAfterUpdate = indexAfterUpdate {
-                        let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
-                        let node = cell?.node as? ListBindable & ASCellNode
-                        node?.bindViewModel(self.viewModels[indexAfterUpdate])
+						self.updateCellNode(at: index, newModel: self.viewModels[indexAfterUpdate])
                     }
                 }
             }
@@ -150,6 +148,12 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             }
         })
     }
+
+	open func updateCellNode(at index: Int, newModel: ListDiffable) {
+		let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
+        let node = cell?.node as? ListBindable & ASCellNode
+        node?.bindViewModel(newModel)
+	}
 }
 
 open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {

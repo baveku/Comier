@@ -10,6 +10,11 @@ import IGListKit
 import AsyncDisplayKit
 
 open class COSectionController: ListSectionController, ASSectionController, ListSupplementaryViewSource, ASSupplementaryNodeSource {
+    public override init() {
+        super.init()
+        bindRootViewModel()
+    }
+    
     open func supportedElementKinds() -> [String] {
         return []
     }
@@ -53,4 +58,16 @@ open class COSectionController: ListSectionController, ASSectionController, List
     open func sizeRangeForSupplementaryElement(ofKind elementKind: String, at index: Int) -> ASSizeRange {
         return ASSizeRangeUnconstrained
     }
+    
+    /**
+     Get ViewModel from ASViewModelViewController
+     */
+    public var rootViewModel: ViewModel? {
+        return (viewController as? ASViewModelController)?.viewModel
+    }
+    
+    /**
+     Binding ViewModel from ViewController to Section Controller
+     */
+    open func bindRootViewModel() {}
 }
