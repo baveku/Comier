@@ -3,17 +3,36 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17C1535F463B8AB53DB6D96B /* Pods_Comier_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE1BE270BD7659C33CDA798 /* Pods_Comier_Example.framework */; };
-		2C518E684332BB0CA541F4FE /* Pods_Comier_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE6A844E8B59E2D511D86B70 /* Pods_Comier_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		FBC136002704CA3F005A7D8D /* IGListDiffKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135EE2704CA3E005A7D8D /* IGListDiffKit.framework */; };
+		FBC136022704CA3F005A7D8D /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135EF2704CA3E005A7D8D /* RxMoya.framework */; };
+		FBC136042704CA3F005A7D8D /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F02704CA3E005A7D8D /* Swinject.framework */; };
+		FBC136062704CA3F005A7D8D /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F12704CA3E005A7D8D /* Moya.framework */; };
+		FBC136082704CA3F005A7D8D /* NVActivityIndicatorViewExtended.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F22704CA3E005A7D8D /* NVActivityIndicatorViewExtended.framework */; };
+		FBC1360A2704CA3F005A7D8D /* DifferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F32704CA3E005A7D8D /* DifferenceKit.framework */; };
+		FBC1360C2704CA3F005A7D8D /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F42704CA3E005A7D8D /* ObjectMapper.framework */; };
+		FBC1360E2704CA3F005A7D8D /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F52704CA3E005A7D8D /* RxCocoa.framework */; };
+		FBC136102704CA3F005A7D8D /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F62704CA3E005A7D8D /* RxRelay.framework */; };
+		FBC136122704CA3F005A7D8D /* PINOperation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F72704CA3E005A7D8D /* PINOperation.framework */; };
+		FBC136142704CA3F005A7D8D /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F82704CA3E005A7D8D /* Alamofire.framework */; };
+		FBC136162704CA3F005A7D8D /* PINCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F92704CA3E005A7D8D /* PINCache.framework */; };
+		FBC136182704CA3F005A7D8D /* PINRemoteImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FA2704CA3E005A7D8D /* PINRemoteImage.framework */; };
+		FBC1361A2704CA3F005A7D8D /* Comier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FB2704CA3F005A7D8D /* Comier.framework */; };
+		FBC1361C2704CA40005A7D8D /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FC2704CA3F005A7D8D /* NVActivityIndicatorView.framework */; };
+		FBC1361E2704CA40005A7D8D /* AsyncDisplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FD2704CA3F005A7D8D /* AsyncDisplayKit.framework */; };
+		FBC136202704CA40005A7D8D /* IGListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FE2704CA3F005A7D8D /* IGListKit.framework */; };
+		FBC136222704CA40005A7D8D /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FF2704CA3F005A7D8D /* RxSwift.framework */; };
+		FBF01EBE2704CD510071CFDE /* Comier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FB2704CA3F005A7D8D /* Comier.framework */; };
+		FBF01EC12704CFED0071CFDE /* input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = FBF01EC02704CFED0071CFDE /* input.xcfilelist */; };
+		FBF01EC32704D09E0071CFDE /* output.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = FBF01EC22704D09E0071CFDE /* output.xcfilelist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,11 +59,29 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		62E8BA2882A55B0739D1BAD5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		908964296CACDF581DD5715F /* Comier.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Comier.podspec; path = ../Comier.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		AE6A844E8B59E2D511D86B70 /* Pods_Comier_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Comier_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFFB50E6F8129CED4B818F76 /* Pods-Comier_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Comier_Example.release.xcconfig"; path = "Target Support Files/Pods-Comier_Example/Pods-Comier_Example.release.xcconfig"; sourceTree = "<group>"; };
-		DDE1BE270BD7659C33CDA798 /* Pods_Comier_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Comier_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF177B28659EEA4F3E08E521 /* Pods-Comier_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Comier_Example.debug.xcconfig"; path = "Target Support Files/Pods-Comier_Example/Pods-Comier_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F65E589F20E4702563D7493F /* Pods-Comier_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Comier_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Comier_Tests/Pods-Comier_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		FBC135EE2704CA3E005A7D8D /* IGListDiffKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IGListDiffKit.framework; path = Carthage/Build/iOS/IGListDiffKit.framework; sourceTree = "<group>"; };
+		FBC135EF2704CA3E005A7D8D /* RxMoya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxMoya.framework; path = Carthage/Build/iOS/RxMoya.framework; sourceTree = "<group>"; };
+		FBC135F02704CA3E005A7D8D /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/iOS/Swinject.framework; sourceTree = "<group>"; };
+		FBC135F12704CA3E005A7D8D /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Moya.framework; path = Carthage/Build/iOS/Moya.framework; sourceTree = "<group>"; };
+		FBC135F22704CA3E005A7D8D /* NVActivityIndicatorViewExtended.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NVActivityIndicatorViewExtended.framework; path = Carthage/Build/iOS/NVActivityIndicatorViewExtended.framework; sourceTree = "<group>"; };
+		FBC135F32704CA3E005A7D8D /* DifferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DifferenceKit.framework; path = Carthage/Build/iOS/DifferenceKit.framework; sourceTree = "<group>"; };
+		FBC135F42704CA3E005A7D8D /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
+		FBC135F52704CA3E005A7D8D /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		FBC135F62704CA3E005A7D8D /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
+		FBC135F72704CA3E005A7D8D /* PINOperation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PINOperation.framework; path = Carthage/Build/iOS/PINOperation.framework; sourceTree = "<group>"; };
+		FBC135F82704CA3E005A7D8D /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		FBC135F92704CA3E005A7D8D /* PINCache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PINCache.framework; path = Carthage/Build/iOS/PINCache.framework; sourceTree = "<group>"; };
+		FBC135FA2704CA3E005A7D8D /* PINRemoteImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PINRemoteImage.framework; path = Carthage/Build/iOS/PINRemoteImage.framework; sourceTree = "<group>"; };
+		FBC135FB2704CA3F005A7D8D /* Comier.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Comier.framework; path = Carthage/Build/iOS/Comier.framework; sourceTree = "<group>"; };
+		FBC135FC2704CA3F005A7D8D /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NVActivityIndicatorView.framework; path = Carthage/Build/iOS/NVActivityIndicatorView.framework; sourceTree = "<group>"; };
+		FBC135FD2704CA3F005A7D8D /* AsyncDisplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AsyncDisplayKit.framework; path = Carthage/Build/iOS/AsyncDisplayKit.framework; sourceTree = "<group>"; };
+		FBC135FE2704CA3F005A7D8D /* IGListKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IGListKit.framework; path = Carthage/Build/iOS/IGListKit.framework; sourceTree = "<group>"; };
+		FBC135FF2704CA3F005A7D8D /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		FBF01EC02704CFED0071CFDE /* input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = input.xcfilelist; sourceTree = "<group>"; };
+		FBF01EC22704D09E0071CFDE /* output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +89,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17C1535F463B8AB53DB6D96B /* Pods_Comier_Example.framework in Frameworks */,
+				FBC1360E2704CA3F005A7D8D /* RxCocoa.framework in Frameworks */,
+				FBC136162704CA3F005A7D8D /* PINCache.framework in Frameworks */,
+				FBC1361C2704CA40005A7D8D /* NVActivityIndicatorView.framework in Frameworks */,
+				FBC136002704CA3F005A7D8D /* IGListDiffKit.framework in Frameworks */,
+				FBC136062704CA3F005A7D8D /* Moya.framework in Frameworks */,
+				FBC136042704CA3F005A7D8D /* Swinject.framework in Frameworks */,
+				FBC136102704CA3F005A7D8D /* RxRelay.framework in Frameworks */,
+				FBC136122704CA3F005A7D8D /* PINOperation.framework in Frameworks */,
+				FBC136142704CA3F005A7D8D /* Alamofire.framework in Frameworks */,
+				FBC136022704CA3F005A7D8D /* RxMoya.framework in Frameworks */,
+				FBC1361A2704CA3F005A7D8D /* Comier.framework in Frameworks */,
+				FBC136182704CA3F005A7D8D /* PINRemoteImage.framework in Frameworks */,
+				FBC1360A2704CA3F005A7D8D /* DifferenceKit.framework in Frameworks */,
+				FBC1360C2704CA3F005A7D8D /* ObjectMapper.framework in Frameworks */,
+				FBC136202704CA40005A7D8D /* IGListKit.framework in Frameworks */,
+				FBC136082704CA3F005A7D8D /* NVActivityIndicatorViewExtended.framework in Frameworks */,
+				FBC1361E2704CA40005A7D8D /* AsyncDisplayKit.framework in Frameworks */,
+				FBC136222704CA40005A7D8D /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,7 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C518E684332BB0CA541F4FE /* Pods_Comier_Tests.framework in Frameworks */,
+				FBF01EBE2704CD510071CFDE /* Comier.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +124,8 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				FBF01EC22704D09E0071CFDE /* output.xcfilelist */,
+				FBF01EC02704CFED0071CFDE /* input.xcfilelist */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for Comier */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -139,8 +195,24 @@
 		776DF63DF00801FF9D9319E8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DDE1BE270BD7659C33CDA798 /* Pods_Comier_Example.framework */,
-				AE6A844E8B59E2D511D86B70 /* Pods_Comier_Tests.framework */,
+				FBC135F82704CA3E005A7D8D /* Alamofire.framework */,
+				FBC135FD2704CA3F005A7D8D /* AsyncDisplayKit.framework */,
+				FBC135FB2704CA3F005A7D8D /* Comier.framework */,
+				FBC135F32704CA3E005A7D8D /* DifferenceKit.framework */,
+				FBC135EE2704CA3E005A7D8D /* IGListDiffKit.framework */,
+				FBC135FE2704CA3F005A7D8D /* IGListKit.framework */,
+				FBC135F12704CA3E005A7D8D /* Moya.framework */,
+				FBC135FC2704CA3F005A7D8D /* NVActivityIndicatorView.framework */,
+				FBC135F22704CA3E005A7D8D /* NVActivityIndicatorViewExtended.framework */,
+				FBC135F42704CA3E005A7D8D /* ObjectMapper.framework */,
+				FBC135F92704CA3E005A7D8D /* PINCache.framework */,
+				FBC135F72704CA3E005A7D8D /* PINOperation.framework */,
+				FBC135FA2704CA3E005A7D8D /* PINRemoteImage.framework */,
+				FBC135F52704CA3E005A7D8D /* RxCocoa.framework */,
+				FBC135EF2704CA3E005A7D8D /* RxMoya.framework */,
+				FBC135F62704CA3E005A7D8D /* RxRelay.framework */,
+				FBC135FF2704CA3F005A7D8D /* RxSwift.framework */,
+				FBC135F02704CA3E005A7D8D /* Swinject.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -163,11 +235,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Comier_Example" */;
 			buildPhases = (
-				93BEA66789E75E1C12687186 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				1454B060A1D5B1E68E878680 /* [CP] Embed Pods Frameworks */,
+				FBF01EBF2704CF8B0071CFDE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -182,7 +253,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Comier_Tests" */;
 			buildPhases = (
-				00E7ABA581B810B5B743558C /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
@@ -243,8 +313,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBF01EC12704CFED0071CFDE /* input.xcfilelist in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				FBF01EC32704D09E0071CFDE /* output.xcfilelist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,101 +330,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		00E7ABA581B810B5B743558C /* [CP] Check Pods Manifest.lock */ = {
+		FBF01EBF2704CF8B0071CFDE /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"$(SRCROOT)/input.xcfilelist",
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
+				"$(SRCROOT)/output.xcfilelist",
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Comier_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1454B060A1D5B1E68E878680 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Comier_Example/Pods-Comier_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Comier/Comier.framework",
-				"${BUILT_PRODUCTS_DIR}/DifferenceKit/DifferenceKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FDFullscreenPopGesture/FDFullscreenPopGesture.framework",
-				"${BUILT_PRODUCTS_DIR}/IGListDiffKit/IGListDiffKit.framework",
-				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
-				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
-				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
-				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
-				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxKeyboard/RxKeyboard.framework",
-				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
-				"${BUILT_PRODUCTS_DIR}/Texture/AsyncDisplayKit.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Comier.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DifferenceKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FDFullscreenPopGesture.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListDiffKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxKeyboard.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AsyncDisplayKit.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Comier_Example/Pods-Comier_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		93BEA66789E75E1C12687186 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Comier_Example-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -490,7 +485,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -500,11 +496,19 @@
 			baseConfigurationReference = EF177B28659EEA4F3E08E521 /* Pods-Comier_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Comier/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				OTHER_LDFLAGS = "";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.josbach.comier_example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -516,11 +520,19 @@
 			baseConfigurationReference = CFFB50E6F8129CED4B818F76 /* Pods-Comier_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Comier/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				OTHER_LDFLAGS = "";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.josbach.comier_example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -533,14 +545,20 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -555,10 +573,16 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;

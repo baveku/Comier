@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import UserNotifications
-import RxKeyboard
 
 public final class AppViewModel: NSObject, IViewModel {
     

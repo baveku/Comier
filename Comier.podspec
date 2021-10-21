@@ -23,26 +23,23 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
                        DESC
 
   s.homepage         = 'https://github.com/baveku/Comier'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'baveku' => 'baveku@gmail.com' }
-  s.source           = { :git => 'https://github.com/baveku/Comier.git', :tag => s.version.to_s, :submodules => true }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => 'https://github.com/baveku/Comier.git' }
+#   s.social_media_url = 'https://twitter.com'
 
   s.ios.deployment_target = '10.0'
-
-  s.source_files = "Comier/Classes/**/*", "TextureSwiftSupport/TextureSwiftSupport", "TextureSwiftSupport/Sources/**/*.swift", "RxCocoa-Texture/RxCocoa-Texture", "RxCocoa-Texture/RxCocoa-Texture/**/*.swift"
+  s.xcconfig = { 'SWIFT_OBJC_BRIDGING_HEADER' => '${POD_ROOT}/Comier/Extensions/BridgingHeader.h' }
+  s.source_files = "Comier/Classes/**/*", "Comier/Extensions/**/*"
   s.frameworks = 'UIKit'
   s.dependency 'RxSwift'
   s.dependency 'RxCocoa'
   s.dependency 'Swinject'
-  s.dependency 'Texture'
+  s.dependency 'Texture',
   s.dependency 'Texture/IGListKit'
   s.dependency 'Moya', '>= 14.0.0'
   s.dependency 'Moya/RxSwift', '>= 14.0.0'
   s.dependency 'ObjectMapper'
-  s.dependency 'RxKeyboard'
-  s.dependency 'FDFullscreenPopGesture', '>= 1.1'
   s.dependency 'NVActivityIndicatorView'
   s.dependency 'DifferenceKit'
 end
