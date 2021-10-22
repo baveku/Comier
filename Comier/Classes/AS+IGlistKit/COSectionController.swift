@@ -10,6 +10,20 @@ import IGListDiffKit
 import IGListKit
 import AsyncDisplayKit
 
+public protocol SInjectViewModelable: AnyObject {
+	associatedtype ViewModelType: ViewModel
+}
+
+public extension SInjectViewModelable where Self: COSectionController {
+	
+	/**
+	 Get ViewModel from ASViewModelViewController
+	 */
+	var rootViewModel: ViewModelType? {
+		return (viewController as? ASViewModelController<ViewModelType>)?.viewModel
+	}
+}
+
 open class COSectionController: ListSectionController, ASSectionController, ListSupplementaryViewSource, ASSupplementaryNodeSource {
     public override init() {
         super.init()
