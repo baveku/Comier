@@ -16,13 +16,13 @@ public protocol ASListBindingDataSource: AnyObject {
 }
 
 public protocol ASListBindingDelegate: AnyObject {
-    func didSelected(at viewModel: ListDiffable)
-    func didDeselected(at viewModel: ListDiffable)
+    func didSelected(at index: Int)
+    func didDeselected(at index: Int)
 }
 
 public extension ASListBindingDelegate {
-    func didSelected(at viewModel: ListDiffable) {}
-    func didDeselected(at viewModel: ListDiffable) {}
+    func didSelected(at index: Int) {}
+    func didDeselected(at index: Int) {}
 }
 
 enum SectionState {
@@ -71,11 +71,11 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     }
     
     public override func didSelectItem(at index: Int) {
-        delegate?.didSelected(at: viewModels[index])
+        delegate?.didSelected(at: index)
     }
     
     public override func didDeselectItem(at index: Int) {
-        delegate?.didDeselected(at: viewModels[index])
+        delegate?.didDeselected(at: index)
     }
     
     open override func sizeForItem(at index: Int) -> CGSize {
