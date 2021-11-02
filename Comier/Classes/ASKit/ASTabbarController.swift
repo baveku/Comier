@@ -17,7 +17,7 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
     
     public var tabbarNode: ASTabbarNode
     public var viewControllers: [UIViewController]
-    let pageNode = ASPagerNode()
+    public let pageNode = ASPagerNode()
     
     public init(items: [ASTabItem], viewControllers: [UIViewController]) {
         self.tabbarNode = ASTabbarNode(items: items)
