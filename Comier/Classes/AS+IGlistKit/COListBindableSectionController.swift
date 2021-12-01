@@ -97,9 +97,6 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         var result: ListIndexSetResult? = nil
         var oldViewModels: [ListDiffable] = []
         let collectionContext = collectionContext
-        if !animated {
-            UIView.setAnimationsEnabled(false)
-        }
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
             oldViewModels = self.viewModels
@@ -134,7 +131,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                     let id = oldViewModels[index].diffIdentifier()
                     let indexAfterUpdate = result?.newIndex(forIdentifier: id)
                     if let indexAfterUpdate = indexAfterUpdate {
-						self.updateCellNode(at: index, newModel: self.viewModels[indexAfterUpdate])
+                        self.updateCellNode(batchContext: batchContext, at: index, newModel: self.viewModels[indexAfterUpdate])
                     }
                 }
             }
@@ -143,17 +140,14 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         }, completion: { (finished) in
             self.state = .idle
             completion?(finished)
-            if !animated {
-                UIView.setAnimationsEnabled(true)
-            }
         })
     }
 
-	open func updateCellNode(at index: Int, newModel: ListDiffable) {
-		let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
+    open func updateCellNode(batchContext: ListBatchContext, at index: Int, newModel: ListDiffable) {
+        let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
         let node = cell?.node as? ListBindable & ASCellNode
         node?.bindViewModel(newModel)
-	}
+    }
 }
 
 open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
