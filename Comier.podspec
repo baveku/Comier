@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Comier'
-  s.version          = '0.7.0'
+  s.version          = '0.7.2'
   s.summary          = 'MVVM-AppBase for Texture + IGListKit + DifferenceKit'
   s.swift_version = '5.4'
 
@@ -42,4 +42,5 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
   s.dependency 'ObjectMapper'
   s.dependency 'NVActivityIndicatorView'
   s.dependency 'DifferenceKit'
+  s.dependency 'SVGKit'
 end
