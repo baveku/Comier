@@ -1,17 +1,15 @@
 PODS:
-  - Alamofire (5.4.4)
-  - CocoaLumberjack (3.7.2):
-    - CocoaLumberjack/Core (= 3.7.2)
-  - CocoaLumberjack/Core (3.7.2)
-  - Comier (0.7.2):
+  - Alamofire (5.4.1)
+  - Comier (0.6.2):
     - DifferenceKit
+    - FDFullscreenPopGesture (>= 1.1)
     - Moya (>= 14.0.0)
     - Moya/RxSwift (>= 14.0.0)
     - NVActivityIndicatorView
     - ObjectMapper
     - RxCocoa
+    - RxKeyboard
     - RxSwift
-    - SVGKit
     - Swinject
     - Texture
     - Texture/IGListKit
@@ -21,16 +19,17 @@ PODS:
   - DifferenceKit/Core (1.2.0)
   - DifferenceKit/UIKitExtension (1.2.0):
     - DifferenceKit/Core
+  - FDFullscreenPopGesture (1.1)
   - IGListDiffKit (4.0.0)
   - IGListKit (4.0.0):
     - IGListDiffKit (= 4.0.0)
-  - Moya (15.0.0):
-    - Moya/Core (= 15.0.0)
-  - Moya/Core (15.0.0):
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
-  - Moya/RxSwift (15.0.0):
+  - Moya/RxSwift (14.0.0):
     - Moya/Core
-    - RxSwift (~> 6.0)
+    - RxSwift (~> 5.0)
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
@@ -50,38 +49,39 @@ PODS:
   - PINRemoteImage/PINCache (3.0.3):
     - PINCache (~> 3.0.3)
     - PINRemoteImage/Core
-  - RxCocoa (6.2.0):
-    - RxRelay (= 6.2.0)
-    - RxSwift (= 6.2.0)
-  - RxRelay (6.2.0):
-    - RxSwift (= 6.2.0)
-  - RxSwift (6.2.0)
-  - SVGKit (3.0.0):
-    - CocoaLumberjack (~> 3.0)
-  - Swinject (2.8.1)
-  - Texture (3.1.0):
-    - Texture/AssetsLibrary (= 3.1.0)
-    - Texture/Core (= 3.1.0)
-    - Texture/MapKit (= 3.1.0)
-    - Texture/Photos (= 3.1.0)
-    - Texture/PINRemoteImage (= 3.1.0)
-    - Texture/Video (= 3.1.0)
-  - Texture/AssetsLibrary (3.1.0):
+  - RxCocoa (5.1.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxKeyboard (1.0.0):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - RxRelay (5.1.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.2)
+  - Swinject (2.7.1)
+  - Texture (3.0.0):
+    - Texture/AssetsLibrary (= 3.0.0)
+    - Texture/Core (= 3.0.0)
+    - Texture/MapKit (= 3.0.0)
+    - Texture/Photos (= 3.0.0)
+    - Texture/PINRemoteImage (= 3.0.0)
+    - Texture/Video (= 3.0.0)
+  - Texture/AssetsLibrary (3.0.0):
     - Texture/Core
-  - Texture/Core (3.1.0)
-  - Texture/IGListKit (3.1.0):
+  - Texture/Core (3.0.0)
+  - Texture/IGListKit (3.0.0):
     - IGListDiffKit (~> 4.0)
     - IGListKit (~> 4.0)
     - Texture/Core
-  - Texture/MapKit (3.1.0):
+  - Texture/MapKit (3.0.0):
     - Texture/Core
-  - Texture/Photos (3.1.0):
+  - Texture/Photos (3.0.0):
     - Texture/Core
-  - Texture/PINRemoteImage (3.1.0):
+  - Texture/PINRemoteImage (3.0.0):
     - PINRemoteImage/iOS (~> 3.0.0)
     - PINRemoteImage/PINCache
     - Texture/Core
-  - Texture/Video (3.1.0):
+  - Texture/Video (3.0.0):
     - Texture/Core
 
 DEPENDENCIES:
@@ -90,8 +90,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - CocoaLumberjack
     - DifferenceKit
+    - FDFullscreenPopGesture
     - IGListDiffKit
     - IGListKit
     - Moya
@@ -101,9 +101,9 @@ SPEC REPOS:
     - PINOperation
     - PINRemoteImage
     - RxCocoa
+    - RxKeyboard
     - RxRelay
     - RxSwift
-    - SVGKit
     - Swinject
     - Texture
 
@@ -113,25 +113,25 @@ EXTERNAL SOURCES:
     :submodules: true
 
 SPEC CHECKSUMS:
-  Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
-  CocoaLumberjack: b7e05132ff94f6ae4dfa9d5bce9141893a21d9da
-  Comier: 035cd7f4e4326ffb5c745d4f686a7bf50a559a0b
+  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  Comier: bd05da73dfe23725ce7d80950cc7a22a8401c233
   DifferenceKit: 5659c430bb7fe45876fa32ce5cba5d6167f0c805
+  FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
-  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
-  RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
-  RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
-  RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
-  SVGKit: 1ad7513f8c74d9652f94ed64ddecda1a23864dea
-  Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
-  Texture: 2e8ab2519452515f7f5a520f5a8f7e0a413abfa3
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxKeyboard: 6683c4344304a00f943c158bd8a43ce5469c82a7
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
+  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
+  Texture: 2f109e937850d94d1d07232041c9c7313ccddb81
 
 PODFILE CHECKSUM: 812db252c933fdbc3deb99c8a35d56275a9087ae
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.10.1
