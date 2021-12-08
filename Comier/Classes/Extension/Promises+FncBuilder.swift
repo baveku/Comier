@@ -22,6 +22,11 @@ public func |><T, U>(_ promise: Promise<T>, nextAction: @escaping (T) -> U) -> P
     return promise.then(nextAction)
 }
 
+@discardableResult
+public func |><T>(_ promise: Promise<T>, nextAction: @escaping (T) -> Void) -> Promise<Void> {
+    return promise.then(nextAction)
+}
+
 public func |><T>(_ observable: Observable<T>, onNext: @escaping (T) -> Void) -> Disposable {
 	return observable.subscribe(onNext: onNext)
 }
