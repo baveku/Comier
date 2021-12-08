@@ -42,5 +42,5 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
   s.dependency 'ObjectMapper'
   s.dependency 'NVActivityIndicatorView'
   s.dependency 'DifferenceKit'
-  s.dependency 'Promises'
+  s.dependency 'PromisesSwift'
 end
