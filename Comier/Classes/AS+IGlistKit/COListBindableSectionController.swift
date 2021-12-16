@@ -87,7 +87,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         return ASIGListSectionControllerMethods.cellForItem(at: index, sectionController: self)
     }
     
-    public func updateAnimated(animated: Bool, completion: ((Bool) -> Void)? = nil) {
+    public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
         if self.state != .idle {
             completion?(false)
             return
@@ -126,13 +126,19 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             }
             
             if let updates = result?.updates {
-                for item in updates.enumerated() {
-                    let (_, index) = item
-                    let id = oldViewModels[index].diffIdentifier()
-                    let indexAfterUpdate = result?.newIndex(forIdentifier: id)
-                    if let indexAfterUpdate = indexAfterUpdate {
-                        self.updateCellNode(batchContext: batchContext, at: index, newModel: self.viewModels[indexAfterUpdate])
+                if shouldUpdateCell {
+                    for item in updates.enumerated() {
+                        let (_, index) = item
+                        let id = oldViewModels[index].diffIdentifier()
+                        let indexAfterUpdate = result?.newIndex(forIdentifier: id)
+                        if let indexAfterUpdate = indexAfterUpdate {
+                            let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
+                            let node = cell?.node as? ListBindable & ASCellNode
+                            node?.bindViewModel(filterVM[indexAfterUpdate])
+                        }
                     }
+                } else {
+                    batchContext.reload(in: self, at: updates)
                 }
             }
             
@@ -141,12 +147,6 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             self.state = .idle
             completion?(finished)
         })
-    }
-
-    open func updateCellNode(batchContext: ListBatchContext, at index: Int, newModel: ListDiffable) {
-        let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
-        let node = cell?.node as? ListBindable & ASCellNode
-        node?.bindViewModel(newModel)
     }
 }
 
