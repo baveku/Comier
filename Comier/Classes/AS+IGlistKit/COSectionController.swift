@@ -10,24 +10,33 @@ import IGListDiffKit
 import IGListKit
 import AsyncDisplayKit
 
-public protocol SInjectViewModelable: AnyObject {
-	associatedtype ViewModelType: ViewModel
+public protocol SInjectViewModelable: AnyObject, SectionViewmodelable {
+    associatedtype ViewModelType: ViewModel
+}
+
+/**
+ Binding ViewModel from ViewController to Section Controller
+ */
+public protocol SectionViewmodelable {
+    func bindRootViewModel()
 }
 
 public extension SInjectViewModelable where Self: COSectionController {
-	
-	/**
-	 Get ViewModel from ASViewModelViewController
-	 */
-	var rootViewModel: ViewModelType? {
-		return (viewController as? ASViewModelController<ViewModelType>)?.viewModel
-	}
+    
+    /**
+     Get ViewModel from ASViewModelViewController
+     */
+    var rootViewModel: ViewModelType? {
+        return (viewController as? ASViewModelController<ViewModelType>)?.viewModel
+    }
 }
 
 open class COSectionController: ListSectionController, ASSectionController, ListSupplementaryViewSource, ASSupplementaryNodeSource {
     public override init() {
         super.init()
-        bindRootViewModel()
+        if let self = self as? SectionViewmodelable {
+            self.bindRootViewModel()
+        }
     }
     
     open func supportedElementKinds() -> [String] {
@@ -73,16 +82,4 @@ open class COSectionController: ListSectionController, ASSectionController, List
     open func sizeRangeForSupplementaryElement(ofKind elementKind: String, at index: Int) -> ASSizeRange {
         return ASSizeRangeUnconstrained
     }
-    
-    /**
-     Get ViewModel from ASViewModelViewController
-     */
-    public var rootViewModel: ViewModel? {
-        return (viewController as? ASViewModelController)?.viewModel
-    }
-    
-    /**
-     Binding ViewModel from ViewController to Section Controller
-     */
-    open func bindRootViewModel() {}
 }

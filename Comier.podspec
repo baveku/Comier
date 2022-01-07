@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Comier'
-  s.version          = '0.7.1'
+  s.version          = '0.7.3'
   s.summary          = 'MVVM-AppBase for Texture + IGListKit + DifferenceKit'
   s.swift_version = '5.4'
 
