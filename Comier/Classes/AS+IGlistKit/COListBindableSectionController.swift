@@ -88,6 +88,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     }
     
     public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
+        guard self.object != nil else {return}
         if self.state != .idle {
             completion?(false)
             return
