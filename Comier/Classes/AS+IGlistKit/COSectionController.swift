@@ -39,6 +39,10 @@ open class COSectionController: ListSectionController, ASSectionController, List
         }
     }
     
+    public var context: ListCollectionContext! {
+        return self.collectionContext
+    }
+    
     open func supportedElementKinds() -> [String] {
         return []
     }
@@ -81,5 +85,30 @@ open class COSectionController: ListSectionController, ASSectionController, List
     
     open func sizeRangeForSupplementaryElement(ofKind elementKind: String, at index: Int) -> ASSizeRange {
         return ASSizeRangeUnconstrained
+    }
+    
+    public func visibleCellNodes() -> [ASCellNode] {
+        return context.visibleCellNodes(for: self) ?? []
+    }
+    
+    public func visibleCellNodes<T: ASCellNode>() -> [T] {
+        let nodes = context.visibleCellNodes(for: self)
+        return nodes.compactMap({$0 as? T})
+    }
+    
+    public func nodeForItem<T: ASMCellNode>(from index: Int) -> T? {
+        return context.nodeForItem(at: index, section: self) as? T
+    }
+}
+
+public extension ListCollectionContext {
+    public func visibleCellNodes(for section: ListSectionController) -> [ASCellNode] {
+        let cells = self.visibleCells(for: section)
+        let nodes = cells.compactMap({ c in return (c as? _ASCollectionViewCell)?.node})
+        return nodes ?? []
+    }
+    
+    public func nodeForItem(at index: Int, section: ListSectionController) -> ASCellNode? {
+        return (self.cellForItem(at: index, sectionController: section) as? _ASCollectionViewCell)?.node
     }
 }
