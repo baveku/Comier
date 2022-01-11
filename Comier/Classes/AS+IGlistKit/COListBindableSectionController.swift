@@ -157,6 +157,7 @@ open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
     public func bindViewModel(_ viewModel: Any) {
         guard let vm = viewModel as? M else {return}
         self.viewModel = vm
+        guard self.interfaceState == .visible || self.interfaceState == .display else {return}
         binding(vm)
     }
     
@@ -164,6 +165,13 @@ open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
         super.init()
         self.automaticallyManagesSubnodes = true
         neverShowPlaceholders = true
+    }
+    
+    open override func didEnterDisplayState() {
+        super.didEnterDisplayState()
+        if let viewModel = viewModel {
+        	binding(viewModel)
+		}
     }
     
     open func binding(_ viewModel: M) {}
