@@ -99,6 +99,10 @@ open class COSectionController: ListSectionController, ASSectionController, List
     public func nodeForItem<T: ASMCellNode>(from index: Int) -> T? {
         return context.nodeForItem(at: index, section: self) as? T
     }
+    
+    public var isVisible: Bool {
+        return !context.visibleIndexPaths(for: self).isEmpty
+    }
 }
 
 public extension ListCollectionContext {
