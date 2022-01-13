@@ -96,17 +96,35 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         self.state = .queued
         
         var result: ListIndexSetResult? = nil
-        var oldViewModels: [ListDiffable] = []
         let collectionContext = collectionContext
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
-            oldViewModels = self.viewModels
             let object = self.object
-            assert(object != nil, "Expected IGListBindingSectionController object to be non-nil before updating.")
+            let oldViewModels = self.viewModels
             let newViewModels = self.dataSource?.viewModels(for: object)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
-            self.viewModels = filterVM
             result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
+
+            if let updates = result?.updates {
+                var indexReloads: [Int] = []
+                for oldIndex in updates {
+                    if shouldUpdateCell {
+                        let id = oldViewModels[oldIndex].diffIdentifier()
+                        let indexAfterUpdate = result?.newIndex(forIdentifier: id)
+                        if let indexAfterUpdate = indexAfterUpdate {
+                            if let cell = collectionContext?.nodeForItem(at: oldIndex, section: self) {
+                                let node = cell as? ListBindable
+                                node?.bindViewModel(filterVM[indexAfterUpdate])
+                            } else {
+                                indexReloads.append(oldIndex)
+                            }
+                        }
+                    } else {
+                        indexReloads.append(oldIndex)
+                    }
+                }
+                batchContext.reload(in: self, at: IndexSet(indexReloads))
+            }
             
             if let ex = self.collectionContext?.experiments, let updates = result?.updates, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
                 batchContext.invalidateLayout(in: self, at: updates)
@@ -126,23 +144,9 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                 }
             }
             
-            if let updates = result?.updates {
-                if shouldUpdateCell {
-                    for item in updates.enumerated() {
-                        let (_, index) = item
-                        let id = oldViewModels[index].diffIdentifier()
-                        let indexAfterUpdate = result?.newIndex(forIdentifier: id)
-                        if let indexAfterUpdate = indexAfterUpdate {
-                            let cell = collectionContext?.cellForItem(at: index, sectionController: self) as? _ASCollectionViewCell
-                            let node = cell?.node as? ListBindable & ASCellNode
-                            node?.bindViewModel(filterVM[indexAfterUpdate])
-                        }
-                    }
-                } else {
-                    batchContext.reload(in: self, at: updates)
-                }
-            }
             
+            
+            self.viewModels = filterVM
             self.state = .applied
         }, completion: { (finished) in
             self.state = .idle
@@ -154,7 +158,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
 open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
     public var viewModel: M!
     
-    public func bindViewModel(_ viewModel: Any) {
+    open func bindViewModel(_ viewModel: Any) {
         guard let vm = viewModel as? M else {return}
         self.viewModel = vm
         binding(vm)
