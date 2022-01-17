@@ -12,16 +12,24 @@ public protocol ASTabbarChildVCDelegate {
     func tabbar(_ tabVC: ASTabbarViewController, didSelect vc: UIViewController, canReload: Bool)
 }
 
-open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPagerDataSource, ASTabbarDelegate {
+open class ASTabbarViewController: BaseASViewController, ASTabbarDelegate {
     public var tabItems: [ASTabItem] = []
     
     public var tabbarNode: ASTabbarNode
     public var viewControllers: [UIViewController]
-    public let pageNode = ASPagerNode()
+    let tabbarControllerNode: ASDisplayNode
+    public let tabbarController: ASTabBarController
     
     public init(items: [ASTabItem], viewControllers: [UIViewController]) {
         self.tabbarNode = ASTabbarNode(items: items)
         self.viewControllers = viewControllers
+        let tabbarController: ASTabBarController = .init()
+        self.tabbarController = tabbarController
+        self.tabbarController.setViewControllers(viewControllers, animated: false)
+        self.tabbarController.tabBar.isHidden = true
+        self.tabbarControllerNode = .init(viewBlock: {
+            tabbarController.view
+        })
         super.init()
         self.tabItems = items
     }
@@ -32,41 +40,20 @@ open class ASTabbarViewController: BaseASViewController, ASPagerDelegate, ASPage
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        pageNode.showsVerticalScrollIndicator = false
-        pageNode.showsHorizontalScrollIndicator = false
-        pageNode.setDataSource(self)
-        pageNode.setDelegate(self)
-        pageNode.view.isScrollEnabled = false
         tabbarNode.delegate = self
     }
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         LayoutSpec {
             VStackLayout(alignItems: .stretch) {
-                pageNode.flexGrow(1)
+                tabbarControllerNode.flexGrow(1)
                 tabbarNode.height(48).padding(.bottom, UIScreen.safeAreaInsets.bottom)
             }
         }
     }
     
-    // MARK: - Page Delegate Datasources
-    open func numberOfPages(in pagerNode: ASPagerNode) -> Int {
-        return tabbarNode.tabItems.count
-    }
-    
-    open func pagerNode(_ pagerNode: ASPagerNode, nodeBlockAt index: Int) -> ASCellNodeBlock {
-        let block = { () -> ASCellNode in
-            let node = ASCellNode { [weak self] () -> UIViewController in
-                guard let self = self else {return UIViewController()}
-                return self.viewControllers[index]
-            } didLoad: { (node) in}
-            return node
-        }
-        return block
-    }
-    
     open func tabbar(_ tab: ASTabbarNode, didSelectTab atIndex: Int, willReload flag: Bool) {
-        pageNode.scrollToPage(at: atIndex, animated: false)
+        tabbarController.selectedIndex = atIndex
         let vc = viewControllers[atIndex]
         if let delegate = vc as? ASTabbarChildVCDelegate {
             delegate.tabbar(self, didSelect: vc, canReload: flag)
