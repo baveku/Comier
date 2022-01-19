@@ -73,3 +73,39 @@ public extension Reactive where Base: ASActivityButtonNode {
         }
     }
 }
+
+public func calculateNodeHeight(target: ASDisplayNode, width: CGFloat, insets: UIEdgeInsets = .zero) -> CGSize {
+    return ASFakeNode(node: target, insets: insets, width: width).childrenSize
+}
+
+class ASFakeNode: ASScrollNode {
+    private weak var wrapNode: ASDisplayNode?
+    private let sizeWraper = ASDisplayNode()
+    private let insets: UIEdgeInsets
+    
+    init(node: ASDisplayNode, insets: UIEdgeInsets, width: CGFloat) {
+        self.wrapNode = node
+        self.insets = insets
+        super.init()
+        automaticallyManagesSubnodes = true
+        automaticallyManagesContentSize = true
+        view.frame = .init(origin: .zero, size: .init(width: width, height: 1))
+        view.layoutIfNeeded()
+    }
+    
+    override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        LayoutSpec {
+            VStackLayout {
+                VStackLayout {
+                    VStackLayout {
+                        wrapNode
+                    }.padding(insets).background(sizeWraper)
+                }
+            }
+        }
+    }
+    
+    var childrenSize: CGSize {
+        return sizeWraper.frame.size
+    }
+}
