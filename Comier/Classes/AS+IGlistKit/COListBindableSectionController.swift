@@ -104,7 +104,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             let newViewModels = self.dataSource?.viewModels(for: object)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
             result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
-
+            self.viewModels = filterVM
             if let updates = result?.updates {
                 var indexReloads: [Int] = []
                 for oldIndex in updates {
@@ -145,8 +145,6 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             }
             
             
-            
-            self.viewModels = filterVM
             self.state = .applied
         }, completion: { (finished) in
             self.state = .idle
