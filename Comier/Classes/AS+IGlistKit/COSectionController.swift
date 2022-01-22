@@ -11,23 +11,23 @@ import IGListKit
 import AsyncDisplayKit
 import RxSwift
 
-public protocol SectionBindable: SectionViewmodelable {
+public protocol SectionBindable: SectionViewModelable {
     associatedtype ViewModelType: ViewModel
 }
 
 /**
  Binding ViewModel from ViewController to Section Controller
  */
-public protocol SectionViewmodelable: AnyObject {
+public protocol SectionViewModelable: AnyObject {
     func bindRootViewModel()
 	func sectionWillDisplay(_ section: ListSectionController)
-	func sectiondidEndDisplaying(_ section: ListSectionController)
+	func sectionDidEndDisplaying(_ section: ListSectionController)
 	
 	func cellNodeWillDisplay(_ section: ListSectionController, cell: ASCellNode, at index: Int)
-	func cellNodedidEndDisplaying(_ section: ListSectionController, cell: ASCellNode, at index: Int)
+	func cellNodeDidEndDisplaying(_ section: ListSectionController, cell: ASCellNode, at index: Int)
 }
 
-public extension SectionViewmodelable {
+public extension SectionViewModelable {
 	func sectionWillDisplay(_ section: ListSectionController) {}
 	func sectiondidEndDisplaying(_ section: ListSectionController) {}
 	
@@ -50,9 +50,7 @@ open class COSectionController: ListSectionController, ASSectionController, List
 	var isBinded = false
     public override init() {
         super.init()
-		if self is SectionViewmodelable {
-			displayDelegate = self
-		}
+		displayDelegate = self
     }
     
     public var context: ListCollectionContext! {
@@ -120,7 +118,7 @@ open class COSectionController: ListSectionController, ASSectionController, List
 	
 	public func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController) {
 		isVisible = true
-		if let self = self as? SectionViewmodelable {
+		if let self = self as? SectionViewModelable {
 			if !isBinded {
 				isBinded = true
 				self.bindRootViewModel()
@@ -131,20 +129,20 @@ open class COSectionController: ListSectionController, ASSectionController, List
 	
 	public func listAdapter(_ listAdapter: ListAdapter, didEndDisplaying sectionController: ListSectionController) {
 		isVisible = false
-		if let self = self as? SectionViewmodelable {
-			self.sectiondidEndDisplaying(sectionController)
+		if let self = self as? SectionViewModelable {
+			self.sectionDidEndDisplaying(sectionController)
 		}
 	}
 	
 	public func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController, cell: UICollectionViewCell, at index: Int) {
-		if let self = self as? SectionViewmodelable {
+		if let self = self as? SectionViewModelable {
 			self.cellNodeWillDisplay(sectionController, cell: (cell as! _ASCollectionViewCell).node!, at: index)
 		}
 	}
 	
 	public func listAdapter(_ listAdapter: ListAdapter, didEndDisplaying sectionController: ListSectionController, cell: UICollectionViewCell, at index: Int) {
-		if let self = self as? SectionViewmodelable {
-			self.cellNodedidEndDisplaying(sectionController, cell: (cell as! _ASCollectionViewCell).node!, at: index)
+		if let self = self as? SectionViewModelable {
+			self.cellNodeDidEndDisplaying(sectionController, cell: (cell as! _ASCollectionViewCell).node!, at: index)
 		}
 	}
 }
