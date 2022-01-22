@@ -10,18 +10,37 @@ import IGListDiffKit
 import IGListKit
 import AsyncDisplayKit
 
-public protocol SInjectViewModelable: AnyObject, SectionViewmodelable {
+public protocol SectionBindable: SectionViewmodelable {
     associatedtype ViewModelType: ViewModel
 }
 
 /**
  Binding ViewModel from ViewController to Section Controller
+ Inside Section Init:
+ `override init() {
+	super.init()
+	displayDelegate = self
+ }`
  */
-public protocol SectionViewmodelable {
+public protocol SectionViewmodelable: AnyObject {
     func bindRootViewModel()
+	func sectionWillDisplay(_ section: ListSectionController)
+	func sectiondidEndDisplaying(_ section: ListSectionController)
+	
+	func cellNodeWillDisplay(_ section: ListSectionController, cell: ASCellNode, at index: Int)
+	func cellNodedidEndDisplaying(_ section: ListSectionController, cell: ASCellNode, at index: Int)
 }
 
-public extension SInjectViewModelable where Self: COSectionController {
+public extension SectionViewmodelable {
+	func sectionWillDisplay(_ section: ListSectionController) {}
+	func sectiondidEndDisplaying(_ section: ListSectionController) {}
+	
+	func cellNodeWillDisplay(_ section: ListSectionController, cell: ASCellNode, at index: Int) {}
+	func cellNodedidEndDisplaying(_ section: ListSectionController, cell: ASCellNode, at index: Int) {}
+}
+
+
+public extension SectionBindable where Self: COSectionController {
     
     /**
      Get ViewModel from ASViewModelViewController
@@ -31,12 +50,12 @@ public extension SInjectViewModelable where Self: COSectionController {
     }
 }
 
-open class COSectionController: ListSectionController, ASSectionController, ListSupplementaryViewSource, ASSupplementaryNodeSource {
+open class COSectionController: ListSectionController, ASSectionController, ListSupplementaryViewSource, ASSupplementaryNodeSource, ListDisplayDelegate {
     public override init() {
         super.init()
-        if let self = self as? SectionViewmodelable {
-            self.bindRootViewModel()
-        }
+		if self is SectionViewmodelable {
+			displayDelegate = self
+		}
     }
     
     public var context: ListCollectionContext! {
@@ -103,6 +122,30 @@ open class COSectionController: ListSectionController, ASSectionController, List
     public var isVisible: Bool {
         return !context.visibleIndexPaths(for: self).isEmpty
     }
+	
+	public func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController) {
+		if let self = self as? SectionViewmodelable {
+			self.bindRootViewModel()
+		}
+	}
+	
+	public func listAdapter(_ listAdapter: ListAdapter, didEndDisplaying sectionController: ListSectionController) {
+		if let self = self as? SectionViewmodelable {
+			self.sectiondidEndDisplaying(sectionController)
+		}
+	}
+	
+	public func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController, cell: UICollectionViewCell, at index: Int) {
+		if let self = self as? SectionViewmodelable {
+			self.cellNodeWillDisplay(sectionController, cell: (cell as! _ASCollectionViewCell).node!, at: index)
+		}
+	}
+	
+	public func listAdapter(_ listAdapter: ListAdapter, didEndDisplaying sectionController: ListSectionController, cell: UICollectionViewCell, at index: Int) {
+		if let self = self as? SectionViewmodelable {
+			self.cellNodedidEndDisplaying(sectionController, cell: (cell as! _ASCollectionViewCell).node!, at: index)
+		}
+	}
 }
 
 public extension ListCollectionContext {
