@@ -116,11 +116,10 @@ open class COSectionController: ListSectionController, ASSectionController, List
         return context.nodeForItem(at: index, section: self) as? T
     }
     
-    public var isVisible: Bool {
-        return !context.visibleIndexPaths(for: self).isEmpty
-    }
+    public private(set) var isVisible: Bool = false
 	
 	public func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController) {
+		isVisible = true
 		if let self = self as? SectionViewmodelable {
 			if !isBinded {
 				isBinded = true
@@ -131,6 +130,7 @@ open class COSectionController: ListSectionController, ASSectionController, List
 	}
 	
 	public func listAdapter(_ listAdapter: ListAdapter, didEndDisplaying sectionController: ListSectionController) {
+		isVisible = false
 		if let self = self as? SectionViewmodelable {
 			self.sectiondidEndDisplaying(sectionController)
 		}
