@@ -9,6 +9,7 @@ import Foundation
 import IGListDiffKit
 import IGListKit
 import AsyncDisplayKit
+import RxSwift
 
 public protocol SectionBindable: SectionViewmodelable {
     associatedtype ViewModelType: ViewModel
@@ -16,11 +17,6 @@ public protocol SectionBindable: SectionViewmodelable {
 
 /**
  Binding ViewModel from ViewController to Section Controller
- Inside Section Init:
- `override init() {
-	super.init()
-	displayDelegate = self
- }`
  */
 public protocol SectionViewmodelable: AnyObject {
     func bindRootViewModel()
@@ -51,6 +47,7 @@ public extension SectionBindable where Self: COSectionController {
 }
 
 open class COSectionController: ListSectionController, ASSectionController, ListSupplementaryViewSource, ASSupplementaryNodeSource, ListDisplayDelegate {
+	var isBinded = false
     public override init() {
         super.init()
 		if self is SectionViewmodelable {
@@ -125,7 +122,11 @@ open class COSectionController: ListSectionController, ASSectionController, List
 	
 	public func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController) {
 		if let self = self as? SectionViewmodelable {
-			self.bindRootViewModel()
+			if !isBinded {
+				isBinded = true
+				self.bindRootViewModel()
+			}
+			self.sectionWillDisplay(sectionController)
 		}
 	}
 	
