@@ -32,7 +32,7 @@ public extension SectionViewModelable {
 	func sectiondidEndDisplaying(_ section: ListSectionController) {}
 	
 	func cellNodeWillDisplay(_ section: ListSectionController, cell: ASCellNode, at index: Int) {}
-	func cellNodedidEndDisplaying(_ section: ListSectionController, cell: ASCellNode, at index: Int) {}
+	func cellNodeDidEndDisplaying(_ section: ListSectionController, cell: ASCellNode, at index: Int) {}
 }
 
 
