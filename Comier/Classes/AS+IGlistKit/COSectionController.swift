@@ -29,7 +29,7 @@ public protocol SectionViewModelable: AnyObject {
 
 public extension SectionViewModelable {
 	func sectionWillDisplay(_ section: ListSectionController) {}
-	func sectiondidEndDisplaying(_ section: ListSectionController) {}
+	func sectionDidEndDisplaying(_ section: ListSectionController) {}
 	
 	func cellNodeWillDisplay(_ section: ListSectionController, cell: ASCellNode, at index: Int) {}
 	func cellNodeDidEndDisplaying(_ section: ListSectionController, cell: ASCellNode, at index: Int) {}
