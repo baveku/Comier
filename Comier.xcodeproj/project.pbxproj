@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB8ABC19279DA39B00020F7C /* COListBindaleSectionController+DifferenceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8ABC18279DA39B00020F7C /* COListBindaleSectionController+DifferenceKit.swift */; };
 		FBC135B0270480C4005A7D8D /* PINCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135A4270480C4005A7D8D /* PINCache.framework */; };
 		FBC135B2270480C4005A7D8D /* PINOperation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135A5270480C4005A7D8D /* PINOperation.framework */; };
 		FBC135B4270480C4005A7D8D /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135A6270480C4005A7D8D /* RxRelay.framework */; };
@@ -121,6 +122,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB8ABC18279DA39B00020F7C /* COListBindaleSectionController+DifferenceKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "COListBindaleSectionController+DifferenceKit.swift"; sourceTree = "<group>"; };
 		FBC135A4270480C4005A7D8D /* PINCache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PINCache.framework; path = Carthage/Build/iOS/PINCache.framework; sourceTree = "<group>"; };
 		FBC135A5270480C4005A7D8D /* PINOperation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PINOperation.framework; path = Carthage/Build/iOS/PINOperation.framework; sourceTree = "<group>"; };
 		FBC135A6270480C4005A7D8D /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 		FBF8D4F2270455B30099E432 /* AS+IGlistKit */ = {
 			isa = PBXGroup;
 			children = (
+				FB8ABC18279DA39B00020F7C /* COListBindaleSectionController+DifferenceKit.swift */,
 				FBF8D4F3270455B30099E432 /* COListBindableSectionController.swift */,
 				FBF8D4F4270455B30099E432 /* COSectionController.swift */,
 			);
@@ -689,6 +692,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBF8D57827045CFB0099E432 /* ConditionalLayout.swift in Sources */,
+				FB8ABC19279DA39B00020F7C /* COListBindaleSectionController+DifferenceKit.swift in Sources */,
 				FBF8D517270455B30099E432 /* AppViewModel.swift in Sources */,
 				FBF8D58527045CFB0099E432 /* VGridLayout.swift in Sources */,
 				FBF8D5A627045CFB0099E432 /* GradientLayerNode.swift in Sources */,
