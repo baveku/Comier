@@ -145,6 +145,22 @@ open class COSectionController: ListSectionController, ASSectionController, List
 			self.cellNodeDidEndDisplaying(sectionController, cell: (cell as! _ASCollectionViewCell).node!, at: index)
 		}
 	}
+    
+    open func shouldBatchFetch() -> Bool {
+        return false
+    }
+    
+    open func beginBatchFetch(with context: ASBatchContext) {}
+    
+    public func reload(animated: Bool, completion: (() -> Void)? = nil) {
+        context.performBatch(animated: animated) { batch in
+            batch.reload(self)
+        } completion: { finished in
+            if finished {
+                completion?()
+            }
+        }
+    }
 }
 
 public extension ListCollectionContext {
