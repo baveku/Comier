@@ -17,9 +17,16 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
 	
     public let elements = BehaviorRelay<[Element]>(value: [])
     public var performUpdatesAnimated: Bool = false
+    
+    /**
+     Debounce when updates: default is 300 miniseconds
+     */
+    open var debounceUpdateTime: Int {
+        return 300
+    }
 
     public func bindToAdapter(adapter: ListAdapter, completion: ((Bool) -> Void)? = nil) -> Disposable {
-        return elements.debounce(.milliseconds(300), scheduler: MainScheduler.instance).subscribe(onNext: { [weak self] _ in
+        return elements.debounce(.milliseconds(debounceUpdateTime), scheduler: MainScheduler.instance).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
             adapter.performUpdates(animated: self.performUpdatesAnimated, completion: completion)
         })
