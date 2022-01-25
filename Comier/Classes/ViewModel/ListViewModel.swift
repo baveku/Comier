@@ -19,7 +19,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
     public var performUpdatesAnimated: Bool = false
 
     public func bindToAdapter(adapter: ListAdapter, completion: ((Bool) -> Void)? = nil) -> Disposable {
-        return elements.subscribe(onNext: { [weak self] _ in
+        return elements.debounce(.milliseconds(300), scheduler: MainScheduler.instance).subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
             adapter.performUpdates(animated: self.performUpdatesAnimated, completion: completion)
         })
