@@ -38,7 +38,6 @@
 		FBF8D50D270455B30099E432 /* Common+ASKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D4EE270455B30099E432 /* Common+ASKit.swift */; };
 		FBF8D50E270455B30099E432 /* Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D4F0270455B30099E432 /* Interfaces.swift */; };
 		FBF8D50F270455B30099E432 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D4F1270455B30099E432 /* AppContainer.swift */; };
-		FBF8D510270455B30099E432 /* COListBindableSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D4F3270455B30099E432 /* COListBindableSectionController.swift */; };
 		FBF8D511270455B30099E432 /* COSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D4F4270455B30099E432 /* COSectionController.swift */; };
 		FBF8D512270455B30099E432 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D4F6270455B30099E432 /* UINavigationController+.swift */; };
 		FBF8D513270455B30099E432 /* SafeArea+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF8D4F7270455B30099E432 /* SafeArea+.swift */; };
@@ -154,7 +153,6 @@
 		FBF8D4EE270455B30099E432 /* Common+ASKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Common+ASKit.swift"; sourceTree = "<group>"; };
 		FBF8D4F0270455B30099E432 /* Interfaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interfaces.swift; sourceTree = "<group>"; };
 		FBF8D4F1270455B30099E432 /* AppContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppContainer.swift; path = Classes/AppContainer.swift; sourceTree = "<group>"; };
-		FBF8D4F3270455B30099E432 /* COListBindableSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COListBindableSectionController.swift; sourceTree = "<group>"; };
 		FBF8D4F4270455B30099E432 /* COSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COSectionController.swift; sourceTree = "<group>"; };
 		FBF8D4F6270455B30099E432 /* UINavigationController+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		FBF8D4F7270455B30099E432 /* SafeArea+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SafeArea+.swift"; sourceTree = "<group>"; };
@@ -381,7 +379,6 @@
 			isa = PBXGroup;
 			children = (
 				FB8ABC18279DA39B00020F7C /* COListBindaleSectionController+DifferenceKit.swift */,
-				FBF8D4F3270455B30099E432 /* COListBindableSectionController.swift */,
 				FBF8D4F4270455B30099E432 /* COSectionController.swift */,
 			);
 			name = "AS+IGlistKit";
@@ -731,7 +728,6 @@
 				FBF8D59927045CFB0099E432 /* ShapeDisplaying.swift in Sources */,
 				FBF8D57B27045CFB0099E432 /* WrapperLayout.swift in Sources */,
 				FBF8D58F27045CFB0099E432 /* DisplayNodeViewController.swift in Sources */,
-				FBF8D510270455B30099E432 /* COListBindableSectionController.swift in Sources */,
 				FBF8D5AD27045CFB0099E432 /* ASControlTarget.swift in Sources */,
 				FBF8D50C270455B30099E432 /* ASKit+DifferenceKit.swift in Sources */,
 				FBF8D5A327045CFB0099E432 /* LinearGradientDrawer.swift in Sources */,

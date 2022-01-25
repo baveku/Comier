@@ -37,6 +37,8 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     public var object: Element? = nil
     var state: SectionState = .idle
     
+    var lastWaitForUpdate: (animated: Bool, shouldUpdateCell: Bool, completion: ((Bool) -> Void)?)? = nil
+    
     public weak var dataSource: ASListBindingDataSource? = nil
     public weak var delegate: ASListBindingDelegate? = nil
     
@@ -52,11 +54,11 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         }
         return block
     }
-	
-	public override init() {
-		super.init()
-	}
-	
+    
+    public override init() {
+        super.init()
+    }
+    
     public override func numberOfItems() -> Int {
         return viewModels.count
     }
@@ -95,58 +97,64 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
         guard self.object != nil else {return}
         if self.state != .idle {
-            completion?(false)
+            self.lastWaitForUpdate = (animated, shouldUpdateCell, completion)
             return
         }
         self.state = .queued
-		let object = self.object
-		let oldViewModels = self.viewModels
-		let newViewModels = self.dataSource?.viewModels(for: object)
-		let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
-		
-		let oldBoxs = oldViewModels.map({DiffBox(value: $0)})
-		let newBoxs = filterVM.map({DiffBox(value: $0)})
-		let stagedChangeset = StagedChangeset(source: oldBoxs, target: newBoxs, section: section)
+        let object = self.object
+        let oldViewModels = self.viewModels
+        let newViewModels = self.dataSource?.viewModels(for: object)
+        let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
+        
+        let oldBoxs = oldViewModels.map({DiffBox(value: $0)})
+        let newBoxs = filterVM.map({DiffBox(value: $0)})
+        let stagedChangeset = StagedChangeset(source: oldBoxs, target: newBoxs, section: section)
         let collectionContext = collectionContext
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
-			for changeset in stagedChangeset {
-				self.viewModels = changeset.data.map({$0.value})
-				
-				if !changeset.elementDeleted.isEmpty {
-					batchContext.delete(in: self, at: IndexSet(changeset.elementDeleted.map({$0.element})))
-				}
-				
-				if !changeset.elementInserted.isEmpty {
-					batchContext.insert(in: self, at: IndexSet(changeset.elementInserted.map({$0.element})))
-				}
-				
-				if !changeset.elementUpdated.isEmpty {
-					var indexReloads: [Int] = []
-					for index in changeset.elementUpdated.map({$0.element}) {
-						if shouldUpdateCell {
-							if let cell = collectionContext?.nodeForItem(at: index, section: self) {
-								let node = cell as? ListBindable
-								node?.bindViewModel(self.viewModels[index])
-							} else {
-								indexReloads.append(index)
-							}
-						} else {
-							indexReloads.append(index)
-						}
-					}
-					batchContext.reload(in: self, at: IndexSet(indexReloads))
-				}
-				
-				for (source, target) in changeset.elementMoved {
-					batchContext.move(in: self, from: source.element, to: target.element)
-				}
-			}
+            for changeset in stagedChangeset {
+                self.viewModels = changeset.data.map({$0.value})
+                
+                if !changeset.elementDeleted.isEmpty {
+                    batchContext.delete(in: self, at: IndexSet(changeset.elementDeleted.map({$0.element})))
+                }
+                
+                if !changeset.elementInserted.isEmpty {
+                    batchContext.insert(in: self, at: IndexSet(changeset.elementInserted.map({$0.element})))
+                }
+                
+                if !changeset.elementUpdated.isEmpty {
+                    var indexReloads: [Int] = []
+                    for index in changeset.elementUpdated.map({$0.element}) {
+                        if shouldUpdateCell {
+                            if let cell = collectionContext?.nodeForItem(at: index, section: self) {
+                                let node = cell as? ListBindable
+                                node?.bindViewModel(self.viewModels[index])
+                            } else {
+                                indexReloads.append(index)
+                            }
+                        } else {
+                            indexReloads.append(index)
+                        }
+                    }
+                    batchContext.reload(in: self, at: IndexSet(indexReloads))
+                }
+                
+                for (source, target) in changeset.elementMoved {
+                    batchContext.move(in: self, from: source.element, to: target.element)
+                }
+            }
             
             self.state = .applied
-        }, completion: { (finished) in
-            self.state = .idle
+        }, completion: { [weak self] (finished) in
+            self?.state = .idle
             completion?(finished)
+            if finished {
+                if let self = self, let wait = self.lastWaitForUpdate {
+                    self.lastWaitForUpdate = nil
+                    self.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
+                }
+            }
         })
     }
 }
@@ -194,18 +202,85 @@ func objectsWithDuplicateIdentifiersRemoved(_ objects: [ListDiffable]?) -> [List
 
 
 struct DiffBox<T: ListDiffable>: Differentiable {
-	let value: T
-	
-	init(value: T) {
-		self.value = value
-	}
-	
-	typealias DifferenceIdentifier = String
-	var differenceIdentifier: String {
-		return "\(value.diffIdentifier())"
-	}
-	
-	func isContentEqual(to source: DiffBox<T>) -> Bool {
-		return source.value.isEqual(toDiffableObject: value)
-	}
+    let value: T
+    
+    init(value: T) {
+        self.value = value
+    }
+    
+    typealias DifferenceIdentifier = String
+    var differenceIdentifier: String {
+        return "\(value.diffIdentifier())"
+    }
+    
+    func isContentEqual(to source: DiffBox<T>) -> Bool {
+        return source.value.isEqual(toDiffableObject: value)
+    }
 }
+
+
+// OLD DIFF
+//public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
+//    guard self.object != nil else {return}
+//    if self.state != .idle {
+//        completion?(false)
+//        return
+//    }
+//    self.state = .queued
+//   
+//    var result: ListIndexSetResult? = nil
+//    let collectionContext = collectionContext
+//    self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
+//        guard let self = self, self.state == .queued else {return}
+//        let object = self.object
+//        let oldViewModels = self.viewModels
+//        let newViewModels = self.dataSource?.viewModels(for: object)
+//        let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
+//        result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
+//        self.viewModels = filterVM
+//        if let updates = result?.updates {
+//            var indexReloads: [Int] = []
+//            for oldIndex in updates {
+//                if shouldUpdateCell {
+//                    let id = oldViewModels[oldIndex].diffIdentifier()
+//                    let indexAfterUpdate = result?.newIndex(forIdentifier: id)
+//                    if let indexAfterUpdate = indexAfterUpdate {
+//                        if let cell = collectionContext?.nodeForItem(at: oldIndex, section: self) {
+//                            let node = cell as? ListBindable
+//                            node?.bindViewModel(filterVM[indexAfterUpdate])
+//                        } else {
+//                            indexReloads.append(oldIndex)
+//                        }
+//                    }
+//                } else {
+//                    indexReloads.append(oldIndex)
+//                }
+//            }
+//            batchContext.reload(in: self, at: IndexSet(indexReloads))
+//        }
+//       
+//        if let ex = self.collectionContext?.experiments, let updates = result?.updates, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
+//            batchContext.invalidateLayout(in: self, at: updates)
+//        }
+//       
+//        if let inserts = result?.inserts {
+//            batchContext.insert(in: self, at: inserts)
+//        }
+//       
+//        if let deletes = result?.deletes {
+//            batchContext.delete(in: self, at: deletes)
+//        }
+//       
+//        if let moves = result?.moves {
+//            for move in moves {
+//                batchContext.move(in: self, from: move.from, to: move.to)
+//            }
+//        }
+//       
+//       
+//        self.state = .applied
+//    }, completion: { (finished) in
+//        self.state = .idle
+//        completion?(finished)
+//    })
+//}
