@@ -103,47 +103,50 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         self.state = .queued
         let copyViewModels = viewModels
         let object = self.object
+        var result: ListIndexSetResult? = nil
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
             let oldViewModels = copyViewModels
             let newViewModels = self.dataSource?.viewModels(for: object)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
-            let oldBoxs = oldViewModels.map({DiffBox(value: $0)})
-            let newBoxs = filterVM.map({DiffBox(value: $0)})
-            let stagedChangeset = StagedChangeset(source: oldBoxs, target: newBoxs, section: self.section)
-            for changeset in stagedChangeset {
-                self.viewModels = changeset.data.map({$0.value})
-                var deleteSet = [Int]()
-                if !changeset.elementDeleted.isEmpty {
-                    deleteSet = changeset.elementDeleted.map({$0.element})
-                    batchContext.delete(in: self, at: IndexSet(deleteSet))
-                }
-                
-                if !changeset.elementInserted.isEmpty {
-                    batchContext.insert(in: self, at: IndexSet(changeset.elementInserted.map({$0.element})))
-                }
-                
-                if !changeset.elementUpdated.isEmpty {
-                    var indexReloads: [Int] = []
-                    for index in changeset.elementUpdated.map({$0.element}) {
-                        if shouldUpdateCell {
-                            if let cell = self.context?.nodeForItem(at: index, section: self) {
+            result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
+            self.viewModels = filterVM
+            if let updates = result?.updates {
+                var indexReloads: [Int] = []
+                for oldIndex in updates {
+                    if shouldUpdateCell {
+                        let id = oldViewModels[oldIndex].diffIdentifier()
+                        let indexAfterUpdate = result?.newIndex(forIdentifier: id)
+                        if let indexAfterUpdate = indexAfterUpdate {
+                            if let cell = self.context.nodeForItem(at: oldIndex, section: self) {
                                 let node = cell as? ListBindable
-                                node?.bindViewModel(self.viewModels[index])
+                                node?.bindViewModel(filterVM[indexAfterUpdate])
                             } else {
-                                indexReloads.append(index)
-                            }
-                        } else {
-                            if !deleteSet.contains(index) {
-                                indexReloads.append(index)
+                                indexReloads.append(oldIndex)
                             }
                         }
+                    } else {
+                        indexReloads.append(oldIndex)
                     }
-                    batchContext.reload(in: self, at: IndexSet(indexReloads))
                 }
-                
-                for (source, target) in changeset.elementMoved {
-                    batchContext.move(in: self, from: source.element, to: target.element)
+                batchContext.reload(in: self, at: IndexSet(indexReloads))
+            }
+            
+            if let ex = self.collectionContext?.experiments, let updates = result?.updates, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
+                batchContext.invalidateLayout(in: self, at: updates)
+            }
+            
+            if let inserts = result?.inserts {
+                batchContext.insert(in: self, at: inserts)
+            }
+            
+            if let deletes = result?.deletes {
+                batchContext.delete(in: self, at: deletes)
+            }
+            
+            if let moves = result?.moves {
+                for move in moves {
+                    batchContext.move(in: self, from: move.from, to: move.to)
                 }
             }
             
