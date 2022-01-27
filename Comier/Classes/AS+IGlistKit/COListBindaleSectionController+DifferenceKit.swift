@@ -101,17 +101,16 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             return
         }
         self.state = .queued
+        let copyViewModels = viewModels
         let object = self.object
-        let oldViewModels = self.viewModels
-        let newViewModels = self.dataSource?.viewModels(for: object)
-        let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
-        
-        let oldBoxs = oldViewModels.map({DiffBox(value: $0)})
-        let newBoxs = filterVM.map({DiffBox(value: $0)})
-        let stagedChangeset = StagedChangeset(source: oldBoxs, target: newBoxs, section: section)
-        let collectionContext = collectionContext
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
+            let oldViewModels = copyViewModels
+            let newViewModels = self.dataSource?.viewModels(for: object)
+            let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
+            let oldBoxs = oldViewModels.map({DiffBox(value: $0)})
+            let newBoxs = filterVM.map({DiffBox(value: $0)})
+            let stagedChangeset = StagedChangeset(source: oldBoxs, target: newBoxs, section: self.section)
             for changeset in stagedChangeset {
                 self.viewModels = changeset.data.map({$0.value})
                 var deleteSet = [Int]()
@@ -128,7 +127,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                     var indexReloads: [Int] = []
                     for index in changeset.elementUpdated.map({$0.element}) {
                         if shouldUpdateCell {
-                            if let cell = collectionContext?.nodeForItem(at: index, section: self) {
+                            if let cell = self.context?.nodeForItem(at: index, section: self) {
                                 let node = cell as? ListBindable
                                 node?.bindViewModel(self.viewModels[index])
                             } else {
