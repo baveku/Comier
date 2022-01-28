@@ -50,6 +50,8 @@ open class ASViewModelController<VM: ViewModel>: BaseASViewController, IViewMode
     public typealias IViewModelType = VM
     public var viewModel: VM
     
+    weak var refCollectionNode: ASCollectionNode! = nil
+    
     public required init(viewModel: VM) {
         self.viewModel = viewModel
         super.init()
