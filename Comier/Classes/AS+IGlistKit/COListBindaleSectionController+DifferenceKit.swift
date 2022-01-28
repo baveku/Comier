@@ -104,6 +104,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         let copyViewModels = viewModels
         let object = self.object
         var result: ListIndexSetResult? = nil
+
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
             let oldViewModels = copyViewModels
@@ -154,8 +155,8 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         }, completion: { [weak self] (finished) in
             self?.state = .idle
             completion?(finished)
-            if finished {
-                if let self = self, let wait = self.lastWaitForUpdate {
+            if finished, let self = self {
+                if let wait = self.lastWaitForUpdate {
                     self.lastWaitForUpdate = nil
                     self.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
                 }

@@ -48,6 +48,10 @@ public extension SectionBindable where Self: COSectionController {
     var rootViewModel: ViewModelType? {
         return (viewController as? ASViewModelController<ViewModelType>)?.viewModel
     }
+    
+    var collectionNode: ASCollectionNode! {
+        return (viewController as? ASViewModelController<ViewModelType>)?.refCollectionNode
+    }
 }
 
 open class COSectionController: ListSectionController, ASSectionController, ListSupplementaryViewSource, ASSupplementaryNodeSource {

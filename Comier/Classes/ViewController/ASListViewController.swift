@@ -35,8 +35,12 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: ASViewModelCont
     }()
     
     open lazy var adapter: ListAdapter = {
-        let adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: workingRangeSize)
+        var updater = ListAdapterUpdater()
+        updater.experiments = .deferredToObjectCreation
+        let adapter = ListAdapter(updater: updater, viewController: self, workingRangeSize: workingRangeSize)
         adapter.setASDKCollectionNode(collectionNode)
+        
+        refCollectionNode = collectionNode
         adapter.dataSource = self
         return adapter
     }()
