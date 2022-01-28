@@ -24,6 +24,10 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: ASViewModelCont
         return nil
     }
     
+    open var workingRangeSize: Int {
+        return 1
+    }
+    
     open var collectionNode: ASCollectionNode = {
         let node = ASCollectionNode(collectionViewLayout: UICollectionViewFlowLayout())
         node.style.flexGrow = 1
@@ -31,7 +35,7 @@ open class ListViewController<LVM: ListViewModel<ListDiffable>>: ASViewModelCont
     }()
     
     open lazy var adapter: ListAdapter = {
-        let adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: self)
+        let adapter = ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: workingRangeSize)
         adapter.setASDKCollectionNode(collectionNode)
         adapter.dataSource = self
         return adapter

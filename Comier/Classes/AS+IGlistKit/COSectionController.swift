@@ -22,6 +22,8 @@ public protocol SectionViewModelable: AnyObject {
     func bindRootViewModel()
 	func sectionWillDisplay(_ section: ListSectionController)
 	func sectionDidEndDisplaying(_ section: ListSectionController)
+    func sectionEnterWorkingRange(_ section: ListSectionController)
+    func sectionExitWorkingRange(_ section: ListSectionController)
 	
 	func cellNodeWillDisplay(_ section: ListSectionController, cell: ASCellNode, at index: Int)
 	func cellNodeDidEndDisplaying(_ section: ListSectionController, cell: ASCellNode, at index: Int)
@@ -30,6 +32,8 @@ public protocol SectionViewModelable: AnyObject {
 public extension SectionViewModelable {
 	func sectionWillDisplay(_ section: ListSectionController) {}
 	func sectionDidEndDisplaying(_ section: ListSectionController) {}
+    func sectionEnterWorkingRange(_ section: ListSectionController) {}
+    func sectionExitWorkingRange(_ section: ListSectionController) {}
 	
 	func cellNodeWillDisplay(_ section: ListSectionController, cell: ASCellNode, at index: Int) {}
 	func cellNodeDidEndDisplaying(_ section: ListSectionController, cell: ASCellNode, at index: Int) {}
@@ -46,11 +50,12 @@ public extension SectionBindable where Self: COSectionController {
     }
 }
 
-open class COSectionController: ListSectionController, ASSectionController, ListSupplementaryViewSource, ASSupplementaryNodeSource, ListDisplayDelegate {
+open class COSectionController: ListSectionController, ASSectionController, ListSupplementaryViewSource, ASSupplementaryNodeSource, ListDisplayDelegate, ListWorkingRangeDelegate {
 	var isBinded = false
     public override init() {
         super.init()
 		displayDelegate = self
+        workingRangeDelegate = self
     }
     
     public var context: ListCollectionContext! {
@@ -119,19 +124,17 @@ open class COSectionController: ListSectionController, ASSectionController, List
 	}
 	
 	public func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController) {
-		if let self = self as? SectionViewModelable {
-			if !isBinded {
-				isBinded = true
-				self.bindRootViewModel()
-			}
-			self.sectionWillDisplay(sectionController)
-		}
+        if let self = self as? SectionViewModelable {
+            if !isBinded {
+                isBinded = true
+                self.bindRootViewModel()
+            }
+            self.sectionWillDisplay(sectionController)
+        }
 	}
 	
 	public func listAdapter(_ listAdapter: ListAdapter, didEndDisplaying sectionController: ListSectionController) {
-		if let self = self as? SectionViewModelable {
-			self.sectionDidEndDisplaying(sectionController)
-		}
+		
 	}
 	
 	public func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController, cell: UICollectionViewCell, at index: Int) {
@@ -159,6 +162,18 @@ open class COSectionController: ListSectionController, ASSectionController, List
             if finished {
                 completion?()
             }
+        }
+    }
+    
+    public func listAdapter(_ listAdapter: ListAdapter, sectionControllerWillEnterWorkingRange sectionController: ListSectionController) {
+        if let self = self as? SectionViewModelable {
+            self.sectionEnterWorkingRange(sectionController)
+        }
+    }
+    
+    public func listAdapter(_ listAdapter: ListAdapter, sectionControllerDidExitWorkingRange sectionController: ListSectionController) {
+        if let self = self as? SectionViewModelable {
+            self.sectionExitWorkingRange(sectionController)
         }
     }
 }
