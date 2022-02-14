@@ -33,8 +33,11 @@ enum SectionState {
 }
 
 open class ASListBindingSectionController<Element: ListDiffable>: COSectionController {
+	
+	public typealias SectionModel = Element
+	
     public var viewModels: [ListDiffable] = []
-    public var object: Element? = nil
+    public var object: SectionModel? = nil
     var state: SectionState = .idle
     
     var lastWaitForUpdate: (animated: Bool, shouldUpdateCell: Bool, completion: ((Bool) -> Void)?)? = nil
