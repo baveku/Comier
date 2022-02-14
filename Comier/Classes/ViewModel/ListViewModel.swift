@@ -20,11 +20,29 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
     
     public private(set) var adapter: ListAdapter? = nil
     
+    private var _perfomUpdatesCompletion: ((Bool) -> Void)? = nil
+    private var _perfomUpdatePublishSubject = PublishSubject<Void>()
+    private var _isAnimated: Bool = false
+    
     /**
      Debounce when updates: default is 300 miniseconds
      */
     open var debounceUpdateTime: Int {
         return 300
+    }
+    
+    open override func viewModelDidLoad() {
+        super.viewModelDidLoad()
+        _perfomUpdatePublishSubject.debounce(.milliseconds(debounceUpdateTime), scheduler: MainScheduler.instance).subscribe(onNext: { [weak self] _ in
+            guard let self = self else {return}
+            let completion = self._perfomUpdatesCompletion
+            self.adapter?.performUpdates(animated: self._isAnimated) { finished in
+                completion?(finished)
+                if finished {
+                    self.didFinishedPefromUpdates()
+                }
+            }
+        }) => disposeBag
     }
 
     public func bindToAdapter(adapter: ListAdapter, completion: ((Bool) -> Void)? = nil) -> Disposable {
@@ -39,12 +57,12 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
 	
     open func performUpdates(_ animated: Bool = true, completion: ((Bool) -> Void)? = nil) {
         self.elements.accept(mapDataToElement())
-        var isAnimated = animated
+        self._isAnimated = animated
         if !performUpdatesAnimated {
-            isAnimated = false
+            self._isAnimated = false
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + Double(debounceUpdateTime)/1000) { [weak self] in
-            self?.adapter?.performUpdates(animated: isAnimated, completion: completion)
-        }
+        _perfomUpdatePublishSubject.onNext(())
 	}
+    
+    open func didFinishedPefromUpdates() {}
 }
