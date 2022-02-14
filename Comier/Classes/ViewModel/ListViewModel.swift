@@ -39,6 +39,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
             self.adapter?.performUpdates(animated: self._isAnimated) { finished in
                 completion?(finished)
                 if finished {
+                    self._perfomUpdatesCompletion = nil
                     self.didFinishedPefromUpdates()
                 }
             }
@@ -61,6 +62,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
         if !performUpdatesAnimated {
             self._isAnimated = false
         }
+        _perfomUpdatesCompletion = completion
         _perfomUpdatePublishSubject.onNext(())
 	}
     
