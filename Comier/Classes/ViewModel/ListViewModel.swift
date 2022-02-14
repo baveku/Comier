@@ -20,7 +20,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
     
     public private(set) var adapter: ListAdapter? = nil
     
-    private var _perfomUpdatesCompletion: ((Bool) -> Void)? = nil
+    private var _queueUpdatesCompletion: [((Bool) -> Void)?] = []
     private var _perfomUpdatePublishSubject = PublishSubject<Void>()
     private var _isAnimated: Bool = false
     
@@ -35,11 +35,13 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
         super.viewModelDidLoad()
         _perfomUpdatePublishSubject.debounce(.milliseconds(debounceUpdateTime), scheduler: MainScheduler.instance).subscribe(onNext: { [weak self] _ in
             guard let self = self else {return}
-            let completion = self._perfomUpdatesCompletion
+            let completions = self._queueUpdatesCompletion
             self.adapter?.performUpdates(animated: self._isAnimated) { finished in
-                completion?(finished)
+                for completion in completions {
+                    completion?(finished)
+                }
                 if finished {
-                    self._perfomUpdatesCompletion = nil
+                    self._queueUpdatesCompletion = []
                     self.didFinishedPefromUpdates()
                 }
             }
@@ -62,7 +64,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
         if !performUpdatesAnimated {
             self._isAnimated = false
         }
-        _perfomUpdatesCompletion = completion
+        _queueUpdatesCompletion.append(completion)
         _perfomUpdatePublishSubject.onNext(())
 	}
     
