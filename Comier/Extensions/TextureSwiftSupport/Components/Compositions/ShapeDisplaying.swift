@@ -1,21 +1,16 @@
-//
-//  ShapeDisplaying.swift
-
-import Foundation
-import AsyncDisplayKit
 
 import UIKit
 
 public protocol ShapeDisplaying: AnyObject {
-  
+
   typealias Update = (CGRect) -> UIBezierPath
-  
+
   init(update: @escaping Update)
-  
+
   var shapeFillColor: UIColor? { get set }
-  
+
   var shapeLineWidth: CGFloat { get set }
-  
+
   var shapeStrokeColor: UIColor? { get set }
 }
 
@@ -47,7 +42,7 @@ public enum CupsuleShapeDirection {
 }
 
 extension ShapeDisplaying {
-  
+
   /// Returns an instance that displays capsule shape
   ///
   /// - Parameters:
@@ -67,7 +62,7 @@ extension ShapeDisplaying {
       }
     }
   }
-  
+
   /// Returns an instance that displays rounded corner shape.
   /// Rounded corner uses smooth-curve
   ///
@@ -78,5 +73,5 @@ extension ShapeDisplaying {
       UIBezierPath.init(roundedRect: bounds, cornerRadius: radius)
     }
   }
-  
+
 }
