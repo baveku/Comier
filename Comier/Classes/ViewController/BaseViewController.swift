@@ -85,6 +85,7 @@ open class ASViewModelController<VM: ViewModel>: BaseASViewController, IViewMode
 
 open class BaseASViewController: ASDKViewController<ASDisplayNode> {
     public let disposeBag = DisposeBag()
+	private let _langBag = DisposeBag()
     
     open var useCustomTransitionAnimation: Bool {
         return false
@@ -142,7 +143,12 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         NotificationCenter.default.addObserver(self,
             selector: #selector(updateUI),
             name: Notification.Name("INJECTION_BUNDLE_NOTIFICATION"), object: nil)
-    }
+		UIContext.shared.languageCode.skip(1).subscribe(onNext: { [weak self] _ in
+			self?.didChangedLanguage()
+		}) => _langBag
+	}
+
+	open func didChangedLanguage() {}
     
     @objc open func updateUI() {
         self.node.setNeedsLayout()
@@ -173,8 +179,16 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
 }
 
 open class BaseViewController: UIViewController {
+	private let _langBag = DisposeBag()
     open override func viewDidLoad() {
         super.viewDidLoad()
         fd_prefersNavigationBarHidden = true
-    }
+		UIContext.shared.languageCode.skip(1).subscribe(onNext: { [weak self] _ in
+            guard let self = self else {return}
+            print("[COMIER][didChangedLanguage] \(String(describing: self))")
+			self.didChangedLanguage()
+		}) => _langBag
+	}
+
+	open func didChangedLanguage() {}
 }

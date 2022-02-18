@@ -6,11 +6,13 @@
 //  Copyright © 2020 BachVQ. All rights reserved.
 //
 
-import UIKit
+//import UIKit
 import RxSwift
 import Swinject
 import IGListKit
 import AsyncDisplayKit
+import RxCocoa
+import Foundation
 
 public protocol Class: AnyObject { }
 
@@ -49,4 +51,18 @@ public protocol IViewModelViewController {
     init(viewModel: IViewModelType)
     func bindToViewModel()
     func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec
+}
+
+public class UIContext {
+	public static let shared = UIContext()
+	public let languageCode = BehaviorRelay<String>(value: "en")
+    
+    public static var currentLanguageCode: String {
+        return shared.languageCode.value
+    }
+    
+    public func setLang(_ new: String) {
+        guard new != Self.currentLanguageCode else {return}
+        languageCode.accept(new)
+    }
 }
