@@ -362,7 +362,7 @@ extension _ASLayoutElementType {
     }
     
     public func preferredSize(_ value: CGFloat) -> ModifiedContent<Self, SizeModifier> {
-        modifier(SizeModifier(size: .init(width: size, height: size)))
+        modifier(SizeModifier(size: .init(width: value, height: value)))
     }
     
     public func alignSelf(_ alignSelf: ASStackLayoutAlignSelf) -> ModifiedContent<Self, AlignSelfModifier> {
