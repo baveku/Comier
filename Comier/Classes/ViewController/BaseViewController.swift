@@ -91,6 +91,12 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         return false
     }
     
+    public var ignoreSafeAreaInset: Bool = false {
+        didSet {
+            self.node.setNeedsLayout()
+        }
+    }
+    
     private var firstLoad = true
     open func layoutFirstLoad() {}
     
@@ -109,7 +115,11 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         
         mainNode.layoutSpecBlock = { [weak self] (node, size) in
             guard let self = self else {return ASStackLayoutSpec()}
-            return self.layoutSpecThatFits(size)
+            if self.ignoreSafeAreaInset {
+                return self.layoutSpecThatFits(size)
+            } else {
+                return self.useSafeArea(size)
+            }
         }
         
         mainNode.nodeLayoutBlock = { [weak self] in
@@ -158,6 +168,21 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
     
     open func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         return ASLayoutSpec()
+    }
+    
+    func useSafeArea(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        var insets = UIEdgeInsets.zero
+        if #available(iOS 11.0, *) {
+            insets = view.safeAreaInsets
+        } else {
+            insets.left = topLayoutGuide.length
+            insets.bottom = bottomLayoutGuide.length
+        }
+        return LayoutSpec {
+            InsetLayout(insets: insets) {
+                self.layoutSpecThatFits(constrainedSize)
+            }
+        }
     }
     
     open func transitionLayout(animated: Bool = true, shouldMeasureAsync: Bool = false, completion: (() -> Void)? = nil) {
