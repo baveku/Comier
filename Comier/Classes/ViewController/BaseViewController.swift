@@ -91,7 +91,7 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
         return false
     }
     
-    public var ignoreSafeAreaInset: Bool = false {
+    public var ignoreSafeAreaInset: Bool = true {
         didSet {
             self.node.setNeedsLayout()
         }
