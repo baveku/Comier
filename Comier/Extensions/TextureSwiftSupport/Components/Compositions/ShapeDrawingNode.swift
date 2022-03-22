@@ -22,7 +22,6 @@
 import Foundation
 
 import AsyncDisplayKit
-import Descriptors
 
 @available(*, deprecated, renamed: "ShapeDrawingNode")
 public typealias ShapeRenderingNode = ShapeDrawingNode

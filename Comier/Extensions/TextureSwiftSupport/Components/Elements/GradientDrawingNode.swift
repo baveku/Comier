@@ -2,7 +2,6 @@
 
 import Foundation
 import AsyncDisplayKit
-import Descriptors
 
 /**
  A display node that displays the gradient with CoreGraphics based drawing.

@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.5.0)
-  - Comier (0.7.1):
+  - Comier (0.8.0):
     - DifferenceKit
     - Moya (>= 14.0.0)
     - Moya/RxSwift (>= 14.0.0)
@@ -50,12 +50,12 @@ PODS:
   - PromisesObjC (2.0.0)
   - PromisesSwift (2.0.0):
     - PromisesObjC (= 2.0.0)
-  - RxCocoa (6.2.0):
-    - RxRelay (= 6.2.0)
-    - RxSwift (= 6.2.0)
-  - RxRelay (6.2.0):
-    - RxSwift (= 6.2.0)
-  - RxSwift (6.2.0)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
   - Swinject (2.8.1)
   - Texture (3.1.0):
     - Texture/AssetsLibrary (= 3.1.0)
@@ -112,7 +112,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
-  Comier: 14f1ff76e5d98b38401397d3c01934d43606594e
+  Comier: 325b3b05e57d282c68d1886fea063bb3c624aa2e
   DifferenceKit: 5659c430bb7fe45876fa32ce5cba5d6167f0c805
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
@@ -124,12 +124,12 @@ SPEC CHECKSUMS:
   PINRemoteImage: f1295b29f8c5e640e25335a1b2bd9d805171bd01
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   PromisesSwift: e0b2a6433469efb0b83a2b84c62a2abab8e5e5d4
-  RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
-  RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
-  RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
   Texture: 2e8ab2519452515f7f5a520f5a8f7e0a413abfa3
 
-PODFILE CHECKSUM: e6226e411863e67a2525aa9786d01a298e61092f
+PODFILE CHECKSUM: 0b8da7df4ce0008105ae69ba7aeed6067531d3a8
 
 COCOAPODS: 1.11.2

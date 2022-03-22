@@ -21,7 +21,6 @@
 
 import AsyncDisplayKit
 import Foundation
-import Descriptors
 
 /**
  A display node that supports interactions tap and long-press.

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,24 +14,6 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		692929A00704017AA3DFF804 /* Pods_Comier_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FC4A644332ACA9638CE3203 /* Pods_Comier_Example.framework */; };
 		E64130291656AF798988BCBD /* Pods_Comier_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6EC45C9DEF30D1DAFCFF4F /* Pods_Comier_Tests.framework */; };
-		FBC136002704CA3F005A7D8D /* IGListDiffKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135EE2704CA3E005A7D8D /* IGListDiffKit.framework */; };
-		FBC136022704CA3F005A7D8D /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135EF2704CA3E005A7D8D /* RxMoya.framework */; };
-		FBC136042704CA3F005A7D8D /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F02704CA3E005A7D8D /* Swinject.framework */; };
-		FBC136062704CA3F005A7D8D /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F12704CA3E005A7D8D /* Moya.framework */; };
-		FBC136082704CA3F005A7D8D /* NVActivityIndicatorViewExtended.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F22704CA3E005A7D8D /* NVActivityIndicatorViewExtended.framework */; };
-		FBC1360A2704CA3F005A7D8D /* DifferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F32704CA3E005A7D8D /* DifferenceKit.framework */; };
-		FBC1360C2704CA3F005A7D8D /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F42704CA3E005A7D8D /* ObjectMapper.framework */; };
-		FBC1360E2704CA3F005A7D8D /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F52704CA3E005A7D8D /* RxCocoa.framework */; };
-		FBC136102704CA3F005A7D8D /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F62704CA3E005A7D8D /* RxRelay.framework */; };
-		FBC136122704CA3F005A7D8D /* PINOperation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F72704CA3E005A7D8D /* PINOperation.framework */; };
-		FBC136142704CA3F005A7D8D /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F82704CA3E005A7D8D /* Alamofire.framework */; };
-		FBC136162704CA3F005A7D8D /* PINCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135F92704CA3E005A7D8D /* PINCache.framework */; };
-		FBC136182704CA3F005A7D8D /* PINRemoteImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FA2704CA3E005A7D8D /* PINRemoteImage.framework */; };
-		FBC1361A2704CA3F005A7D8D /* Comier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FB2704CA3F005A7D8D /* Comier.framework */; };
-		FBC1361C2704CA40005A7D8D /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FC2704CA3F005A7D8D /* NVActivityIndicatorView.framework */; };
-		FBC1361E2704CA40005A7D8D /* AsyncDisplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FD2704CA3F005A7D8D /* AsyncDisplayKit.framework */; };
-		FBC136202704CA40005A7D8D /* IGListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FE2704CA3F005A7D8D /* IGListKit.framework */; };
-		FBC136222704CA40005A7D8D /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FF2704CA3F005A7D8D /* RxSwift.framework */; };
 		FBF01EBE2704CD510071CFDE /* Comier.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC135FB2704CA3F005A7D8D /* Comier.framework */; };
 		FBF01EC12704CFED0071CFDE /* input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = FBF01EC02704CFED0071CFDE /* input.xcfilelist */; };
 		FBF01EC32704D09E0071CFDE /* output.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = FBF01EC22704D09E0071CFDE /* output.xcfilelist */; };
@@ -93,24 +75,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBC1360E2704CA3F005A7D8D /* RxCocoa.framework in Frameworks */,
-				FBC136162704CA3F005A7D8D /* PINCache.framework in Frameworks */,
-				FBC1361C2704CA40005A7D8D /* NVActivityIndicatorView.framework in Frameworks */,
-				FBC136002704CA3F005A7D8D /* IGListDiffKit.framework in Frameworks */,
-				FBC136062704CA3F005A7D8D /* Moya.framework in Frameworks */,
-				FBC136042704CA3F005A7D8D /* Swinject.framework in Frameworks */,
-				FBC136102704CA3F005A7D8D /* RxRelay.framework in Frameworks */,
-				FBC136122704CA3F005A7D8D /* PINOperation.framework in Frameworks */,
-				FBC136142704CA3F005A7D8D /* Alamofire.framework in Frameworks */,
-				FBC136022704CA3F005A7D8D /* RxMoya.framework in Frameworks */,
-				FBC1361A2704CA3F005A7D8D /* Comier.framework in Frameworks */,
-				FBC136182704CA3F005A7D8D /* PINRemoteImage.framework in Frameworks */,
-				FBC1360A2704CA3F005A7D8D /* DifferenceKit.framework in Frameworks */,
-				FBC1360C2704CA3F005A7D8D /* ObjectMapper.framework in Frameworks */,
-				FBC136202704CA40005A7D8D /* IGListKit.framework in Frameworks */,
-				FBC136082704CA3F005A7D8D /* NVActivityIndicatorViewExtended.framework in Frameworks */,
-				FBC1361E2704CA40005A7D8D /* AsyncDisplayKit.framework in Frameworks */,
-				FBC136222704CA40005A7D8D /* RxSwift.framework in Frameworks */,
 				692929A00704017AA3DFF804 /* Pods_Comier_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,7 +211,6 @@
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				FBF01EBF2704CF8B0071CFDE /* ShellScript */,
 				FDACDEB769E6D56C11903BDF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -384,25 +347,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		FBF01EBF2704CF8B0071CFDE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"$(SRCROOT)/input.xcfilelist",
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-				"$(SRCROOT)/output.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
 		};
 		FDACDEB769E6D56C11903BDF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -592,8 +536,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -603,15 +546,12 @@
 			baseConfigurationReference = EF177B28659EEA4F3E08E521 /* Pods-Comier_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Comier/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
@@ -627,15 +567,12 @@
 			baseConfigurationReference = CFFB50E6F8129CED4B818F76 /* Pods-Comier_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Comier/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
@@ -650,21 +587,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F65E589F20E4702563D7493F /* Pods-Comier_Tests.debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -678,17 +608,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5957DB593A70A8952D4D32F8 /* Pods-Comier_Tests.release.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

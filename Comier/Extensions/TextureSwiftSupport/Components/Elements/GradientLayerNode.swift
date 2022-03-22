@@ -20,7 +20,6 @@
 // THE SOFTWARE.
 
 import AsyncDisplayKit
-import Descriptors
 
 fileprivate final class GradientLayerView: UIView {
   override class var layerClass: AnyClass {
