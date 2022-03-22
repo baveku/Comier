@@ -360,6 +360,10 @@ extension _ASLayoutElementType {
   public func preferredSize(_ preferredSize: CGSize) -> ModifiedContent<Self, SizeModifier> {
     modifier(SizeModifier(size: preferredSize))
   }
+
+  public func preferredSize(_ value: CGFloat) -> ModifiedContent<Self, SizeModifier> {
+    modifier(SizeModifier(size: .init(width: value, height: value)))
+  }
   
   public func alignSelf(_ alignSelf: ASStackLayoutAlignSelf) -> ModifiedContent<Self, AlignSelfModifier> {
     modifier(AlignSelfModifier(alignSelf: alignSelf))
