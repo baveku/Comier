@@ -104,56 +104,52 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             return
         }
         self.state = .queued
-        let copyViewModels = viewModels
-        let object = self.object
-        var result: ListIndexSetResult? = nil
-
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
+            let object = self.object
+            let copyViewModels = self.viewModels.map({$0})
             let oldViewModels = copyViewModels
             let newViewModels = self.dataSource?.viewModels(for: object)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
-            result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
+            let result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
+            guard result.hasChanges else {return}
             self.viewModels = filterVM
-            if let updates = result?.updates {
-                var indexReloads: [Int] = []
-                for oldIndex in updates {
-                    if shouldUpdateCell {
-                        let id = oldViewModels[oldIndex].diffIdentifier()
-                        let indexAfterUpdate = result?.newIndex(forIdentifier: id)
-                        if let indexAfterUpdate = indexAfterUpdate {
-                            if let cell = self.context.nodeForItem(at: oldIndex, section: self) {
-                                let node = cell as? ListBindable
-                                node?.bindViewModel(filterVM[indexAfterUpdate])
-                            } else {
-                                indexReloads.append(oldIndex)
-                            }
-                        }
-                    } else {
-                        indexReloads.append(oldIndex)
-                    }
-                }
-                batchContext.reload(in: self, at: IndexSet(indexReloads))
+            
+            if let ex = self.collectionContext?.experiments, !result.updates.isEmpty, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
+                batchContext.invalidateLayout(in: self, at: result.updates)
+            }
+            if !result.inserts.isEmpty {
+                batchContext.insert(in: self, at: result.inserts)
             }
             
-            if let ex = self.collectionContext?.experiments, let updates = result?.updates, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
-                batchContext.invalidateLayout(in: self, at: updates)
+            if !result.deletes.isEmpty {
+                batchContext.delete(in: self, at: result.deletes)
             }
-            
-            if let inserts = result?.inserts {
-                batchContext.insert(in: self, at: inserts)
-            }
-            
-            if let deletes = result?.deletes {
-                batchContext.delete(in: self, at: deletes)
-            }
-            
-            if let moves = result?.moves {
-                for move in moves {
+            if !result.moves.isEmpty {
+                for move in result.moves {
                     batchContext.move(in: self, from: move.from, to: move.to)
                 }
             }
             
+            var indexReloads: [Int] = []
+            for oldIndex in result.updates {
+                guard oldIndex < oldViewModels.count else {break}
+                if shouldUpdateCell {
+                    let id = oldViewModels[oldIndex].diffIdentifier()
+                    let indexAfterUpdate = result.newIndex(forIdentifier: id)
+                    if let cell = self.context.nodeForItem(at: oldIndex, section: self) {
+                        let node = cell as? ListBindable
+                        node?.bindViewModel(filterVM[indexAfterUpdate])
+                    } else {
+                        indexReloads.append(oldIndex)
+                    }
+                } else {
+                    indexReloads.append(oldIndex)
+                }
+            }
+            if !indexReloads.isEmpty {
+                batchContext.reload(in: self, at: IndexSet(indexReloads))
+            }
             self.state = .applied
         }, completion: { [weak self] (finished) in
             self?.state = .idle
