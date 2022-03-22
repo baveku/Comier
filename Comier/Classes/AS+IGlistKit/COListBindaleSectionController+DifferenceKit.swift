@@ -130,8 +130,8 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                     batchContext.move(in: self, from: move.from, to: move.to)
                 }
             }
-            
-            var indexReloads: [Int] = []
+            if !result.updates.isEmpty {
+				var indexReloads: [Int] = []
             for oldIndex in result.updates {
                 guard oldIndex < oldViewModels.count else {break}
                 if shouldUpdateCell {
@@ -150,6 +150,8 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             if !indexReloads.isEmpty {
                 batchContext.reload(in: self, at: IndexSet(indexReloads))
             }
+			}
+
             self.state = .applied
         }, completion: { [weak self] (finished) in
             self?.state = .idle
