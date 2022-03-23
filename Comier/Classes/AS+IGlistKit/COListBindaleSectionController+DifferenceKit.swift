@@ -69,10 +69,10 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     open var willUpdateWithAnimation = true
     
     open override func didUpdate(to object: Any) {
-        let oldObject = self.object
+        let firstUpdate = self.object == nil
         self.object = object as? Element
         
-        if oldObject == nil {
+        if firstUpdate {
             let viewModels = self.dataSource?.viewModels(for: object)
             self.viewModels = objectsWithDuplicateIdentifiersRemoved(viewModels) ?? []
         } else {
@@ -132,24 +132,24 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             }
             if !result.updates.isEmpty {
 				var indexReloads: [Int] = []
-            for oldIndex in result.updates {
-                guard oldIndex < oldViewModels.count else {break}
-                if shouldUpdateCell {
-                    let id = oldViewModels[oldIndex].diffIdentifier()
-                    let indexAfterUpdate = result.newIndex(forIdentifier: id)
-                    if let cell = self.context.nodeForItem(at: oldIndex, section: self) {
-                        let node = cell as? ListBindable
-                        node?.bindViewModel(filterVM[indexAfterUpdate])
+                for oldIndex in result.updates {
+                    guard oldIndex < oldViewModels.count else {break}
+                    if shouldUpdateCell {
+                        let id = oldViewModels[oldIndex].diffIdentifier()
+                        let indexAfterUpdate = result.newIndex(forIdentifier: id)
+                        if let cell = self.context.nodeForItem(at: oldIndex, section: self) {
+                            let node = cell as? ListBindable
+                            node?.bindViewModel(filterVM[indexAfterUpdate])
+                        } else {
+                            indexReloads.append(oldIndex)
+                        }
                     } else {
                         indexReloads.append(oldIndex)
                     }
-                } else {
-                    indexReloads.append(oldIndex)
                 }
-            }
-            if !indexReloads.isEmpty {
-                batchContext.reload(in: self, at: IndexSet(indexReloads))
-            }
+                if !indexReloads.isEmpty {
+                    batchContext.reload(in: self, at: IndexSet(indexReloads))
+                }
 			}
 
             self.state = .applied
