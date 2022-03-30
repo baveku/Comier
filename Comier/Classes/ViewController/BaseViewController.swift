@@ -8,6 +8,7 @@
 import Foundation
 import AsyncDisplayKit
 import RxSwift
+import UIKit
 
 public let ASBlank = ASStackLayoutSpec.vertical
 
@@ -171,18 +172,23 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
     }
     
     func useSafeArea(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        return LayoutSpec {
+            InsetLayout(insets: safeAreaInsets) {
+                self.layoutSpecThatFits(constrainedSize)
+            }
+        }
+    }
+    
+    public var safeAreaInsets: UIEdgeInsets {
         var insets = UIEdgeInsets.zero
         if #available(iOS 11.0, *) {
             insets = view.safeAreaInsets
         } else {
-            insets.left = topLayoutGuide.length
+            insets.top = topLayoutGuide.length
             insets.bottom = bottomLayoutGuide.length
         }
-        return LayoutSpec {
-            InsetLayout(insets: insets) {
-                self.layoutSpecThatFits(constrainedSize)
-            }
-        }
+        
+        return insets
     }
     
     open func transitionLayout(animated: Bool = true, shouldMeasureAsync: Bool = false, completion: (() -> Void)? = nil) {
