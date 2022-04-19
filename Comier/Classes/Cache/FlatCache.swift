@@ -18,6 +18,16 @@ public protocol FlatCachable {
 
 public protocol Cachable: FlatCachable { }
 
+public extension Cachable where Self: Cachable {
+    public func save() {
+        cacheCtx.set(value: self)
+    }
+
+    public var cacheValue: Self? {
+        return cacheCtx.get(id: self.cacheID)
+    }
+}
+
 private extension Cachable {
     static var typeName: String {
         return String(describing: self)

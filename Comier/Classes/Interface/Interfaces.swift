@@ -53,8 +53,11 @@ public protocol IViewModelViewController {
     func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec
 }
 
+public let cacheCtx = UIContext.shared.cache
+
 public class UIContext {
 	public static let shared = UIContext()
+    public var cache = FlatCache()
 	public let languageCode = BehaviorRelay<String>(value: "en")
     
     public static var currentLanguageCode: String {
@@ -66,3 +69,4 @@ public class UIContext {
         languageCode.accept(new)
     }
 }
+
