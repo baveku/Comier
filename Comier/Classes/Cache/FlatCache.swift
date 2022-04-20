@@ -47,6 +47,7 @@ public final class FlatCache {
     public enum Update {
         case item(Any)
         case list([Any])
+		case delete([Any])
         case clear
     }
 
@@ -127,6 +128,37 @@ public final class FlatCache {
             } else {
                 listener.flatCacheDidUpdate(cache: self, update: .list(arr))
             }
+        }
+    }
+
+	public func delete<T: Cachable>(values: [T]) {
+        assert(Thread.isMainThread)
+
+        var listenerHashToValuesMap = [Int: [T]]()
+        var listenerHashToListenerMap = [Int: FlatCacheListener]()
+
+        for value in values {
+            let key = value.flatCacheKey
+            enumerateListeners(key: key, block: { listener in
+                let hash = ObjectIdentifier(listener).hashValue
+                if var arr = listenerHashToValuesMap[hash] {
+                    arr.append(value)
+                    listenerHashToValuesMap[hash] = arr
+                } else {
+                    listenerHashToValuesMap[hash] = [value]
+                }
+                listenerHashToListenerMap[hash] = listener
+            })
+        }
+
+        for (hash, arr) in listenerHashToValuesMap {
+            guard let listener = listenerHashToListenerMap[hash] else { continue }
+            listener.flatCacheDidUpdate(cache: self, update: .delete(arr))
+        }
+        
+        for value in values {
+            let key = value.flatCacheKey
+            storage.removeValue(forKey: key)
         }
     }
 
