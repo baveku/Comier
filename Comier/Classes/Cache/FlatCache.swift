@@ -45,9 +45,9 @@ public protocol FlatCacheListener: AnyObject {
 public final class FlatCache {
 
     public enum Update {
-        case item(Any)
-        case list([Any])
-		case delete([Any])
+        case item(Cachable)
+        case list([Cachable])
+		case delete([Cachable])
         case clear
     }
 
