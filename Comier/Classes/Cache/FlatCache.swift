@@ -78,7 +78,7 @@ public final class FlatCache {
 
 	public func removeListener<T: Cachable>(listener: FlatCacheListener, value: T) {
         let key = value.flatCacheKey
-        listeners.removeValue(forKey: key)
+        listeners[key]?.remove(listener)
     }
 
     public func set<T: Cachable>(value: T) {
