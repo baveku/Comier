@@ -76,6 +76,11 @@ public final class FlatCache {
         listeners[key] = table
     }
 
+	public func removeListener<T: Cachable>(listener: FlatCacheListener, value: T) {
+        let key = value.flatCacheKey
+        listeners.removeValue(forKey: key)
+    }
+
     public func set<T: Cachable>(value: T) {
         assert(Thread.isMainThread)
 
