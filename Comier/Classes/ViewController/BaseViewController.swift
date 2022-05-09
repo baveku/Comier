@@ -194,9 +194,7 @@ open class BaseASViewController: ASDKViewController<ASDisplayNode> {
 	@available(iOS 11.0, *)
     open override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        if !ignoreSafeAreaInset {
-            self.node.setNeedsLayout()
-        }
+        self.node.setNeedsLayout()
     }
     
     open func transitionLayout(animated: Bool = true, shouldMeasureAsync: Bool = false, completion: (() -> Void)? = nil) {
