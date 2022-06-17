@@ -11,6 +11,8 @@ import IGListDiffKit
 import AsyncDisplayKit
 import DifferenceKit
 
+public typealias ListModelable = NSObject & ListDiffable
+
 public protocol ASListBindingDataSource: AnyObject {
     func viewModels(for object: Any) -> [ListDiffable]
     func nodeBlockForViewModel(at viewModel: ListDiffable) -> ASCellNode
