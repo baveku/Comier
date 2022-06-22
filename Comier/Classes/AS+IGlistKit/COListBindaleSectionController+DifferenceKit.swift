@@ -48,12 +48,13 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     public weak var delegate: ASListBindingDelegate? = nil
     
     public override func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
+		let cellModel = self.viewModels[index]
         let block: ASCellNodeBlock = { [weak self] in
             guard let self = self else {return COCellNode<ListDiffable>()}
-            let cell = self.dataSource?.nodeBlockForViewModel(at: self.viewModels[index])
+            let cell = self.dataSource?.nodeBlockForViewModel(at: cellModel)
             cell?.neverShowPlaceholders = true
             if let cell = cell as? ListBindable {
-                cell.bindViewModel(self.viewModels[index])
+                cell.bindViewModel(cellModel)
             }
             return cell ?? COCellNode<ListDiffable>()
         }
@@ -106,59 +107,64 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             return
         }
         self.state = .queued
+		let copyViewModels = self.viewModels.map({$0})
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
             let object = self.object
-            let copyViewModels = self.viewModels.map({$0})
             let oldViewModels = copyViewModels
             let newViewModels = self.dataSource?.viewModels(for: object)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
-            let result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
+			let result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
             guard result.hasChanges else {return}
             self.viewModels = filterVM
-            
-            if let ex = self.collectionContext?.experiments, !result.updates.isEmpty, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
-                batchContext.invalidateLayout(in: self, at: result.updates)
-            }
+			
+			if !result.updates.isEmpty {
+				var indexReloads: [Int] = []
+				for oldIndex in result.updates {
+					guard oldIndex < oldViewModels.count else {break}
+					if shouldUpdateCell {
+						let id = oldViewModels[oldIndex].diffIdentifier()
+						let indexAfterUpdate = result.newIndex(forIdentifier: id)
+						if indexAfterUpdate != NSNotFound {
+							if let cell = self.context.nodeForItem(at: oldIndex, section: self) {
+								let node = cell as? ListBindable
+								node?.bindViewModel(filterVM[indexAfterUpdate])
+							} else {
+								indexReloads.append(oldIndex)
+							}
+						}
+					} else {
+						indexReloads.append(oldIndex)
+					}
+				}
+				if !indexReloads.isEmpty {
+					batchContext.reload(in: self, at: IndexSet(indexReloads))
+				}
+			}
+			
+			if let ex = self.collectionContext?.experiments, !result.updates.isEmpty, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
+				batchContext.invalidateLayout(in: self, at: result.updates)
+			}
+			
+			if !result.deletes.isEmpty {
+				batchContext.delete(in: self, at: result.deletes)
+			}
+
             if !result.inserts.isEmpty {
                 batchContext.insert(in: self, at: result.inserts)
             }
             
-            if !result.deletes.isEmpty {
-                batchContext.delete(in: self, at: result.deletes)
-            }
             if !result.moves.isEmpty {
                 for move in result.moves {
                     batchContext.move(in: self, from: move.from, to: move.to)
                 }
             }
-            if !result.updates.isEmpty {
-				var indexReloads: [Int] = []
-                for oldIndex in result.updates {
-                    guard oldIndex < oldViewModels.count else {break}
-                    if shouldUpdateCell {
-                        let id = oldViewModels[oldIndex].diffIdentifier()
-                        let indexAfterUpdate = result.newIndex(forIdentifier: id)
-                        if let cell = self.context.nodeForItem(at: oldIndex, section: self) {
-                            let node = cell as? ListBindable
-                            node?.bindViewModel(filterVM[indexAfterUpdate])
-                        } else {
-                            indexReloads.append(oldIndex)
-                        }
-                    } else {
-                        indexReloads.append(oldIndex)
-                    }
-                }
-                if !indexReloads.isEmpty {
-                    batchContext.reload(in: self, at: IndexSet(indexReloads))
-                }
-			}
-
+            
             self.state = .applied
         }, completion: { [weak self] (finished) in
-            self?.state = .idle
             completion?(finished)
             if finished, let self = self {
+				self.state = .idle
                 if let wait = self.lastWaitForUpdate {
                     self.lastWaitForUpdate = nil
                     self.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
