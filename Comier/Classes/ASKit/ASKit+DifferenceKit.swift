@@ -170,16 +170,8 @@ public extension ASTableNode {
                 for (source, target) in changeset.sectionMoved {
                     moveSection(source, toSection: target)
                 }
-                
-                if !changeset.elementDeleted.isEmpty {
-                    deleteRows(at: changeset.elementDeleted.map { IndexPath(row: $0.element, section: $0.section) }, with: deleteRowsAnimation())
-                }
-                
-                if !changeset.elementInserted.isEmpty {
-                    insertRows(at: changeset.elementInserted.map { IndexPath(row: $0.element, section: $0.section) }, with: insertRowsAnimation())
-                }
-                
-                if !changeset.elementUpdated.isEmpty {
+		    
+		if !changeset.elementUpdated.isEmpty {
 					if updateRow != nil {
 						changeset.elementUpdated.map { IndexPath(row: $0.element, section: $0.section) }.forEach { indexPath in
 							let cell = self.nodeForRow(at: indexPath)
@@ -189,6 +181,14 @@ public extension ASTableNode {
 					} else {
 						reloadRows(at: changeset.elementUpdated.map { IndexPath(row: $0.element, section: $0.section)}, with: reloadRowsAnimation())
 					}
+                }
+                
+                if !changeset.elementDeleted.isEmpty {
+                    deleteRows(at: changeset.elementDeleted.map { IndexPath(row: $0.element, section: $0.section) }, with: deleteRowsAnimation())
+                }
+                
+                if !changeset.elementInserted.isEmpty {
+                    insertRows(at: changeset.elementInserted.map { IndexPath(row: $0.element, section: $0.section) }, with: insertRowsAnimation())
                 }
                 
                 for (source, target) in changeset.elementMoved {
