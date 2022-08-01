@@ -92,6 +92,7 @@ public extension ASTableNode {
     func reload<C>(
         using stagedChangeset: StagedChangeset<C>,
         with animation: @autoclosure () -> UITableView.RowAnimation,
+		updateRow: ((C.Element, ASCellNode?) -> Void)? = nil,
         interrupt: ((Changeset<C>) -> Bool)? = nil,
         setData: (C) -> Void
     ) {
@@ -103,6 +104,7 @@ public extension ASTableNode {
             deleteRowsAnimation: animation(),
             insertRowsAnimation: animation(),
             reloadRowsAnimation: animation(),
+			updateRow: updateRow,
             interrupt: interrupt,
             setData: setData
         )
@@ -135,6 +137,7 @@ public extension ASTableNode {
         deleteRowsAnimation: @autoclosure () -> UITableView.RowAnimation,
         insertRowsAnimation: @autoclosure () -> UITableView.RowAnimation,
         reloadRowsAnimation: @autoclosure () -> UITableView.RowAnimation,
+		updateRow: ((C.Element, ASCellNode?) -> Void)? = nil,
         interrupt: ((Changeset<C>) -> Bool)? = nil,
         setData: (C) -> Void
     ) {
@@ -177,7 +180,15 @@ public extension ASTableNode {
                 }
                 
                 if !changeset.elementUpdated.isEmpty {
-                    reloadRows(at: changeset.elementUpdated.map { IndexPath(row: $0.element, section: $0.section) }, with: reloadRowsAnimation())
+					if updateRow != nil {
+						changeset.elementUpdated.map { IndexPath(row: $0.element, section: $0.section) }.forEach { indexPath in
+							let cell = self.nodeForRow(at: indexPath)
+							let newValue = Array(changeset.data)[indexPath.row]
+							updateRow?(newValue, cell)
+						}
+					} else {
+						reloadRows(at: changeset.elementUpdated.map { IndexPath(row: $0.element, section: $0.section)}, with: reloadRowsAnimation())
+					}
                 }
                 
                 for (source, target) in changeset.elementMoved {
@@ -193,6 +204,7 @@ public extension ASTableNode {
     
     func reloadWithoutAnimation<C>(
         using stagedChangeset: StagedChangeset<C>,
+		updateRow: ((C.Element, ASCellNode?) -> Void)? = nil,
         interrupt: ((Changeset<C>) -> Bool)? = nil,
         setData: (C) -> Void
     ) {
@@ -205,6 +217,7 @@ public extension ASTableNode {
             deleteRowsAnimation: .none,
             insertRowsAnimation: .none,
             reloadRowsAnimation: .none,
+			updateRow: updateRow,
             interrupt: interrupt,
             setData: setData
         )
