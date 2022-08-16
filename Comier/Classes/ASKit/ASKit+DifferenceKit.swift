@@ -25,64 +25,12 @@ public extension ASCollectionNode {
 			return reloadData()
 		}
 		
-		if !animated {
-			CATransaction.begin()
-			CATransaction.setDisableActions(true)
-		}
-		
-		performBatchUpdates({
-			for changeset in stagedChangeset {
-				setData(changeset.data)
-				if !changeset.sectionDeleted.isEmpty {
-					deleteSections(IndexSet(changeset.sectionDeleted))
-				}
-				
-				if !changeset.sectionInserted.isEmpty {
-					insertSections(IndexSet(changeset.sectionInserted))
-				}
-				
-				if !changeset.sectionUpdated.isEmpty {
-					reloadSections(IndexSet(changeset.sectionUpdated))
-				}
-				
-				for (source, target) in changeset.sectionMoved {
-					moveSection(source, toSection: target)
-				}
-				
-				if !changeset.elementDeleted.isEmpty {
-					deleteItems(at: changeset.elementDeleted.map { IndexPath(item: $0.element, section: $0.section) })
-				}
-				
-				if !changeset.elementInserted.isEmpty {
-					insertItems(at: changeset.elementInserted.map { IndexPath(item: $0.element, section: $0.section) })
-				}
-				
-				if !changeset.elementUpdated.isEmpty {
-					if updateCellBlock != nil {
-						changeset.elementUpdated.map { IndexPath(item: $0.element, section: $0.section) }.forEach { indexPath in
-							let cell = self.nodeForItem(at: indexPath)
-							updateCellBlock?(indexPath, cell)
-						}
-					} else {
-						reloadItems(at: changeset.elementUpdated.map { IndexPath(row: $0.element, section: $0.section)})
-					}
-				}
-				
-				for (source, target) in changeset.elementMoved {
-					moveItem(at: IndexPath(item: source.element, section: source.section), to: IndexPath(item: target.element, section: target.section))
-				}
-			}
-			performAction()
-		}) { finished in
-			if !animated {
-				CATransaction.commit()
-			}
-			
-			completion?(finished)
-		}
-		
 		for changeset in stagedChangeset {
-			performBatchUpdates({
+			if let interrupt = interrupt, interrupt(changeset), let data = stagedChangeset.last?.data {
+				setData(data)
+				return reloadData()
+			}
+			performBatchUpdates {
 				setData(changeset.data)
 				if !changeset.sectionDeleted.isEmpty {
 					deleteSections(IndexSet(changeset.sectionDeleted))
@@ -123,11 +71,7 @@ public extension ASCollectionNode {
 					moveItem(at: IndexPath(item: source.element, section: source.section), to: IndexPath(item: target.element, section: target.section))
 				}
 				performAction()
-			}) { finished in
-				if !animated {
-					CATransaction.commit()
-				}
-				
+			} completion: { finished in
 				completion?(finished)
 			}
 		}
