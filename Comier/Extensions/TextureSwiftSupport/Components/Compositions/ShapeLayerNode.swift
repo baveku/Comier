@@ -2,6 +2,7 @@
 import Foundation
 
 import AsyncDisplayKit
+import Descriptors
 
 fileprivate final class BackingShapeLayerNode : ASDisplayNode {
   

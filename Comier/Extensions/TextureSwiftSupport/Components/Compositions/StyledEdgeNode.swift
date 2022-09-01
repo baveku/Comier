@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 
 import AsyncDisplayKit
+import Descriptors
 
 public final class AnyStyledEdgeNode: StyledEdgeNode<ASDisplayNode> {
 
