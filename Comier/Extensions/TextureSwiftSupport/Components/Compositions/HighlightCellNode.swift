@@ -1,5 +1,5 @@
 import AsyncDisplayKit
-import Descriptors
+
 
 /**
  Provides highlighting function without tap handling for CollectionView.

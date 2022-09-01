@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2020 Hiroshi Kimura(Muukii) <muuki.app@gmail.com>
+// Copyright (c) 2021 Hiroshi Kimura(Muukii) <muukii.app@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,42 +19,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import AsyncDisplayKit
+import UIKit
 
+public struct HapticsDescriptor {
 
-fileprivate final class GradientLayerView: UIView {
-  override class var layerClass: AnyClass {
-    CAGradientLayer.self
+  public enum Event: Equatable {
+    case onTouchDownInside
+    case onTouchUpInside
+    case onLongPress
+  }
+
+  private let _onReceiveEvent: (Event) -> Void
+
+  public init(
+    onReceiveEvent: @escaping (Event) -> Void
+  ) {
+    self._onReceiveEvent = onReceiveEvent
+  }
+
+  public func send(event: Event) {
+    _onReceiveEvent(event)
   }
 }
 
-@available(*, deprecated, renamed: "GradientLayerNode")
-public typealias GradientNode = GradientLayerNode
+extension HapticsDescriptor {
 
-open class GradientLayerNode : ASDisplayNode {
-    
-  open override var supportsLayerBacking: Bool {
-    return false
-  }
-  
-  public var gradientLayer: CAGradientLayer {
-    view.layer as! CAGradientLayer
-  }
-  
-  public override init() {
-    super.init()
-    shouldAnimateSizeChanges = false
-    setViewBlock {
-      GradientLayerView()
-    }
-    
-    backgroundColor = .clear
-  }
-  
-  open func setDescriptor(descriptor: LinearGradientDescriptor) {
-    assert(Thread.isMainThread)
-    ASPerformBlockOnMainThread {
-      descriptor.apply(to: (self.view.layer as! CAGradientLayer))
+  public static func impactOnTouchUpInside(
+    style: UIImpactFeedbackGenerator.FeedbackStyle = .light,
+    delay: DispatchTimeInterval = .seconds(0)
+  ) -> Self {
+
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: style)
+
+    return self.init { event in
+      if case .onTouchUpInside = event {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+          feedbackGenerator.impactOccurred()
+        }
+      }
     }
   }
+
 }
