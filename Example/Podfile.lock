@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.5.0)
-  - Comier (0.8.0):
+  - Comier (0.8.1):
     - DifferenceKit
     - Moya (>= 14.0.0)
     - Moya/RxSwift (>= 14.0.0)
@@ -112,7 +112,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
-  Comier: 325b3b05e57d282c68d1886fea063bb3c624aa2e
+  Comier: fe4dc7ad5f6e049c97595fbcffe2f43599f0136e
   DifferenceKit: 5659c430bb7fe45876fa32ce5cba5d6167f0c805
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   IGListKit: fd5a5d21935298f5849fa49d426843cff97b77c7
@@ -132,4 +132,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 0b8da7df4ce0008105ae69ba7aeed6067531d3a8
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
