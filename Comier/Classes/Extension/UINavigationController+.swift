@@ -9,6 +9,11 @@ import Foundation
 import UIKit
 
 public extension UINavigationController {
+    func setViewControllers(_ vcs: [UIViewController], animated: Bool, completion: (() -> Void)? = nil) {
+        setViewControllers(vcs, animated: animated)
+        callCompletion(animated: animated, completion: completion)
+    }
+
     func pushViewController(_ vc: UIViewController, animated: Bool, completion: (() -> Void)? = nil) {
         pushViewController(vc, animated: animated)
         callCompletion(animated: animated, completion: completion)
