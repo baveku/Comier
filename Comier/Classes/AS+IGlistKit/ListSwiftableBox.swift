@@ -6,7 +6,13 @@ public protocol ListSwiftable {
     func isEqual(to value: ListSwiftable) -> Bool
 }
 
-final class ListDiffableBox: ListDiffable {
+public extension ListSwiftable {
+    func isEqual(to value: ListSwiftable) -> Bool {
+        return true
+    }
+}
+
+public final class ListDiffableBox: ListDiffable {
 
     /**
      The boxed value.

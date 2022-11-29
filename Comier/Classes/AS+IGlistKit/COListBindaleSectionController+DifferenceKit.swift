@@ -56,7 +56,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             if let cell = cell as? ListBindable {
                 cell.bindViewModel(cellModel)
             }
-            return cell ?? COCellNode<ListDiffable>()
+            return cell ?? ASCellNode()
         }
         return block
     }
@@ -189,6 +189,29 @@ open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
     
     open func bindViewModel(_ viewModel: Any) {
         guard let vm = viewModel as? M else {return}
+        self.viewModel = vm
+        binding(vm)
+    }
+    
+    public override init() {
+        super.init()
+        self.automaticallyManagesSubnodes = true
+        neverShowPlaceholders = true
+    }
+    
+    open func binding(_ viewModel: M) {}
+}
+
+open class SCellNode<M: ListSwiftable>: ASCellNode, ListBindable {
+    public var viewModel: M!
+    
+    public func bindViewModel(_ viewModel: Any) {
+        var vm: M!
+        if let castVM = viewModel as? M {
+            vm = castVM
+        } else if let box = viewModel as? ListDiffableBox {
+            vm = box.value as! M
+        }
         self.viewModel = vm
         binding(vm)
     }
