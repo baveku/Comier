@@ -65,6 +65,12 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         super.init()
     }
     
+    private var datasourceProxy: ASListBindingDataSourceProxy? = nil
+    public func setDataSourceV2(_ datasource: ASSwiftListBindingDataSource) {
+        datasourceProxy = ASListBindingDataSourceProxy(dataSource: datasource)
+        self.dataSource = datasourceProxy
+    }
+    
     public override func numberOfItems() -> Int {
         return viewModels.count
     }
@@ -172,6 +178,10 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             }
         })
     }
+    
+    deinit {
+        datasourceProxy = nil
+    }
 }
 
 open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
@@ -232,70 +242,3 @@ struct DiffBox<T: ListDiffable>: Differentiable {
         return source.value.isEqual(toDiffableObject: value)
     }
 }
-
-
-// OLD DIFF
-//public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
-//    guard self.object != nil else {return}
-//    if self.state != .idle {
-//        completion?(false)
-//        return
-//    }
-//    self.state = .queued
-//
-//    var result: ListIndexSetResult? = nil
-//    let collectionContext = collectionContext
-//    self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
-//        guard let self = self, self.state == .queued else {return}
-//        let object = self.object
-//        let oldViewModels = self.viewModels
-//        let newViewModels = self.dataSource?.viewModels(for: object)
-//        let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
-//        result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
-//        self.viewModels = filterVM
-//        if let updates = result?.updates {
-//            var indexReloads: [Int] = []
-//            for oldIndex in updates {
-//                if shouldUpdateCell {
-//                    let id = oldViewModels[oldIndex].diffIdentifier()
-//                    let indexAfterUpdate = result?.newIndex(forIdentifier: id)
-//                    if let indexAfterUpdate = indexAfterUpdate {
-//                        if let cell = collectionContext?.nodeForItem(at: oldIndex, section: self) {
-//                            let node = cell as? ListBindable
-//                            node?.bindViewModel(filterVM[indexAfterUpdate])
-//                        } else {
-//                            indexReloads.append(oldIndex)
-//                        }
-//                    }
-//                } else {
-//                    indexReloads.append(oldIndex)
-//                }
-//            }
-//            batchContext.reload(in: self, at: IndexSet(indexReloads))
-//        }
-//
-//        if let ex = self.collectionContext?.experiments, let updates = result?.updates, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
-//            batchContext.invalidateLayout(in: self, at: updates)
-//        }
-//
-//        if let inserts = result?.inserts {
-//            batchContext.insert(in: self, at: inserts)
-//        }
-//
-//        if let deletes = result?.deletes {
-//            batchContext.delete(in: self, at: deletes)
-//        }
-//
-//        if let moves = result?.moves {
-//            for move in moves {
-//                batchContext.move(in: self, from: move.from, to: move.to)
-//            }
-//        }
-//
-//
-//        self.state = .applied
-//    }, completion: { (finished) in
-//        self.state = .idle
-//        completion?(finished)
-//    })
-//}
