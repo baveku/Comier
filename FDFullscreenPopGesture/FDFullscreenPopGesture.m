@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import "FDFullscreenPopGesture.h"
+#import "include/FDFullscreenPopGesture/FDFullscreenPopGesture.h"
 #import <objc/runtime.h>
 
 @interface _FDFullscreenPopGestureRecognizerDelegate : NSObject <UIGestureRecognizerDelegate>
