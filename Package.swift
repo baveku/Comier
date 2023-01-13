@@ -6,7 +6,7 @@ let package = Package(
 	platforms: [.iOS(.v10)],
 	products: [
         .library(name: "Comier",
-                 type: .static,
+                 type: .dynamic,
                  targets: ["Comier", "FDFullscreenPopGesture"]
         )
     ],
@@ -22,7 +22,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "Comier",
-                dependencies: ["Swinject", "NVActivityIndicatorView","DifferenceKit", "ObjectMapper", "FDFullscreenPopGesture",
+                dependencies: ["Swinject", "NVActivityIndicatorView", "DifferenceKit", "ObjectMapper", "FDFullscreenPopGesture",
                     .product(name: "Moya", package: "Moya"),
                     .product(name: "RxMoya", package: "Moya"),
                     .product(name: "AsyncDisplayKit", package: "Texture"),

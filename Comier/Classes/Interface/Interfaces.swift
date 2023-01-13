@@ -6,10 +6,9 @@
 //  Copyright © 2020 BachVQ. All rights reserved.
 //
 
-//import UIKit
+import UIKit
 import RxSwift
 import Swinject
-import IGListKit
 import AsyncDisplayKit
 import RxCocoa
 import Foundation
@@ -32,11 +31,6 @@ public protocol IViewModel: Interface {
     func viewModelDidLoad()
 }
 
-public protocol IListViewModel: IViewModel {
-    associatedtype Element: ListDiffable
-    var elements: BehaviorSubject<[Element]> { get }
-    func bindToAdapter(_ adapter: ListAdapter) -> Disposable
-}
 public protocol IReusableView: Interface, Class where Self: UIView {
     func prepareForReuse()
 }
