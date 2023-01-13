@@ -19,15 +19,6 @@
       }
     },
     {
-      "identity" : "iglistkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Instagram/IGListKit",
-      "state" : {
-        "branch" : "main",
-        "revision" : "a1b9c2ddb3fee9dd09d14ae2f54e54cb27a9ae84"
-      }
-    },
-    {
       "identity" : "moya",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Moya/Moya",

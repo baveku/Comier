@@ -11,7 +11,6 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/Instagram/IGListKit", branch: "main"),
         .package(url: "https://github.com/shimastripe/Texture.git", from: .init(3, 1, 1)),
         .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift", from: "6.5.0"),
@@ -23,12 +22,10 @@ let package = Package(
     ],
     targets: [
         .target(name: "Comier",
-                dependencies: ["Swinject", "NVActivityIndicatorView","DifferenceKit", "ObjectMapper",
+                dependencies: ["Swinject", "NVActivityIndicatorView","DifferenceKit", "ObjectMapper", "FDFullscreenPopGesture",
                     .product(name: "Moya", package: "Moya"),
                     .product(name: "RxMoya", package: "Moya"),
                     .product(name: "AsyncDisplayKit", package: "Texture"),
-                    .product(name: "IGListKit", package: "IGListKit"),
-                    .product(name: "IGListDiffKit", package: "IGListKit"),
                     .product(name: "Promises", package: "Promises"),
                     .product(name: "RxCocoa", package: "RxSwift"),
                     .product(name: "RxRelay", package: "RxSwift"),
