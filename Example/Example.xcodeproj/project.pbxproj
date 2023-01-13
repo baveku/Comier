@@ -49,6 +49,7 @@
 		FBAAD2152971677200F6FB48 /* ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBAAD2192971677200F6FB48 /* ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITests.swift; sourceTree = "<group>"; };
 		FBAAD21B2971677200F6FB48 /* ExampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FBAAD2292971679C00F6FB48 /* Comier */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Comier; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +80,7 @@
 		FBAAD1EC2971677000F6FB48 = {
 			isa = PBXGroup;
 			children = (
+				FBAAD2282971679C00F6FB48 /* Packages */,
 				FBAAD1F72971677000F6FB48 /* Example */,
 				FBAAD20E2971677200F6FB48 /* ExampleTests */,
 				FBAAD2182971677200F6FB48 /* ExampleUITests */,
@@ -125,6 +127,14 @@
 				FBAAD21B2971677200F6FB48 /* ExampleUITestsLaunchTests.swift */,
 			);
 			path = ExampleUITests;
+			sourceTree = "<group>";
+		};
+		FBAAD2282971679C00F6FB48 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				FBAAD2292971679C00F6FB48 /* Comier */,
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
