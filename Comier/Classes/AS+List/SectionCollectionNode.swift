@@ -11,6 +11,7 @@ import DifferenceKit
 
 public protocol SectionDataSource: AnyObject {
     var viewModels: [any Differentiable] {get set}
+    func viewModels(by section: any Differentiable) -> [any Differentiable]
     func nodeBlockForItem(for model: any Differentiable) -> ASCellNodeBlock
     func nodeItemDidUpdate(new: any Differentiable)
 }
@@ -19,11 +20,55 @@ public protocol SectionDelegate: AnyObject {
     func didSelectItem(at indexPath: IndexPath)
 }
 
-public class SectionController: NSObject {
+
+open class ATSectionController<T: Differentiable>: AXSectionController {
+    public var model: T?
+    public override func didUpdate(section: any Differentiable) {
+        guard let value = section as? T else {return}
+        didUpdate(value: value)
+    }
+    
+    open func didUpdate(value: T) {
+        let canUpdate = model != nil
+        self.model = value
+        if canUpdate {
+            performUpdates()
+        } else if let dataSource {
+            dataSource.viewModels = dataSource.viewModels(by: value)
+        }
+    }
+    
+    public override func performUpdates() {
+        guard let dataSource, let model else  {
+            return super.performUpdates()
+        }
+        let old = dataSource.viewModels.map({ AnyDifferentiable($0) })
+        let new = dataSource.viewModels(by: model)
+        let newMapping = new.map({AnyDifferentiable($0)})
+        let stage = StagedChangeset(source: newMapping, target: old, section: section)
+        collectionNode?.reload(using: stage, updateCellBlock: { [weak self] index, cell in
+            self?.didUpdateCell(indexPath: index, cell: cell)
+        },setData: { c in
+            dataSource.viewModels = new
+        })
+    }
+    
+    private func didUpdateCell(indexPath: IndexPath, cell: ASCellNode?) {
+        guard let cell = cell as? AXCellBindable else {
+            return
+        }
+        if let model = self.dataSource?.viewModels[indexPath.item] {
+            cell.didUpdate(model)
+        } else {
+            collectionNode?.reloadItems(at: [indexPath])
+        }
+    }
+}
+
+open class AXSectionController: NSObject {
     public weak var delegate: SectionDelegate?
     public weak var dataSource: SectionDataSource?
     public weak var collectionNode: ASCollectionNode?
-    
     public var section: Int = 0
     
     public override init() {
@@ -32,24 +77,24 @@ public class SectionController: NSObject {
     
     public func didUpdate(section: any Differentiable) {}
     
-    public func supplementaryElementKinds() -> [String] {
+    open func supplementaryElementKinds() -> [String] {
         return []
     }
     
     
-    public func numberOfItem() -> Int {
+    open func numberOfItem() -> Int {
         if let dataSource {
             return dataSource.viewModels.count
         }
         
-        return 1
+        return 0
     }
     
-    public func nodeBlockForSupplementaryElement(kind: String) -> ASCellNodeBlock {
+    open func nodeBlockForSupplementaryElement(kind: String) -> ASCellNodeBlock {
         return {ASCellNode()}
     }
     
-    public func nodeBlockForItemAt(at index: Int) -> ASCellNodeBlock {
+    open func nodeBlockForItemAt(at index: Int) -> ASCellNodeBlock {
         if let dataSource {
             let model = dataSource.viewModels[index]
             return dataSource.nodeBlockForItem(for: model)
@@ -57,15 +102,23 @@ public class SectionController: NSObject {
             return {ASCellNode()}
         }
     }
+    
+    public func refCellNode(by index: Int) -> ASCellNode? {
+        return collectionNode?.nodeForItem(at: .init(item: index, section: section))
+    }
+    
+    public func performUpdates() {
+        collectionNode?.reloadSections(.init([section]))
+    }
 }
 
 public protocol ASSectionControllerDataSource: AnyObject {
-    func sectionController(by model: Any) -> SectionController
+    func sectionController(by model: Any) -> AXSectionController
 }
 
 public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSource, ASCollectionDelegate {
     private let collectionNode: ASCollectionNode
-    private var sectionControllers: [SectionController] = []
+    private var sectionControllers: [AXSectionController] = []
     private var _models: [AnyDifferentiable] = []
     
     public weak var dataSource: ASSectionControllerDataSource? = nil
@@ -108,7 +161,7 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
                 if !changeset.elementInserted.isEmpty {
                     for item in changeset.elementInserted {
                         let model = self._models[item.element].base as! (any Differentiable)
-                        let section = self.dataSource?.sectionController(by: model) ?? SectionController()
+                        let section = self.dataSource?.sectionController(by: model) ?? AXSectionController()
                         section.collectionNode = self.collectionNode
                         self.sectionControllers.insert(section, at: item.element)
                     }
@@ -165,4 +218,17 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
     public func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNodeBlock {
         return sectionControllers[indexPath.section].nodeBlockForSupplementaryElement(kind: kind)
     }
+}
+
+public protocol AXCellBindable: AnyObject {
+    func didUpdate(_ model: any Differentiable)
+}
+
+open class AXCellNode<T: Differentiable>: ASMCellNode, AXCellBindable {
+    public func didUpdate(_ newValue: any Differentiable) {
+        guard let castItem = newValue as? T else {return}
+        didUpdate(castItem)
+    }
+    
+    open func didUpdate(_ model: T) {}
 }
