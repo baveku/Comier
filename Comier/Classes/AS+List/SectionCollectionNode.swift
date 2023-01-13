@@ -80,6 +80,15 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
         collectionNode.dataSource = self
     }
     
+    public override var backgroundColor: UIColor? {
+        get {
+            return collectionNode.backgroundColor
+        }
+        set {
+            collectionNode.backgroundColor = newValue
+        }
+    }
+    
     public func performUpdates(_ models: [any Differentiable]) {
         let mapAny = models.map {AnyDifferentiable($0)}
         let stage: StagedChangeset = StagedChangeset(source: _models, target: mapAny, section: 0)

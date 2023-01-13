@@ -6,7 +6,7 @@ let package = Package(
 	platforms: [.iOS(.v10)],
 	products: [
         .library(name: "Comier",
-                 type: .dynamic,
+                 type: .static,
                  targets: ["Comier", "FDFullscreenPopGesture"]
         )
     ],
