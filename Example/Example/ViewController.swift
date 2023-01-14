@@ -10,7 +10,7 @@ import Comier
 import DifferenceKit
 
 class ViewController: UIViewController, ASSectionControllerDataSource {
-    func sectionController(by model: Any) -> AXSectionController {
+    func sectionController(by model: Any) -> AnySectionController {
         return NoteSectionController()
     }
     var section: [MainSection] = [.main("Hellau")]
@@ -98,6 +98,7 @@ class DemoCellNode: ATCellNode<CellModel> {
     
     override func didUpdate(_ model: CellModel) {
         super.didUpdate(model)
+        backgroundColor = .brown
         textNode.attributedText = NSMutableAttributedString(string: model.value).color(.black)
     }
     

@@ -9,132 +9,10 @@ import Foundation
 import AsyncDisplayKit
 import DifferenceKit
 
-public protocol ATListBindableDataSource: AnyObject {
-    var viewModels: [any Differentiable] {get set}
-    func viewModels(by section: any Differentiable) -> [any Differentiable]
-    func nodeForItem(for model: any Differentiable) -> ASCellNode
-}
-
-public protocol ATListBindableDelegate: AnyObject {
-    func didSelectItem(at indexPath: IndexPath)
-}
-
-
-open class ATListBindableSectionController<T: Differentiable>: AXSectionController {
-    public typealias SectionModel = T
-    public var model: T?
-    public weak var delegate: ATListBindableDelegate?
-    public weak var dataSource: (any ATListBindableDataSource)?
-    public override func didUpdate(section: any Differentiable) {
-        guard let value = section as? T else {return}
-        didUpdate(value: value)
-    }
-    
-    open func didUpdate(value: T) {
-        let canUpdate = model != nil
-        self.model = value
-        if canUpdate {
-            performUpdates()
-        } else if let dataSource {
-            dataSource.viewModels = dataSource.viewModels(by: value)
-        }
-    }
-    
-    public override func performUpdates() {
-        guard let dataSource, let model else  {
-            return super.performUpdates()
-        }
-        let old = dataSource.viewModels.map({ AnyDifferentiable($0) })
-        let new = dataSource.viewModels(by: model)
-        let newMapping = new.map({AnyDifferentiable($0)})
-        let stage = StagedChangeset(source: newMapping, target: old, section: section)
-        collectionNode?.reload(using: stage, updateCellBlock: { [weak self] index, cell in
-            self?.didUpdateCell(indexPath: index, cell: cell)
-        },setData: { c in
-            dataSource.viewModels = new
-        })
-    }
-    
-    private func didUpdateCell(indexPath: IndexPath, cell: ASCellNode?) {
-        guard let cell = cell as? AXCellBindable else {
-            return
-        }
-        if let model = self.dataSource?.viewModels[indexPath.item] {
-            cell.didUpdate(newValue: model)
-        } else {
-            collectionNode?.reloadItems(at: [indexPath])
-        }
-    }
-    
-    open override func nodeBlockForItemAt(at index: Int) -> ASCellNodeBlock {
-        if let dataSource {
-            let model = dataSource.viewModels[index]
-            return {
-                let node = dataSource.nodeForItem(for: model)
-                if let node = node as? AXCellBindable {
-                    node.didUpdate(newValue: model)
-                }
-                return node
-            }
-        } else {
-            return super.nodeBlockForItemAt(at: index)
-        }
-    }
-    
-    open override func numberOfItem() -> Int {
-        return dataSource?.viewModels.count ?? super.numberOfItem()
-    }
-}
-
-open class AXSectionController: NSObject {
-    public weak var collectionNode: ASCollectionNode?
-    public var section: Int = 0
-    
-    public override init() {
-        super.init()
-    }
-    
-    public func didUpdate(section: any Differentiable) {}
-    
-    open func supplementaryElementKinds() -> [String] {
-        return []
-    }
-    
-    
-    open func numberOfItem() -> Int {
-        return 0
-    }
-    
-    open func nodeBlockForSupplementaryElement(kind: String) -> ASCellNodeBlock {
-        return {ASCellNode()}
-    }
-    
-    open func nodeBlockForItemAt(at index: Int) -> ASCellNodeBlock {
-        return {ASCellNode()}
-    }
-    
-    public func refCellNode(by index: Int) -> ASCellNode? {
-        return collectionNode?.nodeForItem(at: .init(item: index, section: section))
-    }
-    
-    public func performUpdates() {
-        collectionNode?.reloadSections(.init([section]))
-    }
-    
-    public func sizeForItem(at: Int) -> ASSizeRange {
-        guard let collectionNode else {return .init(min: .zero, max: .init(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))}
-        let isHorizontal = collectionNode.scrollDirection.contains(.right)
-        return .init(min: .zero, max: .init(width: isHorizontal ? CGFloat.greatestFiniteMagnitude : collectionNode.frame.width, height: isHorizontal ? collectionNode.frame.height : .greatestFiniteMagnitude))
-    }
-}
-
-public protocol ASSectionControllerDataSource: AnyObject {
-    func sectionController(by model: Any) -> AXSectionController
-}
 
 public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSource, ASCollectionDelegate {
     private let collectionNode: ASCollectionNode
-    private var sectionControllers: [AXSectionController] = []
+    private var sectionControllers: [BaseSectionController] = []
     private var _models: [AnyDifferentiable] = []
     
     public weak var dataSource: ASSectionControllerDataSource? = nil
@@ -247,7 +125,7 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
     
     public func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         let section = sectionControllers[indexPath.section]
-        return section.nodeBlockForItemAt(at: indexPath.item)
+        return section._nodeBlockForItemAt(at: indexPath.item)
     }
     
     public func collectionNode(_ collectionNode: ASCollectionNode, supplementaryElementKindsInSection section: Int) -> [String] {
@@ -256,11 +134,19 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
     }
     
     public func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNodeBlock {
-        return sectionControllers[indexPath.section].nodeBlockForSupplementaryElement(kind: kind)
+        return sectionControllers[indexPath.section]._nodeBlockForSupplementaryElement(kind: kind)
     }
     
     public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
-        return sectionControllers[indexPath.section].sizeForItem(at: indexPath.item)
+        return sectionControllers[indexPath.section]._sizeForItem(at: indexPath.item)
+    }
+    
+    public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
+        return sectionControllers[indexPath.section]._didSelected(at: indexPath.item)
+    }
+    
+    public func collectionNode(_ collectionNode: ASCollectionNode, didDeselectItemAt indexPath: IndexPath) {
+        return sectionControllers[indexPath.section]._didDeselected(at: indexPath.item)
     }
 }
 
