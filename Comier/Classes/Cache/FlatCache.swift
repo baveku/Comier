@@ -19,11 +19,11 @@ public protocol FlatCachable {
 public protocol Cachable: FlatCachable { }
 
 public extension Cachable where Self: Cachable {
-    public func save() {
+    func save() {
         cacheCtx.set(value: self)
     }
 
-    public var cacheValue: Self? {
+    var cacheValue: Self? {
         return cacheCtx.get(id: self.cacheID)
     }
 }

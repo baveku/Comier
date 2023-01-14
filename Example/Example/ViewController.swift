@@ -11,38 +11,51 @@ import DifferenceKit
 
 class ViewController: UIViewController, ASSectionControllerDataSource {
     func sectionController(by model: Any) -> AXSectionController {
-        return .init()
+        return NoteSectionController()
     }
     var section: [MainSection] = [.main("Hellau")]
-    let node = ASDisplayNode()
+    
+    let collectionNode = ASSectionCollectionNode(layout: UICollectionViewFlowLayout())
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        let collectionNode = ASSectionCollectionNode(layout: UICollectionViewFlowLayout())
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshAction(_:)), for: .valueChanged)
         collectionNode.frame = view.bounds
         view.addSubview(collectionNode.view)
+        collectionNode.setRefreshControl(refreshControl)
         collectionNode.dataSource = self
+        collectionNode.performUpdates([MainSection.main("Hello")])
+    }
+    
+    @objc func refreshAction(_ control: UIRefreshControl) {
+        let randomStr = ["sss", "abc", "xyz", "123456789"].randomElement() ?? "Hello"
+        collectionNode.performUpdates([MainSection.main(randomStr)]) {
+            control.endRefreshing()
+        }
     }
 }
 
-class NoteSectionController: ATSectionController<MainSection> {
+class NoteSectionController: ATListBindableSectionController<MainSection>, ATListBindableDataSource {
+    var viewModels: [any Differentiable] = []
     
-    override func didUpdate(value: MainSection) {
-        if case .main(let string) = value {
-            let cell = refCellNode(by: 0) as? DemoCellNode
-            
+    func nodeForItem(for model: any Differentiable) -> ASCellNode {
+        switch model {
+        case is CellModel:
+            return DemoCellNode()
+        default:
+            return ASCellNode()
         }
     }
     
-    override func numberOfItem() -> Int {
-        return 1
+    override init() {
+        super.init()
+        dataSource = self
     }
     
-    override func nodeBlockForItemAt(at index: Int) -> ASCellNodeBlock {
-        return {
-            DemoCellNode()
-        }
+    func viewModels(by section: any Differentiable) -> [any Differentiable] {
+        guard case .main(let str) = section as? SectionModel else {return []}
+        return [CellModel(value: str)]
     }
 }
 
@@ -68,6 +81,31 @@ extension MainSection: Differentiable {
     }
 }
 
-class DemoCellNode: ASMCellNode {
+struct CellModel: Differentiable {
+    func isContentEqual(to source: CellModel) -> Bool {
+        return value == source.value
+    }
+    
+    let value: String
+    typealias DifferenceIdentifier = String
+    var differenceIdentifier: String {
+        return "CELL_MODEL"
+    }
+}
+
+class DemoCellNode: ATCellNode<CellModel> {
     let textNode = ASTextNode()
+    
+    override func didUpdate(_ model: CellModel) {
+        super.didUpdate(model)
+        textNode.attributedText = NSMutableAttributedString(string: model.value).color(.black)
+    }
+    
+    override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        LayoutSpec {
+            VStackLayout {
+                textNode
+            }.height(100).width(100)
+        }
+    }
 }

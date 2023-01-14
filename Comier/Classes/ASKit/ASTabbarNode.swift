@@ -63,7 +63,7 @@ open class ASTabItem: ASControlNode {
     }
 }
 
-public protocol ASTabbarDelegate: class {
+public protocol ASTabbarDelegate: AnyObject {
     func tabbar(_ tab: ASTabbarNode, didSelectTab atIndex: Int, willReload flag: Bool)
 }
 
