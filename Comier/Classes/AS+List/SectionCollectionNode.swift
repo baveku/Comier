@@ -120,6 +120,12 @@ open class AXSectionController: NSObject {
     public func performUpdates() {
         collectionNode?.reloadSections(.init([section]))
     }
+    
+    public func sizeForItem(at: Int) -> ASSizeRange {
+        guard let collectionNode else {return .init(min: .zero, max: .init(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))}
+        let isHorizontal = collectionNode.scrollDirection.contains(.right)
+        return .init(min: .zero, max: .init(width: isHorizontal ? CGFloat.greatestFiniteMagnitude : collectionNode.frame.width, height: isHorizontal ? collectionNode.frame.height : .greatestFiniteMagnitude))
+    }
 }
 
 public protocol ASSectionControllerDataSource: AnyObject {
@@ -254,7 +260,7 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
     }
     
     public func collectionNode(_ collectionNode: ASCollectionNode, constrainedSizeForItemAt indexPath: IndexPath) -> ASSizeRange {
-        return .init(min: .zero, max: .init(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+        return sectionControllers[indexPath.section].sizeForItem(at: indexPath.item)
     }
 }
 

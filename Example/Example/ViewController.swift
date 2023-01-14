@@ -102,10 +102,11 @@ class DemoCellNode: ATCellNode<CellModel> {
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        LayoutSpec {
+        print("CONSTREAINED SIZE", constrainedSize)
+        return LayoutSpec {
             VStackLayout {
                 textNode
-            }.height(100).width(100)
+            }
         }
     }
 }
