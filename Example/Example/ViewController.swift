@@ -61,7 +61,7 @@ class NoteSectionController: ATListBindableSectionController<MainSection>, ATLis
     override func sizeForCell(_ model: any Differentiable, at index: Int) -> ASSizeRange? {
         switch model {
         case is CellModel:
-            return .init(fixedWidth: collectionNode.frame.widths)
+            return .init(fixedWidth: collectionNode.frame.width)
         default:
             return super.sizeForCell(model, at: index)
         }
