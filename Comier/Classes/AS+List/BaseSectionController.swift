@@ -15,7 +15,7 @@ public protocol ASSectionControllerDataSource: AnyObject {
 }
 
 open class BaseSectionController: NSObject {
-    public weak var collectionNode: ASCollectionNode?
+    public weak var collectionNode: ASCollectionNode!
     public var section: Int = 0
     
     public override init() {

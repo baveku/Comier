@@ -12,6 +12,16 @@ import RxSwift
 import RxCocoa
 import NVActivityIndicatorView
 
+extension ASSizeRange {
+    public init(fixedWidth: CGFloat) {
+        self.init(width: fixedWidth, height: 0...CGFloat.greatestFiniteMagnitude)
+    }
+    
+    public init(fixedHeight: CGFloat) {
+        self.init(width: 0...CGFloat.greatestFiniteMagnitude, height: fixedHeight)
+    }
+}
+
 open class ASActivityButtonNode: ASButtonNode {
     public let activity: ASDisplayNode = {
         let ac = ASDisplayNode { () -> UIView in

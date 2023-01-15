@@ -57,8 +57,16 @@ class NoteSectionController: ATListBindableSectionController<MainSection>, ATLis
         guard case .main(let str) = section as? SectionModel else {return []}
         return [CellModel(value: str)]
     }
+    
+    override func sizeForCell(_ model: any Differentiable, at index: Int) -> ASSizeRange? {
+        switch model {
+        case is CellModel:
+            return .init(fixedWidth: collectionNode.frame.widths)
+        default:
+            return super.sizeForCell(model, at: index)
+        }
+    }
 }
-
 
 enum MainSection {
     case main(String)

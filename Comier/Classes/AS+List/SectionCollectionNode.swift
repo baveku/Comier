@@ -24,7 +24,8 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
     public init(layout: UICollectionViewLayout) {
         collectionNode = .init(collectionViewLayout: layout)
         super.init()
-        automaticallyManagesSubnodes = true
+        addSubnode(collectionNode)
+        collectionNode.frame = bounds
         automaticallyRelayoutOnSafeAreaChanges = true
         collectionNode.automaticallyRelayoutOnSafeAreaChanges = true
         collectionNode.delegate = self
@@ -37,6 +38,15 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
         }
         set {
             collectionNode.backgroundColor = newValue
+        }
+    }
+    
+    public override var frame: CGRect {
+        didSet {
+            if frame != oldValue {
+                collectionNode.frame = bounds
+                collectionNode.relayoutItems()
+            }
         }
     }
     
@@ -105,12 +115,6 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
             }
         } completion: { _ in
             completion?()
-        }
-    }
-    
-    public override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        LayoutSpec {
-            collectionNode.flexGrow(1)
         }
     }
     
