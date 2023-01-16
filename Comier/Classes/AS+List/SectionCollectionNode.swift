@@ -154,16 +154,24 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
     }
 }
 
-public protocol AXCellBindable: AnyObject {
+protocol CellBindable {
+    
+}
+
+protocol BaseCellBindable: AnyObject {
     func didUpdate(newValue: any Differentiable)
 }
 
-open class AXCellNode: ASMCellNode, AXCellBindable {
-    public func didUpdate(newValue: any Differentiable) {}
+open class BaseAXCellNode: ASMCellNode, BaseCellBindable {
+    func didUpdate(newValue: any Differentiable) {}
 }
 
-open class ATCellNode<T: Differentiable>: AXCellNode {
-    public override func didUpdate(newValue: any Differentiable) {
+open class AXCellNode: BaseAXCellNode {
+    override func didUpdate(newValue: any Differentiable) {}
+}
+
+open class ATCellNode<T: Differentiable>: BaseAXCellNode {
+    override func didUpdate(newValue: any Differentiable) {
         guard let castItem = newValue as? T else {return}
         didUpdate(castItem)
     }

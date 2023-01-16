@@ -56,7 +56,7 @@ open class ATListBindableSectionController<T: Differentiable>: BaseSectionContro
     }
     
     private func didUpdateCell(indexPath: IndexPath, cell: ASCellNode?) {
-        guard let cell = cell as? AXCellBindable else {
+        guard let cell = cell as? BaseCellBindable else {
             return
         }
         if let model = self.dataSource?.viewModels[indexPath.item] {
@@ -71,7 +71,7 @@ open class ATListBindableSectionController<T: Differentiable>: BaseSectionContro
             let model = dataSource.viewModels[index]
             return {
                 let node = dataSource.nodeForItem(for: model)
-                if let node = node as? AXCellBindable {
+                if let node = node as? BaseCellBindable {
                     node.didUpdate(newValue: model)
                 }
                 return node

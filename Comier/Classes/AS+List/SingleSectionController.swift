@@ -9,16 +9,28 @@ import Foundation
 import DifferenceKit
 import AsyncDisplayKit
 
-open class SingleNodeSectionController: BaseSectionController {
-    let cellBlock: ASCellNodeBlock
-    public init(cellBlock: @escaping ASCellNodeBlock) {
+open class SingleNodeSectionController<T: Differentiable>: BaseSectionController {
+    public typealias SectionModel = T
+    var base: SectionModel!
+    let cellBlock: (_ section: any Differentiable) -> ASCellNode
+    public init(cellBlock: @escaping (_ section: any Differentiable) -> ASCellNode) {
         self.cellBlock = cellBlock
         super.init()
     }
     
-    public init(viewBlock: @escaping ASDisplayNodeViewBlock) {
-        self.cellBlock = {
-            return ASCellNode(viewBlock: viewBlock)
+    public override func didUpdate(section: any Differentiable) {
+        let willUpdate = base != nil
+        self.base = section as? SectionModel
+        if willUpdate {
+            reload()
+        }
+    }
+    
+    public init(viewBlock: @escaping (_ section: any Differentiable) -> UIView) {
+        self.cellBlock = { section in
+            return ASCellNode {
+                return viewBlock(section)
+            }
         }
         super.init()
     }
@@ -28,7 +40,14 @@ open class SingleNodeSectionController: BaseSectionController {
     }
     
     override func _nodeBlockForItemAt(at index: Int) -> ASCellNodeBlock {
-        return cellBlock
+        let cellBlock = cellBlock
+        if let section = base {
+            return {
+                cellBlock(section)
+            }
+        } else {
+            return {ASCellNode()}
+        }
     }
     
     override func _sizeForItem(at index: Int) -> ASSizeRange {

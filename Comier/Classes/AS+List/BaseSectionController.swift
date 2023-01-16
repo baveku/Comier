@@ -59,6 +59,14 @@ open class BaseSectionController: NSObject {
         return .init(min: .zero, max: .init(width: isHorizontal ? CGFloat.greatestFiniteMagnitude : collectionNode.frame.width, height: isHorizontal ? collectionNode.frame.height : .greatestFiniteMagnitude))
     }
     
+    public func reload() {
+        collectionNode.reloadSections(IndexSet([section]))
+    }
+    
+    public func reloadItems(_ items: [Int]) {
+        collectionNode.reloadItems(at: items.map({.init(item: $0, section: section)}))
+    }
+    
     func _didSelected(at index: Int) {}
     func _didDeselected(at index: Int) {}
 }

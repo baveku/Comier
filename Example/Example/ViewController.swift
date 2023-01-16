@@ -119,3 +119,28 @@ class DemoCellNode: ATCellNode<CellModel> {
         }
     }
 }
+
+struct ImageCellModel: Differentiable {
+    private let id: String
+    let url: String
+    
+    init(id: String, url: String) {
+        self.id = id
+        self.url = url
+    }
+    
+    typealias DifferenceIdentifier = String
+    var differenceIdentifier: String {
+        id
+    }
+    
+    func isContentEqual(to source: ImageCellModel) -> Bool {
+        return url == source.url
+    }
+}
+
+class ImageCellNode: ATCellNode<ImageCellModel> {
+    override func didUpdate(_ model: ImageCellModel) {
+        
+    }
+}
