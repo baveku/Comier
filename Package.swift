@@ -30,7 +30,6 @@ let package = Package(
                     "DifferenceKit", "ObjectMapper",
                     "FDFullscreenPopGesture", "PINCache",
                     "PINOperation", "PINRemoteImage",
-                    .product(name: "libwebp", package: "libwebp-Xcode"),
                     .product(name: "Moya", package: "Moya"),
                     .product(name: "RxMoya", package: "Moya"),
                     .product(name: "AsyncDisplayKit", package: "TextureSPM"),
