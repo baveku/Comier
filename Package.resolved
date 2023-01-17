@@ -82,11 +82,11 @@
       }
     },
     {
-      "identity" : "texture",
+      "identity" : "texturespm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/shimastripe/Texture.git",
+      "location" : "https://github.com/baveku/TextureSPM.git",
       "state" : {
-        "revision" : "ef22942d014ed0f7d0cca9d708e335e06fb1dddb",
+        "revision" : "64a9e474ad0343434de7eacd8cb8582c5762208d",
         "version" : "3.1.1"
       }
     }
