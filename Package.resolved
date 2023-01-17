@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "iglistkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/3a4oT/IGListKit",
+      "state" : {
+        "branch" : "spmNumber10",
+        "revision" : "979eca9b2da15e35af36f4613452dd6e07641969"
+      }
+    },
+    {
       "identity" : "libwebp-xcode",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/libwebp-Xcode.git",
@@ -75,7 +84,7 @@
     {
       "identity" : "pinremoteimage",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pinterest/PINRemoteImage",
+      "location" : "https://github.com/pinterest/PINRemoteImage.git",
       "state" : {
         "revision" : "611d8ab1c6937bcdfd9d59a967716b0370a332be",
         "version" : "3.0.3"
@@ -120,10 +129,10 @@
     {
       "identity" : "texturespm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/baveku/TextureSPM.git",
+      "location" : "https://github.com/baveku/TextureSPM",
       "state" : {
-        "revision" : "64a9e474ad0343434de7eacd8cb8582c5762208d",
-        "version" : "3.1.1"
+        "branch" : "spm",
+        "revision" : "d22484249daea98fe4e6c823216b7780145c396c"
       }
     }
   ],
