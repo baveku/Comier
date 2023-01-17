@@ -21,8 +21,7 @@ let package = Package(
         .package(url: "https://github.com/Moya/Moya", from: "15.0.3"),
         .package(url: "https://github.com/pinterest/PINRemoteImage", .upToNextMajor(from: "3.0.3")),
         .package(url: "https://github.com/pinterest/PINCache.git", .upToNextMajor(from: "3.0.3")),
-        .package(url: "https://github.com/pinterest/PINOperation.git", .upToNextMajor(from: "1.2.2")),
-        .package(url: "https://github.com/SDWebImage/libwebp-Xcode.git", .upToNextMajor(from: "1.2.1"))
+        .package(url: "https://github.com/pinterest/PINOperation.git", .upToNextMajor(from: "1.2.2"))
     ],
     targets: [
         .target(name: "Comier",
