@@ -19,6 +19,24 @@
       }
     },
     {
+      "identity" : "iglistkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/3a4oT/IGListKit",
+      "state" : {
+        "branch" : "spmNumber10",
+        "revision" : "979eca9b2da15e35af36f4613452dd6e07641969"
+      }
+    },
+    {
+      "identity" : "libwebp-xcode",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/libwebp-Xcode",
+      "state" : {
+        "revision" : "4f52fc9b29600a03de6e05af16df0d694cb44301",
+        "version" : "1.2.4"
+      }
+    },
+    {
       "identity" : "moya",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Moya/Moya",
@@ -43,6 +61,33 @@
       "state" : {
         "revision" : "0b96a734de3ea1c87374ae677064f86adb0716ec",
         "version" : "4.2.0"
+      }
+    },
+    {
+      "identity" : "pincache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pinterest/PINCache.git",
+      "state" : {
+        "revision" : "875c654984fb52b47ca65ae70d24852b0003ccd9",
+        "version" : "3.0.3"
+      }
+    },
+    {
+      "identity" : "pinoperation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pinterest/PINOperation.git",
+      "state" : {
+        "revision" : "40504c156a68b20f98f7ddc73a115cbb7893be25",
+        "version" : "1.2.2"
+      }
+    },
+    {
+      "identity" : "pinremoteimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pinterest/PINRemoteImage.git",
+      "state" : {
+        "revision" : "611d8ab1c6937bcdfd9d59a967716b0370a332be",
+        "version" : "3.0.3"
       }
     },
     {
@@ -82,12 +127,12 @@
       }
     },
     {
-      "identity" : "texture",
+      "identity" : "texturespm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/shimastripe/Texture.git",
+      "location" : "https://github.com/baveku/TextureSPM",
       "state" : {
-        "revision" : "ef22942d014ed0f7d0cca9d708e335e06fb1dddb",
-        "version" : "3.1.1"
+        "branch" : "spm",
+        "revision" : "d22484249daea98fe4e6c823216b7780145c396c"
       }
     }
   ],
