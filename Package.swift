@@ -19,10 +19,19 @@ let package = Package(
         .package(url: "https://github.com/ra1028/DifferenceKit", from: "1.3.0"),
         .package(url: "https://github.com/google/promises", from: "2.0.0"),
         .package(url: "https://github.com/Moya/Moya", from: "15.0.3"),
+        .package(url: "https://github.com/pinterest/PINRemoteImage", .upToNextMajor(from: "3.0.3")),
+        .package(url: "https://github.com/pinterest/PINCache.git", .upToNextMajor(from: "3.0.3")),
+        .package(url: "https://github.com/pinterest/PINOperation.git", .upToNextMajor(from: "1.2.2")),
+        .package(url: "https://github.com/SDWebImage/libwebp-Xcode.git", .upToNextMajor(from: "1.2.1"))
     ],
     targets: [
         .target(name: "Comier",
-                dependencies: ["Swinject", "NVActivityIndicatorView", "DifferenceKit", "ObjectMapper", "FDFullscreenPopGesture",
+                dependencies: [
+                    "Swinject", "NVActivityIndicatorView",
+                    "DifferenceKit", "ObjectMapper",
+                    "FDFullscreenPopGesture", "PINCache",
+                    "PINOperation", "PINRemoteImage",
+                    .product(name: "libwebp", package: "libwebp-Xcode"),
                     .product(name: "Moya", package: "Moya"),
                     .product(name: "RxMoya", package: "Moya"),
                     .product(name: "AsyncDisplayKit", package: "TextureSPM"),
