@@ -17,6 +17,7 @@
 		FBAAD21A2971677200F6FB48 /* ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAAD2192971677200F6FB48 /* ExampleUITests.swift */; };
 		FBAAD21C2971677200F6FB48 /* ExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAAD21B2971677200F6FB48 /* ExampleUITestsLaunchTests.swift */; };
 		FBAAD22C297167DC00F6FB48 /* Comier in Frameworks */ = {isa = PBXBuildFile; productRef = FBAAD22B297167DC00F6FB48 /* Comier */; };
+		FBBCDBFC29779263007CDC8B /* PINRemoteImage in Frameworks */ = {isa = PBXBuildFile; productRef = FBBCDBFB29779263007CDC8B /* PINRemoteImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBBCDBFC29779263007CDC8B /* PINRemoteImage in Frameworks */,
 				FBAAD22C297167DC00F6FB48 /* Comier in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,6 +167,7 @@
 			name = Example;
 			packageProductDependencies = (
 				FBAAD22B297167DC00F6FB48 /* Comier */,
+				FBBCDBFB29779263007CDC8B /* PINRemoteImage */,
 			);
 			productName = Example;
 			productReference = FBAAD1F52971677000F6FB48 /* Example.app */;
@@ -238,6 +241,9 @@
 				Base,
 			);
 			mainGroup = FBAAD1EC2971677000F6FB48;
+			packageReferences = (
+				FBBCDBFA29779263007CDC8B /* XCRemoteSwiftPackageReference "PINRemoteImage" */,
+			);
 			productRefGroup = FBAAD1F62971677000F6FB48 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -379,10 +385,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = SWIFT_PACKAGE;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -437,6 +440,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -620,10 +624,26 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		FBBCDBFA29779263007CDC8B /* XCRemoteSwiftPackageReference "PINRemoteImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pinterest/PINRemoteImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		FBAAD22B297167DC00F6FB48 /* Comier */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Comier;
+		};
+		FBBCDBFB29779263007CDC8B /* PINRemoteImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FBBCDBFA29779263007CDC8B /* XCRemoteSwiftPackageReference "PINRemoteImage" */;
+			productName = PINRemoteImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
