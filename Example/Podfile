@@ -28,6 +28,31 @@ def use_flipper
   pod 'boost-for-react-native', :configuration => flipper_configurations
   pod 'OpenSSL-Universal', :configuration => flipper_configurations
 
+  # If you use `use_frameworks!` in your Podfile,
+    # uncomment the below $static_framework array and also
+    # the pre_install section.  This will cause Flipper and
+    # it's dependencies to be built as a static library and all other pods to
+    # be dynamic.
+    #
+    # NOTE Doing this may lead to a broken build if any of these are also
+    #      transitive dependencies of other dependencies and are expected
+    #      to be built as frameworks.
+    #
+     $static_framework = ['FlipperKit', 'Flipper', 'Flipper-Folly',
+        'CocoaAsyncSocket', 'ComponentKit', 'Flipper-DoubleConversion',
+        'Flipper-Glog', 'Flipper-PeerTalk', 'Flipper-RSocket', 'Yoga', 'YogaKit',
+        'CocoaLibEvent', 'OpenSSL-Universal', 'boost-for-react-native', 'Flipper-Fmt']
+
+   pre_install do |installer|
+       Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+       installer.pod_targets.each do |pod|
+           if $static_framework.include?(pod.name)
+             def pod.build_type;
+               Pod::BuildType.static_library
+             end
+           end
+      end
+    end
 end
 
 target 'Example' do
@@ -46,31 +71,6 @@ target 'Example' do
 
   target 'ExampleUITests' do
     # Pods for testing
-  end
-
-  # If you use `use_frameworks!` in your Podfile,
-    # uncomment the below $static_framework array and also
-    # the pre_install section.  This will cause Flipper and
-    # it's dependencies to be built as a static library and all other pods to
-    # be dynamic.
-    #
-    # NOTE Doing this may lead to a broken build if any of these are also
-    #      transitive dependencies of other dependencies and are expected
-    #      to be built as frameworks.
-    #
- $static_framework = ['FlipperKit', 'Flipper', 'Flipper-Folly', 'Flipper-DoubleConversion',
-      'Flipper-Glog', 'Flipper-PeerTalk',
-      'CocoaLibEvent', 'OpenSSL-Universal', 'boost-for-react-native', 'Flipper-Fmt']
-
-  pre_install do |installer|
-    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
-    installer.pod_targets.each do |pod|
-        if $static_framework.include?(pod.name)
-          def pod.build_type;
-            Pod::BuildType.static_library
-          end
-        end
-      end
   end
 end
 
