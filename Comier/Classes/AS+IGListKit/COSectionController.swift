@@ -148,11 +148,17 @@ open class COSectionController: ListSectionController, ASSectionController, List
 
 public extension ListCollectionContext {
     func visibleCellNodes(for section: ListSectionController) -> [ASCellNode] {
-        []
+        return visibleCells(for: section).compactMap({$0.node})
     }
     
     func nodeForItem(at index: Int, section: ListSectionController) -> ASCellNode? {
-        nil
+        return cellForItem(at: index, sectionController: section)?.node
+    }
+}
+
+extension UICollectionViewCell {
+    var node: ASCellNode? {
+        return (contentView.subviews.first as? _ASDisplayView)?.asyncdisplaykit_node as? ASCellNode
     }
 }
 
