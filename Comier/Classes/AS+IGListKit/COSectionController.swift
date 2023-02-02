@@ -192,14 +192,14 @@ extension COSectionController: ListDisplayDelegate, ListWorkingRangeDelegate {
     }
     
     public func listAdapter(_ listAdapter: ListAdapter, willDisplay sectionController: ListSectionController, cell: UICollectionViewCell, at index: Int) {
-        if let self = self as? SectionViewModelable {
-//            self.cellNodeWillDisplay(sectionController, cell: (cell as! _ASCollectionViewCell).node!, at: index)
+        if let self = self as? SectionViewModelable, let node = cell.node {
+            self.cellNodeWillDisplay(sectionController, cell: node, at: index)
         }
     }
     
     public func listAdapter(_ listAdapter: ListAdapter, didEndDisplaying sectionController: ListSectionController, cell: UICollectionViewCell, at index: Int) {
-        if let self = self as? SectionViewModelable {
-//            self.cellNodeDidEndDisplaying(sectionController, cell: (cell as! _ASCollectionViewCell).node!, at: index)
+        if let self = self as? SectionViewModelable, let node = cell.node {
+            self.cellNodeDidEndDisplaying(sectionController, cell: node, at: index)
         }
     }
 }
