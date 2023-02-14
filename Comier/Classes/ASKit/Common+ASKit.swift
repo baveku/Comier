@@ -37,6 +37,15 @@ open class ASActivityButtonNode: ASButtonNode {
     
     public var isLoading = false
     
+    open override func setTitle(_ title: String, with font: UIFont?, with color: UIColor?, for state: UIControl.State) {
+        if let color {
+            ASPerformBlockOnMainThread {
+                self.activityView.color = color
+            }
+        }
+        super.setTitle(title, with: font, with: color, for: state)
+    }
+    
     open func startLoading() {
         guard !isLoading else {return}
         isLoading = true
