@@ -15,6 +15,15 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
     private var sectionControllers: [BaseSectionController] = []
     private var _models: [AnyDifferentiable] = []
     
+    public var inverted: Bool {
+        get {
+            return collectionNode.inverted
+        }
+        set {
+            collectionNode.inverted = newValue
+        }
+    }
+    
     public weak var dataSource: ASSectionControllerDataSource? = nil
     
     public func setRefreshControl(_ control: UIRefreshControl) {
