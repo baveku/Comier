@@ -24,6 +24,10 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
         }
     }
     
+    public func configureCollectionNode(_ block: (ASCollectionNode) -> Void) {
+        block(collectionNode)
+    }
+    
     public weak var dataSource: ASSectionControllerDataSource? = nil
     
     public func setRefreshControl(_ control: UIRefreshControl) {
