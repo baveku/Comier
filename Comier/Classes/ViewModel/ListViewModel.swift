@@ -35,16 +35,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
         super.viewModelDidLoad()
         _perfomUpdatePublishSubject.debounce(.milliseconds(debounceUpdateTime), scheduler: MainScheduler.instance).subscribe(onNext: { [weak self] _ in
             guard let self = self else {return}
-            let completions = self._queueUpdatesCompletion
-            self.adapter?.performUpdates(animated: self._isAnimated) { finished in
-                for completion in completions {
-                    completion?(finished)
-                }
-                if finished {
-                    self._queueUpdatesCompletion = []
-                    self.didFinishedPefromUpdates()
-                }
-            }
+            performViewUpdates()
         }) => disposeBag
     }
 
@@ -59,7 +50,6 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
 	}
 	
     open func performUpdates(_ animated: Bool = true, completion: ((Bool) -> Void)? = nil) {
-        self.elements.accept(mapDataToElement())
         self._isAnimated = animated
         if !performUpdatesAnimated {
             self._isAnimated = false
@@ -69,4 +59,19 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
 	}
     
     open func didFinishedPefromUpdates() {}
+    
+    open func performViewUpdates() {
+        elements.accept(mapDataToElement())
+        let completions = _queueUpdatesCompletion
+        adapter?.performUpdates(animated: self._isAnimated) { [weak self] finished in
+            guard let self else {return}
+            for completion in completions {
+                completion?(finished)
+            }
+            if finished {
+                _queueUpdatesCompletion = []
+                didFinishedPefromUpdates()
+            }
+        }
+    }
 }
