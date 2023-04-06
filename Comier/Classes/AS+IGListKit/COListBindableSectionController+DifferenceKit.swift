@@ -36,12 +36,12 @@ enum SectionState {
 
 open class ASListBindingSectionController<Element: ListDiffable>: COSectionController {
     public typealias SectionModel = Element
-    
+    private var lockCount: Int = 0
     public var viewModels: [ListDiffable] = []
     public var object: SectionModel? = nil
     var state: SectionState = .idle
     
-    var lastWaitForUpdate: (animated: Bool, shouldUpdateCell: Bool, completion: ((Bool) -> Void)?)? = nil
+    var lastWaitForUpdate: (controller: COSectionController?, animated: Bool, shouldUpdateCell: Bool, completion: ((Bool) -> Void)?)? = nil
     
     public weak var dataSource: ASListBindingDataSource? = nil
     public weak var delegate: ASListBindingDelegate? = nil
@@ -108,12 +108,13 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
         guard self.object != nil else {return}
         if self.state != .idle {
-            self.lastWaitForUpdate = (animated, shouldUpdateCell, completion)
+            self.lastWaitForUpdate = (self, animated, shouldUpdateCell, completion)
             return
         }
+        self.state = .queued
         DispatchQueue.global().async { [weak self] in
             guard let self else {return}
-            let object = self.object
+            let object = (self.object as? NSObject)?.copy()
             let newViewModels = self.dataSource?.viewModels(for: object as Any)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
             let boxs = filterVM.map({DiffBox(value: $0)})
@@ -127,6 +128,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     }
     
     private func performUpdate(stageChanged: StagedChangeset<[DiffBox<ListDiffable>]>, animated: Bool, shouldUpdateCell: Bool, completion: ((Bool) -> Void)? = nil) {
+        self.lockCount = stageChanged.count
         for stage in stageChanged {
             self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
                 guard let self = self else {return}
@@ -174,14 +176,18 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                         batchContext.move(in: self, from: move.source.element, to: move.target.element)
                     }
                 }
-                //                self.state = .applied
+                self.state = .applied
             }, completion: { [weak self] (finished) in
-                completion?(finished)
-                //                self?.state = .idle
-                //                if let wait = self?.lastWaitForUpdate {
-                //                    self?.lastWaitForUpdate = nil
-                //                    self?.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
-                //                }
+                self?.lockCount -= 1
+                if self?.lockCount ?? 0 <= 0 {
+                    self?.lockCount = 0
+                    self?.state = .idle
+                    completion?(finished)
+                    if let wait = self?.lastWaitForUpdate {
+                        self?.lastWaitForUpdate = nil
+                        self?.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
+                    }
+                }
             })
         }
     }
