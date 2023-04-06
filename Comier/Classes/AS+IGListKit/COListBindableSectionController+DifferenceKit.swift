@@ -129,7 +129,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     private func performUpdate(stageChanged: StagedChangeset<[DiffBox<ListDiffable>]>, animated: Bool, shouldUpdateCell: Bool, completion: ((Bool) -> Void)? = nil) {
         for stage in stageChanged {
             self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
-                guard let self = self, self.state == .queued else {return}
+                guard let self = self else {return}
                 
                 guard !stageChanged.isEmpty else {return}
                 
