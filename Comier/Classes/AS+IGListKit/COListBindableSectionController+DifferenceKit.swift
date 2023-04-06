@@ -118,7 +118,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
             let boxs = filterVM.map({DiffBox(value: $0)})
             let oldViewModels = viewModels.map({DiffBox(value: $0)})
-            let stageChanged = StagedChangeset(source: boxs, target: oldViewModels)
+            let stageChanged = StagedChangeset(source: oldViewModels, target: boxs)
             DispatchQueue.main.async { [weak self] in
                 guard let self else {return}
                 performUpdate(stageChanged: stageChanged, animated: animated, shouldUpdateCell: shouldUpdateCell, completion: completion)
