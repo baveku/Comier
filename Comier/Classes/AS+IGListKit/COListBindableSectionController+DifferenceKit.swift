@@ -34,6 +34,13 @@ enum SectionState {
     case applied
 }
 
+struct WaitItem {
+    let object: Any?
+    let animated: Bool
+    let shouldUpdateCell: Bool
+    let completion: ((Bool) -> Void)?
+}
+
 open class ASListBindingSectionController<Element: ListDiffable>: COSectionController {
     public typealias SectionModel = Element
     private var lockCount: Int = 0
@@ -41,7 +48,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     public var object: SectionModel? = nil
     var state: SectionState = .idle
     
-    var lastWaitForUpdate: (controller: COSectionController?, animated: Bool, shouldUpdateCell: Bool, completion: ((Bool) -> Void)?)? = nil
+    var lastWaitForUpdate: WaitItem? = nil
     
     public weak var dataSource: ASListBindingDataSource? = nil
     public weak var delegate: ASListBindingDelegate? = nil
@@ -78,13 +85,13 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     
     open override func didUpdate(to object: Any) {
         let firstUpdate = self.object == nil
+        let copyObj = object as? Element
         self.object = object as? Element
-        
         if firstUpdate {
             let viewModels = self.dataSource?.viewModels(for: object)
             self.viewModels = objectsWithDuplicateIdentifiersRemoved(viewModels) ?? []
         } else {
-            self.updateAnimated(animated: willUpdateWithAnimation)
+            self.updateAnimated(object: object as? Element, animated: willUpdateWithAnimation)
         }
     }
     
@@ -105,20 +112,22 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         return ASIGListSectionControllerMethods.cellForItem(at: index, sectionController: self)
     }
     
-    public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
-        guard self.object != nil else {return}
+    public func updateAnimated(object: Any?, animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
+        guard let object else {return}
         if self.state != .idle {
-            self.lastWaitForUpdate = (self, animated, shouldUpdateCell, completion)
+            self.lastWaitForUpdate = .init(object: object, animated: animated, shouldUpdateCell: shouldUpdateCell, completion: completion)
             return
         }
         self.state = .queued
         DispatchQueue.global().async { [weak self] in
             guard let self else {return}
-            let object = (self.object as? NSObject)?.copy()
             let newViewModels = self.dataSource?.viewModels(for: object as Any)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
             let boxs = filterVM.map({DiffBox(value: $0)})
-            let oldViewModels = viewModels.map({DiffBox(value: $0)})
+            let oldViewModels = viewModels.map({item in
+                let copy = item
+                return DiffBox(value: copy)
+            })
             let stageChanged = StagedChangeset(source: oldViewModels, target: boxs)
             DispatchQueue.main.async { [weak self] in
                 guard let self else {return}
@@ -131,10 +140,8 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         self.lockCount = stageChanged.count
         for stage in stageChanged {
             self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
-                guard let self = self else {return}
-                
+                guard let self = self, self.state != .idle else {return}
                 guard !stageChanged.isEmpty else {return}
-                
                 let changeData = stage.data.map({$0.value})
                 self.viewModels = changeData
                 
@@ -185,7 +192,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                     completion?(finished)
                     if let wait = self?.lastWaitForUpdate {
                         self?.lastWaitForUpdate = nil
-                        self?.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
+                        self?.updateAnimated(object: wait.object ,animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
                     }
                 }
             })
