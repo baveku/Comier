@@ -111,7 +111,6 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             self.lastWaitForUpdate = (animated, shouldUpdateCell, completion)
             return
         }
-        self.state = .queued
         DispatchQueue.global().async { [weak self] in
             guard let self else {return}
             let object = self.object
@@ -175,14 +174,14 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                         batchContext.move(in: self, from: move.source.element, to: move.target.element)
                     }
                 }
-                self.state = .applied
+//                self.state = .applied
             }, completion: { [weak self] (finished) in
                 completion?(finished)
-                self?.state = .idle
-                if let wait = self?.lastWaitForUpdate {
-                    self?.lastWaitForUpdate = nil
-                    self?.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
-                }
+//                self?.state = .idle
+//                if let wait = self?.lastWaitForUpdate {
+//                    self?.lastWaitForUpdate = nil
+//                    self?.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
+//                }
             })
         }
     }
