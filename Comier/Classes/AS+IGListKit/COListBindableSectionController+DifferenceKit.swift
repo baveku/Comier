@@ -113,10 +113,10 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             return
         }
         self.state = .queued
-        let copyViewModels = self.viewModels.map({$0})
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
             let object = self.object
+            let copyViewModels = self.viewModels.map({$0})
             let oldViewModels = copyViewModels
             let newViewModels = self.dataSource?.viewModels(for: object)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []

@@ -44,10 +44,11 @@ open class ATListBindableSectionController<T: Differentiable>: BaseSectionContro
         guard let dataSource, let model else  {
             return super._performUpdates()
         }
+        
         let old = dataSource.viewModels.map({ AnyDifferentiable($0) })
         let new = dataSource.viewModels(by: model)
         let newMapping = new.map({AnyDifferentiable($0)})
-        let stage = StagedChangeset(source: newMapping, target: old, section: section)
+        let stage = StagedChangeset(source: old, target: newMapping, section: section)
         collectionNode?.reload(using: stage, updateCellBlock: { [weak self] index, cell in
             self?.didUpdateCell(indexPath: index, cell: cell)
         },setData: { c in
