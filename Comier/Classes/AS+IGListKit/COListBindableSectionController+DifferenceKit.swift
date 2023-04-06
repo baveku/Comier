@@ -88,10 +88,10 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         let copyObj = object as? Element
         self.object = object as? Element
         if firstUpdate {
-            let viewModels = self.dataSource?.viewModels(for: object)
+            let viewModels = self.dataSource?.viewModels(for: copyObj ?? object)
             self.viewModels = objectsWithDuplicateIdentifiersRemoved(viewModels) ?? []
         } else {
-            self.updateAnimated(object: object as? Element, animated: willUpdateWithAnimation)
+            self.updateAnimated(object: copyObj, animated: willUpdateWithAnimation)
         }
     }
     
