@@ -113,70 +113,75 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             return
         }
         self.state = .queued
-        self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
-            guard let self = self, self.state == .queued else {return}
+        DispatchQueue.global().async { [weak self] in
+            guard let self else {return}
             let object = self.object
-            let copyViewModels = self.viewModels.map({$0})
-            let oldViewModels = copyViewModels
-            let newViewModels = self.dataSource?.viewModels(for: object)
+            let newViewModels = self.dataSource?.viewModels(for: object as Any)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
-            let result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
-            guard result.hasChanges else {return}
-            self.viewModels = filterVM
-            
-            if !result.updates.isEmpty {
-                var indexReloads: [Int] = []
-                for oldIndex in result.updates {
-                    guard oldIndex < oldViewModels.count else {break}
-                    if shouldUpdateCell {
-                        let id = oldViewModels[oldIndex].diffIdentifier()
-                        let indexAfterUpdate = result.newIndex(forIdentifier: id)
-                        if indexAfterUpdate != NSNotFound {
-                            if let cell = self.context.nodeForItem(at: oldIndex, section: self) {
-                                let node = cell as? ListBindable
-                                node?.bindViewModel(filterVM[indexAfterUpdate])
-                            } else {
-                                indexReloads.append(oldIndex)
+            let boxs = filterVM.map({DiffBox(value: $0)})
+            let oldViewModels = viewModels.map({DiffBox(value: $0)})
+            let stageChanged = StagedChangeset(source: oldViewModels, target: boxs, section: section)
+            DispatchQueue.main.async { [weak self] in
+                guard let self else {return}
+                self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
+                    guard let self = self, self.state == .queued else {return}
+                    
+                    guard !stageChanged.isEmpty else {return}
+                    
+                    for stage in stageChanged {
+                        let changeData = stage.data.map({$0})
+                        
+                        if let ex = self.collectionContext?.experiments, !stage.elementUpdated.isEmpty, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
+                            batchContext.invalidateLayout(in: self, at: IndexSet(stage.elementUpdated.map({$0.element})))
+                        }
+                        
+                        self.viewModels = stage.data.map({$0.value})
+                        if !stage.elementUpdated.isEmpty {
+                            var indexReloads: [Int] = []
+                            for indexPath in stage.elementUpdated {
+                                let index = indexPath.element
+                                if shouldUpdateCell {
+                                    let value = changeData[indexPath.element].value
+                                    if let cell = self.context.nodeForItem(at: index, section: self) {
+                                        let node = cell as? ListBindable
+                                        node?.bindViewModel(value)
+                                    } else {
+                                        indexReloads.append(indexPath.element)
+                                    }
+                                } else {
+                                    indexReloads.append(indexPath.element)
+                                }
+                            }
+                            if !indexReloads.isEmpty {
+                                batchContext.reload(in: self, at: IndexSet(indexReloads))
                             }
                         }
-                    } else {
-                        indexReloads.append(oldIndex)
-                    }
-                }
-                if !indexReloads.isEmpty {
-                    batchContext.reload(in: self, at: IndexSet(indexReloads))
-                }
-            }
-            
-            if let ex = self.collectionContext?.experiments, !result.updates.isEmpty, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
-                batchContext.invalidateLayout(in: self, at: result.updates)
-            }
-            
-            if !result.deletes.isEmpty {
-                batchContext.delete(in: self, at: result.deletes)
-            }
+                        
+                        if !stage.elementDeleted.isEmpty {
+                            batchContext.delete(in: self, at: IndexSet(stage.elementDeleted.map({$0.element})))
+                        }
 
-            if !result.inserts.isEmpty {
-                batchContext.insert(in: self, at: result.inserts)
+                        if !stage.elementInserted.isEmpty {
+                            batchContext.insert(in: self, at: IndexSet(stage.elementInserted.map({$0.element})))
+                        }
+                        
+                        if !stage.elementMoved.isEmpty {
+                            for move in stage.elementMoved {
+                                batchContext.move(in: self, from: move.source.element, to: move.target.element)
+                            }
+                        }
+                    }
+                    self.state = .applied
+                }, completion: { [weak self] (finished) in
+                    completion?(finished)
+                    self?.state = .idle
+                    if let wait = self?.lastWaitForUpdate {
+                        self?.lastWaitForUpdate = nil
+                        self?.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
+                    }
+                })
             }
-            
-            if !result.moves.isEmpty {
-                for move in result.moves {
-                    batchContext.move(in: self, from: move.from, to: move.to)
-                }
-            }
-            
-            self.state = .applied
-        }, completion: { [weak self] (finished) in
-            completion?(finished)
-            if finished, let self = self {
-                self.state = .idle
-                if let wait = self.lastWaitForUpdate {
-                    self.lastWaitForUpdate = nil
-                    self.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
-                }
-            }
-        })
+        }
     }
     
     deinit {
