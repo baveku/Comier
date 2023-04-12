@@ -10,57 +10,26 @@ import AsyncDisplayKit
 import DifferenceKit
 
 
-public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSource, ASCollectionDelegate {
-    private let collectionNode: ASCollectionNode
+public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSource, ASCollectionDelegate {
     private var sectionControllers: [BaseSectionController] = []
     private var _models: [AnyDifferentiable] = []
     
-    public var inverted: Bool {
-        get {
-            return collectionNode.inverted
-        }
-        set {
-            collectionNode.inverted = newValue
-        }
-    }
-    
     public func configureCollectionNode(_ block: (ASCollectionNode) -> Void) {
-        block(collectionNode)
+        block(self)
     }
     
-    public weak var dataSource: ASSectionControllerDataSource? = nil
+    public weak var sectionDataSource: ASSectionControllerDataSource? = nil
     
     public func setRefreshControl(_ control: UIRefreshControl) {
-        collectionNode.view.refreshControl = control
+        view.refreshControl = control
     }
     
     public init(layout: UICollectionViewLayout) {
-        collectionNode = .init(collectionViewLayout: layout)
-        super.init()
-        addSubnode(collectionNode)
-        collectionNode.frame = bounds
+        super.init(collectionViewLayout: layout)
+        
         automaticallyRelayoutOnSafeAreaChanges = true
-        collectionNode.automaticallyRelayoutOnSafeAreaChanges = true
-        collectionNode.delegate = self
-        collectionNode.dataSource = self
-    }
-    
-    public override var backgroundColor: UIColor? {
-        get {
-            return collectionNode.backgroundColor
-        }
-        set {
-            collectionNode.backgroundColor = newValue
-        }
-    }
-    
-    public override var frame: CGRect {
-        didSet {
-            if frame != oldValue {
-                collectionNode.frame = bounds
-                collectionNode.relayoutItems()
-            }
-        }
+        delegate = self
+        dataSource = self
     }
     
     public func performUpdates(_ models: [any Differentiable], completion: (() -> Void)? = nil) {
@@ -70,21 +39,21 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
             self._models = mapAny
             self.sectionControllers = mapAny.enumerated().map({ ind, m in
                 let model = m.base
-                let section = dataSource?.sectionController(by: model) ?? .init()
+                let section = sectionDataSource?.sectionController(by: model) ?? .init()
                 section.section = ind
-                section.collectionNode = collectionNode
+                section.collectionNode = self
                 section.didUpdate(section: model as! (any Differentiable))
                 return section
             })
-            self.collectionNode.reloadData {
+            self.reloadData {
                 completion?()
             }
             return
         }
         
         let stage: StagedChangeset = StagedChangeset(source: _models, target: mapAny, section: 0)
-        collectionNode.waitUntilAllUpdatesAreProcessed()
-        collectionNode.performBatchUpdates { [weak self] in
+        waitUntilAllUpdatesAreProcessed()
+        performBatchUpdates { [weak self] in
             guard let self else {return}
             for changeset in stage {
                 guard changeset.hasChanges else {return}
@@ -99,12 +68,12 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
                 if !changeset.elementInserted.isEmpty {
                     for item in changeset.elementInserted {
                         let model = self._models[item.element].base as! (any Differentiable)
-                        let section = self.dataSource?.sectionController(by: model) ?? AXSectionController()
-                        section.collectionNode = self.collectionNode
+                        let section = self.sectionDataSource?.sectionController(by: model) ?? AXSectionController()
+                        section.collectionNode = self
                         section.section = item.element
                         self.sectionControllers.insert(section, at: item.element)
                     }
-                    self.collectionNode.insertSections(IndexSet(changeset.elementInserted.map({$0.element})))
+                    self.insertSections(IndexSet(changeset.elementInserted.map({$0.element})))
                 }
                 
                 if !changeset.elementMoved.isEmpty {
@@ -114,7 +83,7 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
                         self.sectionControllers.enumerated().forEach { ind, sec in
                             sec.section = ind
                         }
-                        self.collectionNode.moveSection(item.source.element, toSection: item.target.element)
+                        self.moveSection(item.source.element, toSection: item.target.element)
                     }
                 }
                 
@@ -123,7 +92,7 @@ public final class ASSectionCollectionNode: ASDisplayNode, ASCollectionDataSourc
                     for index in indexSet {
                         self.sectionControllers.remove(at: index)
                     }
-                    self.collectionNode.deleteSections(indexSet)
+                    self.deleteSections(indexSet)
                 }
             }
         } completion: { _ in
