@@ -65,10 +65,9 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         super.init()
     }
     
-    private var datasourceProxy: ASListBindingDataSourceProxy? = nil
     public func setDataSourceV2(_ datasource: ASSwiftListBindingDataSource) {
-        datasourceProxy = ASListBindingDataSourceProxy(dataSource: datasource)
-        self.dataSource = datasourceProxy
+        let proxy = ASListBindingDataSourceProxy(dataSource: datasource)
+        self.dataSource = proxy
     }
     
     public override func numberOfItems() -> Int {
@@ -116,8 +115,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
             let object = self.object
-            let copyViewModels = self.viewModels.map({$0})
-            let oldViewModels = copyViewModels
+            let oldViewModels = self.viewModels.map({$0})
             let newViewModels = self.dataSource?.viewModels(for: object)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
             let result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
@@ -178,10 +176,6 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             }
         })
     }
-    
-    deinit {
-        datasourceProxy = nil
-    }
 }
 
 open class COCellNode<M: ListDiffable>: ASCellNode, ListBindable {
@@ -227,22 +221,13 @@ open class SCellNode<M: ListSwiftable>: ASCellNode, ListBindable {
 
 func objectsWithDuplicateIdentifiersRemoved(_ objects: [ListDiffable]?) -> [ListDiffable]? {
     guard let objects = objects else {return nil}
-    var mapObjects: [NSObject: ListDiffable] = [:]
+    var mapObjects: [String: ListDiffable] = [:]
     var uniqueObjects: [ListDiffable] = []
     for object in objects {
-        let diffIdentifier = object.diffIdentifier() as? NSObject
-        
-        var previousObject: ListDiffable?
-        if let id = diffIdentifier {
-            previousObject = mapObjects[id]
-        }
-        
-        if diffIdentifier != nil
-            && previousObject == nil {
-            mapObjects[diffIdentifier!] = object
+        let idString = "\(object.diffIdentifier())"
+        if mapObjects[idString] == nil {
+            mapObjects[idString] = object
             uniqueObjects.append(object)
-        } else {
-            print("Duplicate identifier %@ for object %@ with object %@", diffIdentifier, object, previousObject);
         }
     }
     return uniqueObjects;
