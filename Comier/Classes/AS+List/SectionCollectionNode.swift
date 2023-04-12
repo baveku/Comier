@@ -25,7 +25,7 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
     }
     
     public init(layout: UICollectionViewLayout) {
-        super.init(collectionViewLayout: layout)
+        super.init(frame: .zero, collectionViewLayout: layout, layoutFacilitator: nil)
         
         automaticallyRelayoutOnSafeAreaChanges = true
         delegate = self
