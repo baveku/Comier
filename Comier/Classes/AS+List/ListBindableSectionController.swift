@@ -16,11 +16,11 @@ public protocol ATListBindableDataSource: AnyObject {
 }
 
 public protocol ATListBindableDelegate: AnyObject {
-    func didSelectItem(at indexPath: IndexPath)
+    func didSelectItem(at index: Int)
+    func didDeselectedItem(at index: Int)
 }
 
-
-open class ATListBindableSectionController<T: Differentiable>: BaseSectionController {
+open class ATListBindableSectionController<T: Differentiable>: AXSectionController {
     public typealias SectionModel = T
     public var model: T?
     public weak var delegate: ATListBindableDelegate?
@@ -96,6 +96,14 @@ open class ATListBindableSectionController<T: Differentiable>: BaseSectionContro
     
     open func sizeForCell(_ model: any Differentiable, at index: Int) -> ASSizeRange? {
         return nil
+    }
+    
+    override func _didSelected(at index: Int) {
+        delegate?.didSelectItem(at: index)
+    }
+    
+    override func _didDeselected(at index: Int) {
+        delegate?.didDeselectedItem(at: index)
     }
 }
 
