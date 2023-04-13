@@ -153,8 +153,16 @@ open class AXCellNode: BaseAXCellNode {
 }
 
 open class ATCellNode<T: Differentiable>: BaseAXCellNode {
+    var model: T!
+    public convenience init(model: T) {
+        self.init()
+        self.model = model
+        didUpdate(model)
+    }
+    
     override func didUpdate(newValue: any Differentiable) {
         guard let castItem = newValue as? T else {return}
+        self.model = castItem
         didUpdate(castItem)
     }
     
