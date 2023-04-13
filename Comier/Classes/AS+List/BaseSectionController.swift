@@ -67,8 +67,8 @@ open class BaseSectionController: NSObject {
         collectionNode.reloadItems(at: items.map({.init(item: $0, section: section)}))
     }
     
-    func _didSelected(at index: Int) {}
-    func _didDeselected(at index: Int) {}
+    internal func _didSelected(at index: Int) {}
+    internal func _didDeselected(at index: Int) {}
 }
 
 open class AXSectionController: BaseSectionController {
@@ -79,6 +79,14 @@ open class AXSectionController: BaseSectionController {
     
     open func sizeForItem(at index: Int) -> ASSizeRange? {
         return nil
+    }
+    
+    override func _didSelected(at index: Int) {
+        didSelected(at: index)
+    }
+    
+    override func _didDeselected(at index: Int) {
+        didDeselected(at: index)
     }
     
     open func didSelected(at index: Int) {}

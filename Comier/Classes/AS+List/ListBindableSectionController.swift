@@ -45,14 +45,15 @@ open class ATListBindableSectionController<T: Differentiable>: AXSectionControll
             return super._performUpdates()
         }
         
-        let old = dataSource.viewModels.map({ AnyDifferentiable($0) })
+        let old = dataSource.viewModels
         let new = dataSource.viewModels(by: model)
-        let newMapping = new.map({AnyDifferentiable($0)})
-        let stage = StagedChangeset(source: old, target: newMapping, section: section)
+        let source = old.map({ AnyDifferentiable($0)})
+        let target = new.map({AnyDifferentiable($0)})
+        let stage = StagedChangeset(source: source, target: target, section: section)
         collectionNode?.reload(using: stage, updateCellBlock: { [weak self] index, cell in
             self?.didUpdateCell(indexPath: index, cell: cell)
-        },setData: { c in
-            dataSource.viewModels = new
+        },setData: { collection in
+            dataSource.viewModels = collection.map({$0.base as! any Differentiable})
         })
     }
     

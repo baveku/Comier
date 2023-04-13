@@ -128,11 +128,11 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
     }
     
     public func collectionNode(_ collectionNode: ASCollectionNode, didSelectItemAt indexPath: IndexPath) {
-        return sectionControllers[indexPath.section]._didSelected(at: indexPath.item)
+        sectionControllers[indexPath.section]._didSelected(at: indexPath.item)
     }
     
     public func collectionNode(_ collectionNode: ASCollectionNode, didDeselectItemAt indexPath: IndexPath) {
-        return sectionControllers[indexPath.section]._didDeselected(at: indexPath.item)
+        sectionControllers[indexPath.section]._didDeselected(at: indexPath.item)
     }
 }
 

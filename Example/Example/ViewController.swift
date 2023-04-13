@@ -24,7 +24,7 @@ class ViewController: UIViewController, ASSectionControllerDataSource {
         collectionNode.frame = view.bounds
         view.addSubview(collectionNode.view)
         collectionNode.setRefreshControl(refreshControl)
-        collectionNode.dataSource = self
+        collectionNode.sectionDataSource = self
         collectionNode.performUpdates([MainSection.main("Hello")])
     }
     
@@ -36,7 +36,7 @@ class ViewController: UIViewController, ASSectionControllerDataSource {
     }
 }
 
-class NoteSectionController: ATListBindableSectionController<MainSection>, ATListBindableDataSource {
+class NoteSectionController: ATListBindableSectionController<MainSection>, ATListBindableDataSource, ATListBindableDelegate {
     var viewModels: [any Differentiable] = []
     
     func nodeForItem(for model: any Differentiable) -> ASCellNode {
@@ -48,14 +48,24 @@ class NoteSectionController: ATListBindableSectionController<MainSection>, ATLis
         }
     }
     
+    var isSelected = false
+    
     override init() {
         super.init()
         dataSource = self
+        delegate = self
     }
     
     func viewModels(by section: any Differentiable) -> [any Differentiable] {
         guard case .main(let str) = section as? SectionModel else {return []}
-        return [CellModel(value: str)]
+        var result: [any Differentiable] = [CellModel(value: str)]
+        
+        if isSelected {
+            result.insert(CellModel(value: "hello1"), at: 0)
+            result.append(CellModel(value: "hello2"))
+        }
+        
+        return result
     }
     
     override func sizeForCell(_ model: any Differentiable, at index: Int) -> ASSizeRange? {
@@ -65,6 +75,15 @@ class NoteSectionController: ATListBindableSectionController<MainSection>, ATLis
         default:
             return super.sizeForCell(model, at: index)
         }
+    }
+    
+    func didSelectItem(at index: Int) {
+        isSelected = !isSelected
+        performUpdates()
+    }
+    
+    func didDeselectedItem(at index: Int) {
+        
     }
 }
 
@@ -97,7 +116,7 @@ struct CellModel: Differentiable {
     let value: String
     typealias DifferenceIdentifier = String
     var differenceIdentifier: String {
-        return "CELL_MODEL"
+        return value
     }
 }
 
