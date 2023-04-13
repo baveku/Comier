@@ -19,6 +19,7 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
     }
     
     public weak var sectionDataSource: ASSectionControllerDataSource? = nil
+    public weak var batchDelegate: ASSectionBatchUpdatable? = nil
     
     public func setRefreshControl(_ control: UIRefreshControl) {
         view.refreshControl = control
@@ -134,6 +135,14 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
     public func collectionNode(_ collectionNode: ASCollectionNode, didDeselectItemAt indexPath: IndexPath) {
         sectionControllers[indexPath.section]._didDeselected(at: indexPath.item)
     }
+    
+    public func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool {
+        batchDelegate?.shouldBatchFetch(for: collectionNode) ?? false
+    }
+    
+    public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
+        batchDelegate?.willBeginBatchFetch(collectionNode, context: context)
+    }
 }
 
 protocol CellBindable {
@@ -167,4 +176,9 @@ open class ATCellNode<T: Differentiable>: BaseAXCellNode {
     }
     
     open func didUpdate(_ model: T) {}
+}
+
+public protocol ASSectionBatchUpdatable: AnyObject {
+    func shouldBatchFetch(for collectionNode: ASCollectionNode) -> Bool
+    func willBeginBatchFetch(_ collectionNode: ASCollectionNode, context: ASBatchContext)
 }
