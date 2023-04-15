@@ -53,16 +53,38 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
         }
         
         let stage: StagedChangeset = StagedChangeset(source: _models, target: mapAny, section: 0)
-        waitUntilAllUpdatesAreProcessed()
-        performBatchUpdates { [weak self] in
-            guard let self else {return}
-            for changeset in stage {
+        
+        let totalChangeCount = stage.map({$0.changeCount}).reduce(0, +)
+        guard totalChangeCount > 0 else {
+            completion?()
+            return
+        }
+        
+        let group = DispatchGroup()
+        if totalChangeCount > 200 {
+            self._models = mapAny
+            self.reloadData(completion: completion)
+            return
+        }
+        
+        for changeset in stage {
+            group.enter()
+            performBatchUpdates { [weak self] in
+                guard let self else {return}
                 guard changeset.hasChanges else {return}
                 self._models = changeset.data
                 if !changeset.elementUpdated.isEmpty {
                     for item in changeset.elementUpdated {
                         let controller = self.sectionControllers[item.element]
                         controller.didUpdate(section: self._models[item.element].base as! (any Differentiable))
+                    }
+                }
+                var deleteIndexSet: IndexSet = .init()
+                var insertIndexSet: IndexSet = .init()
+                if !changeset.elementDeleted.isEmpty {
+                    deleteIndexSet = IndexSet(changeset.elementDeleted.map({$0.element}))
+                    for index in deleteIndexSet {
+                        self.sectionControllers.remove(at: index)
                     }
                 }
                 
@@ -74,9 +96,11 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
                         section.section = item.element
                         self.sectionControllers.insert(section, at: item.element)
                     }
-                    self.insertSections(IndexSet(changeset.elementInserted.map({$0.element})))
+                    insertIndexSet = IndexSet(changeset.elementInserted.map({$0.element}))
                 }
                 
+                self.deleteSections(deleteIndexSet)
+                self.insertSections(insertIndexSet)
                 if !changeset.elementMoved.isEmpty {
                     for item in changeset.elementMoved {
                         self.sectionControllers.swapAt(item.source.element, item.target.element)
@@ -88,15 +112,12 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
                     }
                 }
                 
-                if !changeset.elementDeleted.isEmpty {
-                    let indexSet = IndexSet(changeset.elementDeleted.map({$0.element}))
-                    for index in indexSet {
-                        self.sectionControllers.remove(at: index)
-                    }
-                    self.deleteSections(indexSet)
-                }
+            } completion: { _ in
+                group.leave()
             }
-        } completion: { _ in
+        }
+        
+        group.notify(queue: .main) {
             completion?()
         }
     }
@@ -142,6 +163,18 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
     
     public func collectionNode(_ collectionNode: ASCollectionNode, willBeginBatchFetchWith context: ASBatchContext) {
         batchDelegate?.willBeginBatchFetch(collectionNode, context: context)
+    }
+    
+    public override func reloadData(completion: (() -> Void)? = nil) {
+        self.sectionControllers = _models.enumerated().map({ ind, m in
+            let model = m.base
+            let section = sectionDataSource?.sectionController(by: model) ?? .init()
+            section.section = ind
+            section.collectionNode = self
+            section.didUpdate(section: model as! (any Differentiable))
+            return section
+        })
+        super.reloadData(completion: completion)
     }
 }
 
