@@ -38,17 +38,7 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
         
         if self._models.isEmpty {
             self._models = mapAny
-            self.sectionControllers = mapAny.enumerated().map({ ind, m in
-                let model = m.base
-                let section = sectionDataSource?.sectionController(by: model) ?? .init()
-                section.section = ind
-                section.collectionNode = self
-                section.didUpdate(section: model as! (any Differentiable))
-                return section
-            })
-            self.reloadData {
-                completion?()
-            }
+            self.reloadData(completion: completion)
             return
         }
         
