@@ -63,10 +63,14 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
                 guard let self else {return}
                 guard changeset.hasChanges else {return}
                 self._models = changeset.data
+                var sectionBatchUpdates: [SectionUpdateBlock] = []
                 if !changeset.elementUpdated.isEmpty {
                     for item in changeset.elementUpdated {
                         let controller = self.sectionControllers[item.element]
                         controller.didUpdate(section: self._models[item.element].base as! (any Differentiable))
+                        if let c = controller as? SectionBatchUpdatable, let updates = c.batchUpdates {
+                            sectionBatchUpdates.append(updates)
+                        }
                     }
                 }
                 var deleteIndexSet: IndexSet = .init()
@@ -91,6 +95,9 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
                 
                 self.deleteSections(deleteIndexSet)
                 self.insertSections(insertIndexSet)
+                for sectionBatchUpdate in sectionBatchUpdates {
+                    sectionBatchUpdate(self)
+                }
                 if !changeset.elementMoved.isEmpty {
                     for item in changeset.elementMoved {
                         self.sectionControllers.swapAt(item.source.element, item.target.element)
