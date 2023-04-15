@@ -70,6 +70,7 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
                         controller.didUpdate(section: self._models[item.element].base as! (any Differentiable))
                         if let c = controller as? SectionBatchUpdatable, let updates = c.batchUpdates {
                             sectionBatchUpdates.append(updates)
+                            c.batchUpdates = nil
                         }
                     }
                 }
@@ -95,9 +96,6 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
                 
                 self.deleteSections(deleteIndexSet)
                 self.insertSections(insertIndexSet)
-                for sectionBatchUpdate in sectionBatchUpdates {
-                    sectionBatchUpdate(self)
-                }
                 if !changeset.elementMoved.isEmpty {
                     for item in changeset.elementMoved {
                         self.sectionControllers.swapAt(item.source.element, item.target.element)
@@ -108,7 +106,9 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
                         self.moveSection(item.source.element, toSection: item.target.element)
                     }
                 }
-                
+                for sectionBatchUpdate in sectionBatchUpdates {
+                    sectionBatchUpdate(self)
+                }
             } completion: { _ in
                 group.leave()
             }
