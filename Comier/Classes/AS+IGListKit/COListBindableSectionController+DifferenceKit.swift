@@ -42,10 +42,10 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     public var object: SectionModel? = nil
     var state: SectionState = .idle
     
-    var lastWaitForUpdate: (animated: Bool, shouldUpdateCell: Bool, completion: ((Bool) -> Void)?)? = nil
-    
     public weak var dataSource: ASListBindingDataSource? = nil
     public weak var delegate: ASListBindingDelegate? = nil
+    
+    var proxy: ASListBindingDataSourceProxy!
     
     public override func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
         let cellModel = self.viewModels[index]
@@ -66,7 +66,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     }
     
     public func setDataSourceV2(_ datasource: ASSwiftListBindingDataSource) {
-        let proxy = ASListBindingDataSourceProxy(dataSource: datasource)
+        proxy = ASListBindingDataSourceProxy(dataSource: datasource)
         self.dataSource = proxy
     }
     
@@ -219,7 +219,7 @@ open class SCellNode<M: ListSwiftable>: ASCellNode, ListBindable {
 }
 
 func objectsWithDuplicateIdentifiersRemoved(_ objects: [ListDiffable]?) -> [ListDiffable]? {
-    guard let objects = objects else {return nil}
+    guard let objects = objects else {return []}
     var mapObjects: [String: ListDiffable] = [:]
     var uniqueObjects: [ListDiffable] = []
     for object in objects {
