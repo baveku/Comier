@@ -51,7 +51,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         let cellModel = self.viewModels[index]
         let block: ASCellNodeBlock = { [weak self] in
             guard let self = self else {return COCellNode<ListDiffable>()}
-            let cell = self.dataSource?.nodeBlockForViewModel(at: cellModel)
+            let cell = self.dataSource?.nodeBlockForViewModel(at: cellModel as! ListDiffable)
             cell?.neverShowPlaceholders = true
             if let cell = cell as? ListBindable {
                 cell.bindViewModel(cellModel)
@@ -106,19 +106,21 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     }
     
     public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
-        guard self.object != nil else {return}
-        if self.state != .idle {
-            self.lastWaitForUpdate = (animated, shouldUpdateCell, completion)
+        guard state == .idle else {
+            completion?(false)
             return
         }
         self.state = .queued
+        var result: ListIndexSetResult! = nil
+        var oldViewModels:[ListDiffable]! = nil
+        let context = collectionContext!
         self.collectionContext?.performBatch(animated: animated, updates: { [weak self] (batchContext) in
             guard let self = self, self.state == .queued else {return}
             let object = self.object
-            let oldViewModels = self.viewModels.map({$0})
+            oldViewModels = self.viewModels.map({$0})
             let newViewModels = self.dataSource?.viewModels(for: object)
             let filterVM = objectsWithDuplicateIdentifiersRemoved(newViewModels) ?? []
-            let result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
+            result = ListDiff(oldArray: oldViewModels, newArray: filterVM, option: .equality)
             guard result.hasChanges else {return}
             self.viewModels = filterVM
             
@@ -146,17 +148,12 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                 }
             }
             
-            if let ex = self.collectionContext?.experiments, !result.updates.isEmpty, ListExperimentEnabled(mask: ex, option: IGListExperiment.invalidateLayoutForUpdates) {
+            if ListExperimentEnabled(mask: context.experiments, option: .invalidateLayoutForUpdates) {
                 batchContext.invalidateLayout(in: self, at: result.updates)
             }
             
-            if !result.deletes.isEmpty {
-                batchContext.delete(in: self, at: result.deletes)
-            }
-
-            if !result.inserts.isEmpty {
-                batchContext.insert(in: self, at: result.inserts)
-            }
+            batchContext.delete(in: self, at: result.deletes)
+            batchContext.insert(in: self, at: result.inserts)
             
             if !result.moves.isEmpty {
                 for move in result.moves {
@@ -166,15 +163,17 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
             
             self.state = .applied
         }, completion: { [weak self] (finished) in
-            completion?(finished)
-            if finished, let self = self {
-                self.state = .idle
-                if let wait = self.lastWaitForUpdate {
-                    self.lastWaitForUpdate = nil
-                    self.updateAnimated(animated: wait.animated, shouldUpdateCell: wait.shouldUpdateCell, completion: wait.completion)
-                }
-            }
+            self?.state = .idle
+            completion?(true)
         })
+    }
+    
+    open override func moveObject(from sourceIndex: Int, to destinationIndex: Int) {
+        var viewModels = self.viewModels
+        let modelAtSource = viewModels[sourceIndex]
+        viewModels.remove(at: sourceIndex)
+        viewModels.insert(modelAtSource, at: destinationIndex)
+        self.viewModels = viewModels
     }
 }
 
