@@ -64,18 +64,9 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
                 guard changeset.hasChanges else {return}
                 self._models = changeset.data
                 var sectionBatchUpdates: [SectionUpdateBlock] = []
-                if !changeset.elementUpdated.isEmpty {
-                    for item in changeset.elementUpdated {
-                        let controller = self.sectionControllers[item.element]
-                        controller.didUpdate(section: self._models[item.element].base as! (any Differentiable))
-                        if let c = controller as? SectionBatchUpdatable, let updates = c.batchUpdates {
-                            sectionBatchUpdates.append(updates)
-                            c.batchUpdates = nil
-                        }
-                    }
-                }
                 var deleteIndexSet: IndexSet = .init()
                 var insertIndexSet: IndexSet = .init()
+                var moveIndexSet: [(source: ElementPath, target: ElementPath)] = []
                 if !changeset.elementDeleted.isEmpty {
                     deleteIndexSet = IndexSet(changeset.elementDeleted.map({$0.element}))
                     for index in deleteIndexSet {
@@ -94,18 +85,37 @@ public final class ASSectionCollectionNode: ASCollectionNode, ASCollectionDataSo
                     insertIndexSet = IndexSet(changeset.elementInserted.map({$0.element}))
                 }
                 
-                self.deleteSections(deleteIndexSet)
-                self.insertSections(insertIndexSet)
                 if !changeset.elementMoved.isEmpty {
                     for item in changeset.elementMoved {
                         self.sectionControllers.swapAt(item.source.element, item.target.element)
-                        // update index
-                        self.sectionControllers.enumerated().forEach { ind, sec in
-                            sec.section = ind
-                        }
-                        self.moveSection(item.source.element, toSection: item.target.element)
+                        moveIndexSet.append(item)
                     }
                 }
+                
+                // refresh index
+                self.sectionControllers.enumerated().forEach { ind, sec in
+                    sec.section = ind
+                }
+                
+                self.deleteSections(deleteIndexSet)
+                self.insertSections(insertIndexSet)
+                
+                if !changeset.elementUpdated.isEmpty {
+                    for item in changeset.elementUpdated {
+                        let controller = self.sectionControllers[item.element]
+                        controller.didUpdate(section: self._models[item.element].base as! (any Differentiable))
+                        if let c = controller as? SectionBatchUpdatable, let updates = c.batchUpdates {
+                            sectionBatchUpdates.append(updates)
+                            c.batchUpdates = nil
+                        }
+                    }
+                }
+                
+                for item in moveIndexSet {
+                    // update index
+                    self.moveSection(item.source.element, toSection: item.target.element)
+                }
+                
                 for sectionBatchUpdate in sectionBatchUpdates {
                     sectionBatchUpdate(self)
                 }
