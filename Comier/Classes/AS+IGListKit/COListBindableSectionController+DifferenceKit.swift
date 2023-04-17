@@ -108,7 +108,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
         if !isVisible, let object = object {
             self.viewModels = self.dataSource?.viewModels(for: object) ?? []
-            self.reload(animated: false)
+            self.reload(animated: animated)
             return
         }
         
