@@ -51,7 +51,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         let cellModel = self.viewModels[index]
         let block: ASCellNodeBlock = { [weak self] in
             guard let self = self else {return COCellNode<ListDiffable>()}
-            let cell = self.dataSource?.nodeBlockForViewModel(at: cellModel as! ListDiffable)
+            let cell = self.dataSource?.nodeBlockForViewModel(at: cellModel)
             cell?.neverShowPlaceholders = true
             if let cell = cell as? ListBindable {
                 cell.bindViewModel(cellModel)
@@ -132,7 +132,7 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
                         let id = oldViewModels[oldIndex].diffIdentifier()
                         let indexAfterUpdate = result.newIndex(forIdentifier: id)
                         if indexAfterUpdate != NSNotFound {
-                            if let cell = self.context.nodeForItem(at: oldIndex, section: self) {
+                            if let cell = self.context.nodeForItem(at: oldIndex, section: self), cell.isVisible {
                                 let node = cell as? ListBindable
                                 node?.bindViewModel(filterVM[indexAfterUpdate])
                             } else {
