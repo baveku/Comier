@@ -60,6 +60,7 @@ open class COSectionController: ListSectionController, ASSectionController, List
         super.init()
         displayDelegate = self
         workingRangeDelegate = self
+        supplementaryViewSource = self
     }
     
     public var context: ListCollectionContext! {
@@ -67,7 +68,7 @@ open class COSectionController: ListSectionController, ASSectionController, List
     }
     
     open func supportedElementKinds() -> [String] {
-        return []
+        return [UICollectionView.elementKindSectionHeader, UICollectionView.elementKindSectionFooter]
     }
     
     public func viewForSupplementaryElement(ofKind elementKind: String, at index: Int) -> UICollectionReusableView {
