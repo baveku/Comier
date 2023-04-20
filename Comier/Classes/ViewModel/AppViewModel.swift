@@ -10,17 +10,6 @@ import RxSwift
 import UserNotifications
 
 public final class AppViewModel: NSObject, IViewModel {
-    
-    public enum Action {
-        case didBackground
-        case willResignActive
-        case didBecomeActive
-        case willEnterForeground
-        case willTerminate
-        case takeSnapshot
-        case willChangeKeyboardHeight(CGFloat)
-    }
-    
     public let disposeBag = DisposeBag()
     // MARK: - Properties
     
@@ -148,5 +137,35 @@ public final class AppViewModel: NSObject, IViewModel {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    public enum Action: Equatable {
+        case didBackground
+        case willResignActive
+        case didBecomeActive
+        case willEnterForeground
+        case willTerminate
+        case takeSnapshot
+        case willChangeKeyboardHeight(CGFloat)
+        
+        public static func == (lhs: Self, rhs: Self) -> Bool {
+            switch (lhs, rhs) {
+            case (.didBackground, .didBackground):
+                return true
+            case (.willResignActive, .willResignActive):
+                return true
+            case (.didBecomeActive, .didBecomeActive):
+                return true
+            case (.willEnterForeground, .willEnterForeground):
+                return true
+            case (.willTerminate, .willTerminate):
+                return true
+            case (.takeSnapshot, .takeSnapshot):
+                return true
+            case (.willChangeKeyboardHeight(_), .willChangeKeyboardHeight(_)):
+                return true
+            default: return false
+            }
+        }
     }
 }
