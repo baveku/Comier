@@ -68,7 +68,7 @@ open class COSectionController: ListSectionController, ASSectionController, List
     }
     
     open func supportedElementKinds() -> [String] {
-        return [UICollectionView.elementKindSectionHeader, UICollectionView.elementKindSectionFooter]
+        return [UICollectionView.elementKindSectionHeader]
     }
     
     public func viewForSupplementaryElement(ofKind elementKind: String, at index: Int) -> UICollectionReusableView {
