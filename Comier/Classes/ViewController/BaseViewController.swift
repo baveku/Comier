@@ -14,17 +14,17 @@ import UIKit
 public let ASBlank = ASStackLayoutSpec.vertical
 
 open class ASDisplayNodePlus: ASDisplayNode {
-    var nodeLayoutBlock: (() -> Void)? = nil
-    var nodeLayoutDidFinishedBlock: (() -> Void)? = nil
+    public var nodeLayoutBlock: (() -> Void)? = nil
+    public var nodeLayoutDidFinishedBlock: (() -> Void)? = nil
+    
+    public var animateLayoutTransitionBlock: ((ASContextTransitioning) -> Void)? = nil
+    public var didCompleteLayoutTransitionBlock: ((ASContextTransitioning) -> Void)? = nil
     
     public override init() {
         super.init()
         self.automaticallyManagesSubnodes = true
         self.backgroundColor = .white
     }
-    
-    public var animateLayoutTransitionBlock: ((ASContextTransitioning) -> Void)? = nil
-    public var didCompleteLayoutTransitionBlock: ((ASContextTransitioning) -> Void)? = nil
     
     open override func layout() {
         super.layout()
