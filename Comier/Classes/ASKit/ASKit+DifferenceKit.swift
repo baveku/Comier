@@ -24,12 +24,14 @@ public extension ASCollectionNode {
 			setData(data)
 			return reloadData()
 		}
-		
-		for changeset in stagedChangeset {
-			if let interrupt = interrupt, interrupt(changeset), let data = stagedChangeset.last?.data {
-				setData(data)
-				return reloadData()
-			}
+        
+        for (ind, changeset) in stagedChangeset.enumerated() {
+            let isLast = ind == stagedChangeset.count - 1
+            if let interrupt = interrupt, interrupt(changeset), let data = stagedChangeset.last?.data {
+                setData(data)
+                return reloadData()
+            }
+            
 			performBatchUpdates {
 				setData(changeset.data)
 				if !changeset.sectionDeleted.isEmpty {
@@ -72,7 +74,9 @@ public extension ASCollectionNode {
 				}
 				performAction()
 			} completion: { finished in
-				completion?(finished)
+                if isLast {
+                    completion?(finished)
+                }
 			}
 		}
 	}
