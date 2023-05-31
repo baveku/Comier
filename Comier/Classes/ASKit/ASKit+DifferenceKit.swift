@@ -72,7 +72,9 @@ public extension ASCollectionNode {
 				for (source, target) in changeset.elementMoved {
 					moveItem(at: IndexPath(item: source.element, section: source.section), to: IndexPath(item: target.element, section: target.section))
 				}
-				performAction()
+                if isLast {
+                    performAction()
+                }
 			} completion: { finished in
                 if isLast {
                     completion?(finished)
