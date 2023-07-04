@@ -148,18 +148,20 @@ public extension ASTableNode {
 		reloadRowsAnimation: @autoclosure () -> UITableView.RowAnimation,
 		updateRow: ((C.Element, ASCellNode?) -> Void)? = nil,
 		interrupt: ((Changeset<C>) -> Bool)? = nil,
-		setData: (C) -> Void
+		setData: (C) -> Void,
+        completion: ((Bool) -> Void)? = nil
 	) {
 		if case .none = self.view.window, let data = stagedChangeset.last?.data {
 			setData(data)
 			return reloadData()
 		}
 		
-		for changeset in stagedChangeset {
+        for (ind, changeset) in stagedChangeset.enumerated() {
 			if let interrupt = interrupt, interrupt(changeset), let data = stagedChangeset.last?.data {
 				setData(data)
 				return reloadData()
 			}
+            let isLast = ind == stagedChangeset.count - 1
 			
 			_performBatchUpdates(animated: useAnimated) {
 				setData(changeset.data)
@@ -203,12 +205,16 @@ public extension ASTableNode {
 				for (source, target) in changeset.elementMoved {
 					moveRow(at: IndexPath(row: source.element, section: source.section), to: IndexPath(row: target.element, section: target.section))
 				}
-			}
+            } completion: { finished in
+                if isLast {
+                    completion?(finished)
+                }
+            }
 		}
 	}
 	
-	private func _performBatchUpdates(animated: Bool = false, updates: () -> Void) {
-		performBatch(animated: animated, updates: updates, completion: nil)
+    private func _performBatchUpdates(animated: Bool = false, updates: () -> Void, completion: ((Bool) -> Void)? = nil) {
+		performBatch(animated: animated, updates: updates, completion: completion)
 	}
 	
 	func reloadWithoutAnimation<C>(
