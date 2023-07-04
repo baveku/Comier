@@ -8,7 +8,9 @@
 import AsyncDisplayKit
 import RxSwift
 import RxCocoa
+#if canImport(RxCocoaRuntime)
 import RxCocoaRuntime
+#endif
 
 // This should be only used from `MainScheduler`
 final class ASControlTarget<Control: ASControlNode>: _RXKVOObserver, Disposable {

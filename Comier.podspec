@@ -28,8 +28,7 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
   s.source           = { :git => 'https://github.com/baveku/Comier.git' }
 #   s.social_media_url = 'https://twitter.com'
 
-  s.ios.deployment_target = '10.0'
-  s.public_header_files = 'Comier/Extensions/**/*.h'
+  s.ios.deployment_target = '12.0'
   s.source_files = "Comier/Classes/**/*", "Comier/Extensions/**/*"
   s.frameworks = 'UIKit'
   s.dependency 'RxSwift'
@@ -43,4 +42,5 @@ MVVM with TextureGroup + IGListKit + DifferenceKit + Swinject + Reactive Program
   s.dependency 'NVActivityIndicatorView'
   s.dependency 'DifferenceKit'
   s.dependency 'PromisesSwift'
+  s.dependency 'FDFullscreenPopGesture'
 end
