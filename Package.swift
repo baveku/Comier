@@ -11,7 +11,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/baveku/TextureSPM", branch: "spm"),
+        .package(url: "https://github.com/baveku/TextureSPM", branch: "test_iglistkit"),
         .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift", from: "6.5.0"),
         .package(url: "https://github.com/tristanhimmelman/ObjectMapper", from: "4.2.0"),
