@@ -19,7 +19,7 @@ let package = Package(
         .package(url: "https://github.com/ra1028/DifferenceKit", from: "1.3.0"),
         .package(url: "https://github.com/google/promises", from: "2.0.0"),
         .package(url: "https://github.com/Moya/Moya", from: "15.0.3"),
-        .package(url: "https://github.com/3a4oT/IGListKit", branch: "spmNumber10")
+        .package(url: "https://github.com/baveku/IGListKitSPM", branch: "spm")
     ],
     targets: [
         .target(name: "Comier",
@@ -32,8 +32,8 @@ let package = Package(
                     .product(name: "Moya", package: "Moya"),
                     .product(name: "RxMoya", package: "Moya"),
                     .product(name: "AsyncDisplayKit", package: "TextureSPM"),
-                    .product(name: "IGListKit", package: "IGListKit"),
-                    .product(name: "IGListDiffKit", package: "IGListKit"),
+                    .product(name: "IGListKit", package: "IGListKitSPM"),
+                    .product(name: "IGListDiffKit", package: "IGListKitSPM"),
                     .product(name: "Promises", package: "Promises"),
                     .product(name: "RxCocoa", package: "RxSwift"),
                     .product(name: "RxRelay", package: "RxSwift"),
