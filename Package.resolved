@@ -19,12 +19,12 @@
       }
     },
     {
-      "identity" : "iglistkit",
+      "identity" : "iglistkitspm",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/3a4oT/IGListKit",
+      "location" : "https://github.com/baveku/IGListKitSPM",
       "state" : {
-        "branch" : "spmNumber10",
-        "revision" : "979eca9b2da15e35af36f4613452dd6e07641969"
+        "branch" : "spm",
+        "revision" : "cd3f84f22709dc6bd0153476372cade8167b9513"
       }
     },
     {
@@ -131,8 +131,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/baveku/TextureSPM",
       "state" : {
-        "branch" : "spm",
-        "revision" : "d22484249daea98fe4e6c823216b7780145c396c"
+        "branch" : "test_iglistkit",
+        "revision" : "087a5e7c623c3faf980feb9296e6776f19e16891"
       }
     }
   ],
