@@ -23,6 +23,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
     private var _queueUpdatesCompletion: [((Bool) -> Void)?] = []
     private var _perfomUpdatePublishSubject = PublishSubject<Void>()
     private var _isAnimated: Bool = false
+    private var adapterCompletionHandler: ((Bool) -> Void)? = nil
     
     /**
      Debounce when updates: default is 300 miniseconds
@@ -41,6 +42,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
 
     public func bindToAdapter(adapter: ListAdapter, completion: ((Bool) -> Void)? = nil) -> Disposable {
         self.adapter = adapter
+        self.adapterCompletionHandler = completion
         performUpdates()
         return Disposables.create()
     }
@@ -72,6 +74,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
                 _queueUpdatesCompletion = []
                 didFinishedPefromUpdates()
             }
+            adapterCompletionHandler?()
         }
     }
 }
