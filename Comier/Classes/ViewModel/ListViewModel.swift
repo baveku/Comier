@@ -74,7 +74,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
                 _queueUpdatesCompletion = []
                 didFinishedPefromUpdates()
             }
-            adapterCompletionHandler?()
+            adapterCompletionHandler?(finished)
         }
     }
 }
