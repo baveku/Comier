@@ -27,7 +27,7 @@ open class ASActivityButtonNode: ASButtonNode {
             let view = NVActivityIndicatorView(frame: .init(x: 0, y: 0, width: 24, height: 24), type: .circleStrokeSpin, padding: 0)
             return view
         }
-        
+        ac.isHidden = true
         return ac
     }()
     
@@ -51,8 +51,8 @@ open class ASActivityButtonNode: ASButtonNode {
         isLoading = true
         titleNode.alpha = 0
         imageNode.alpha = 0
+        activity.isHidden = false
         activityView.startAnimating()
-        self.setNeedsLayout()
     }
     
     open func stopLoading() {
@@ -61,7 +61,7 @@ open class ASActivityButtonNode: ASButtonNode {
         titleNode.alpha = 1
         imageNode.alpha = 1
         activityView.stopAnimating()
-        self.setNeedsLayout()
+        activity.isHidden = true
     }
     
     public func setAnimationType(_ type: NVActivityIndicatorType) {
@@ -69,17 +69,12 @@ open class ASActivityButtonNode: ASButtonNode {
     }
     
     open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let stack = super.layoutSpecThatFits(constrainedSize)
         return LayoutSpec {
-            if isLoading {
-                stack.overlay({
-                    HStackLayout(justifyContent: .center, alignItems: .center) {
-                        activity.preferredSize(.init(width: 24, height: 24))
-                    }
-                }())
-            } else {
-                stack
-            }
+            super.layoutSpecThatFits(constrainedSize).overlay({
+                HStackLayout(justifyContent: .center, alignItems: .center) {
+                    activity.preferredSize(.init(width: 24, height: 24))
+                }
+            }())
         }
     }
 }
