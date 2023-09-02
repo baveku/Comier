@@ -37,6 +37,19 @@ open class ASActivityButtonNode: ASButtonNode {
     
     public var isLoading = false
     
+    
+    public override init() {
+        super.init()
+        addSubnode(activity)
+        activity.frame.size = .init(width: 24, height: 24)
+    }
+    
+    open override func layout() {
+        super.layout()
+        
+        activity.view.center = view.center
+    }
+    
     open override func setTitle(_ title: String, with font: UIFont?, with color: UIColor?, for state: UIControl.State) {
         if let color {
             ASPerformBlockOnMainThread {
@@ -66,16 +79,6 @@ open class ASActivityButtonNode: ASButtonNode {
     
     public func setAnimationType(_ type: NVActivityIndicatorType) {
         activityView.type = type
-    }
-    
-    open override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        return LayoutSpec {
-            super.layoutSpecThatFits(constrainedSize).overlay({
-                HStackLayout(justifyContent: .center, alignItems: .center) {
-                    activity.preferredSize(.init(width: 24, height: 24))
-                }
-            }())
-        }
     }
 }
 
