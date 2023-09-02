@@ -11,15 +11,14 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/baveku/TextureSPM", branch: "test_iglistkit"),
+        .package(url: "https://github.com/baveku/TextureSPM", branch: "yoga_support"),
         .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift", from: "6.5.0"),
         .package(url: "https://github.com/tristanhimmelman/ObjectMapper", from: "4.2.0"),
         .package(url: "https://github.com/ninjaprox/NVActivityIndicatorView", from: "5.1.1"),
         .package(url: "https://github.com/ra1028/DifferenceKit", from: "1.3.0"),
         .package(url: "https://github.com/google/promises", from: "2.0.0"),
-        .package(url: "https://github.com/Moya/Moya", from: "15.0.3"),
-        .package(url: "https://github.com/baveku/IGListKitSPM", branch: "spm")
+        .package(url: "https://github.com/Moya/Moya", from: "15.0.3")
     ],
     targets: [
         .target(name: "Comier",
@@ -32,8 +31,6 @@ let package = Package(
                     .product(name: "Moya", package: "Moya"),
                     .product(name: "RxMoya", package: "Moya"),
                     .product(name: "AsyncDisplayKit", package: "TextureSPM"),
-                    .product(name: "IGListKit", package: "IGListKitSPM"),
-                    .product(name: "IGListDiffKit", package: "IGListKitSPM"),
                     .product(name: "Promises", package: "Promises"),
                     .product(name: "RxCocoa", package: "RxSwift"),
                     .product(name: "RxRelay", package: "RxSwift"),

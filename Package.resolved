@@ -131,8 +131,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/baveku/TextureSPM",
       "state" : {
-        "branch" : "test_iglistkit",
-        "revision" : "087a5e7c623c3faf980feb9296e6776f19e16891"
+        "branch" : "yoga_support",
+        "revision" : "611cd18433c9ddaf84ce0e5fe1cecdc9eb3c3c35"
+      }
+    },
+    {
+      "identity" : "yoga",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/baveku/yoga",
+      "state" : {
+        "revision" : "31b6c0ddc91d2f071f4ec7650dd7e2bfed657b14",
+        "version" : "1.0.0"
       }
     }
   ],
