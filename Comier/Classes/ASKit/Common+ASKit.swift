@@ -41,13 +41,11 @@ open class ASActivityButtonNode: ASButtonNode {
     public override init() {
         super.init()
         addSubnode(activity)
-        activity.frame.size = .init(width: 24, height: 24)
     }
     
     open override func layout() {
         super.layout()
-        
-        activity.view.center = view.center
+        activity.frame = .init(origin: .init(x: bounds.midX - 12, y: bounds.midY - 12), size: .init(width: 24, height: 24))
     }
     
     open override func setTitle(_ title: String, with font: UIFont?, with color: UIColor?, for state: UIControl.State) {
