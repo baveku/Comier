@@ -22,27 +22,13 @@ extension ASSizeRange {
 }
 
 open class ASActivityButtonNode: ASButtonNode {
-<<<<<<< Updated upstream
-    public let activity: ASDisplayNode = {
-        let ac = ASDisplayNode { () -> UIView in
-            let view = NVActivityIndicatorView(frame: .init(x: 0, y: 0, width: 24, height: 24), type: .circleStrokeSpin, padding: 0)
-            return view
-        }
-        
-        return ac
-    }()
-=======
     public let activity: ASDisplayNode
->>>>>>> Stashed changes
     
     public var activityView: NVActivityIndicatorView {
         return activity.view as! NVActivityIndicatorView
     }
     
     public var isLoading = false
-    
-<<<<<<< Updated upstream
-=======
     
     public override init() {
         activity = {
@@ -75,7 +61,6 @@ open class ASActivityButtonNode: ASButtonNode {
         activity.frame = .init(origin: .init(x: bounds.midX - 12, y: bounds.midY - 12), size: .init(width: 24, height: 24))
     }
     
->>>>>>> Stashed changes
     open override func setTitle(_ title: String, with font: UIFont?, with color: UIColor?, for state: UIControl.State) {
         if let color {
             ASPerformBlockOnMainThread {
