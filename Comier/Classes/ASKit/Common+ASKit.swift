@@ -22,6 +22,7 @@ extension ASSizeRange {
 }
 
 open class ASActivityButtonNode: ASButtonNode {
+<<<<<<< Updated upstream
     public let activity: ASDisplayNode = {
         let ac = ASDisplayNode { () -> UIView in
             let view = NVActivityIndicatorView(frame: .init(x: 0, y: 0, width: 24, height: 24), type: .circleStrokeSpin, padding: 0)
@@ -30,6 +31,9 @@ open class ASActivityButtonNode: ASButtonNode {
         
         return ac
     }()
+=======
+    public let activity: ASDisplayNode
+>>>>>>> Stashed changes
     
     public var activityView: NVActivityIndicatorView {
         return activity.view as! NVActivityIndicatorView
@@ -37,6 +41,41 @@ open class ASActivityButtonNode: ASButtonNode {
     
     public var isLoading = false
     
+<<<<<<< Updated upstream
+=======
+    
+    public override init() {
+        activity = {
+            let ac = ASDisplayNode { () -> UIView in
+                let view = NVActivityIndicatorView(frame: .init(x: 0, y: 0, width: 24, height: 24), type: .circleStrokeSpin, padding: 0)
+                return view
+            }
+            ac.isHidden = true
+            return ac
+        }()
+        super.init()
+        addSubnode(activity)
+    }
+    
+    public init(type: NVActivityIndicatorType) {
+        activity = {
+            let ac = ASDisplayNode { () -> UIView in
+                let view = NVActivityIndicatorView(frame: .init(x: 0, y: 0, width: 24, height: 24), type: type, padding: 0)
+                return view
+            }
+            ac.isHidden = true
+            return ac
+        }()
+        super.init()
+        addSubnode(activity)
+    }
+    
+    open override func layout() {
+        super.layout()
+        activity.frame = .init(origin: .init(x: bounds.midX - 12, y: bounds.midY - 12), size: .init(width: 24, height: 24))
+    }
+    
+>>>>>>> Stashed changes
     open override func setTitle(_ title: String, with font: UIFont?, with color: UIColor?, for state: UIControl.State) {
         if let color {
             ASPerformBlockOnMainThread {
