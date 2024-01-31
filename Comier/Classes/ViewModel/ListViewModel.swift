@@ -65,7 +65,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
     open func performViewUpdates() {
         elements.accept(mapDataToElement())
         let completions = _queueUpdatesCompletion
-        if adapter?.collectionView != nil, adapter?.dataSource != nil, adapter?.delegate != nil {
+        if adapter?.collectionView != nil, adapter?.dataSource != nil {
             adapter?.performUpdates(animated: self._isAnimated) { [weak self] finished in
                 guard let self else {return}
                 for completion in completions {
