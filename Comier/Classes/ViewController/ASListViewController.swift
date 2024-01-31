@@ -10,7 +10,7 @@ import AsyncDisplayKit
 import RxSwift
 import IGListKit
 
-final class DDefaultSectionController: ListSectionController {
+public final class DDefaultSectionController: ListSectionController {
     override func numberOfItems() -> Int {
         return 1
     }
