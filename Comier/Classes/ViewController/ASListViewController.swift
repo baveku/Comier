@@ -11,12 +11,8 @@ import RxSwift
 import IGListKit
 
 public final class DDefaultSectionController: ListSectionController {
-    override func numberOfItems() -> Int {
-        return 1
-    }
-    
-    override func cellForItem(at index: Int) -> UICollectionViewCell {
-        return UICollectionViewCell()
+    public override func numberOfItems() -> Int {
+        return 0
     }
 }
 
