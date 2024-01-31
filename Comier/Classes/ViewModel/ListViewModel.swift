@@ -43,6 +43,7 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
     public func bindToAdapter(adapter: ListAdapter, completion: ((Bool) -> Void)? = nil) -> Disposable {
         self.adapter = adapter
         self.adapterCompletionHandler = completion
+        performViewUpdates()
         return Disposables.create()
     }
 	
