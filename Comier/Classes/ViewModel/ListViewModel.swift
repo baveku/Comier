@@ -43,7 +43,6 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
     public func bindToAdapter(adapter: ListAdapter, completion: ((Bool) -> Void)? = nil) -> Disposable {
         self.adapter = adapter
         self.adapterCompletionHandler = completion
-        performUpdates()
         return Disposables.create()
     }
 	
@@ -65,16 +64,18 @@ open class BaseListViewModel<Element: ListDiffable>: ViewModel {
     open func performViewUpdates() {
         elements.accept(mapDataToElement())
         let completions = _queueUpdatesCompletion
-        adapter?.performUpdates(animated: self._isAnimated) { [weak self] finished in
-            guard let self else {return}
-            for completion in completions {
-                completion?(finished)
+        if adapter?.collectionView != nil, adapter?.dataSource != nil, adapter?.delegate != nil {
+            adapter?.performUpdates(animated: self._isAnimated) { [weak self] finished in
+                guard let self else {return}
+                for completion in completions {
+                    completion?(finished)
+                }
+                if finished {
+                    _queueUpdatesCompletion = []
+                    didFinishedPefromUpdates()
+                }
+                adapterCompletionHandler?(finished)
             }
-            if finished {
-                _queueUpdatesCompletion = []
-                didFinishedPefromUpdates()
-            }
-            adapterCompletionHandler?(finished)
         }
     }
 }
