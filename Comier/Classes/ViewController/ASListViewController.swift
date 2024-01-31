@@ -10,13 +10,23 @@ import AsyncDisplayKit
 import RxSwift
 import IGListKit
 
+final class DDefaultSectionController: ListSectionController {
+    override func numberOfItems() -> Int {
+        return 1
+    }
+    
+    override func cellForItem(at index: Int) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+}
+
 open class ListViewController<LVM: ListViewModel<ListDiffable>>: ASViewModelController<LVM>, ListAdapterDataSource {
     open func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return viewModel.elements.value
     }
     
     open func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return ListSectionController()
+        return DDefaultSectionController()
     }
     
     open func emptyView(for listAdapter: ListAdapter) -> UIView? {
