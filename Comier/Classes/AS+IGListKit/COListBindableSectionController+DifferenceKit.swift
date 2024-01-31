@@ -48,17 +48,17 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     var proxy: ASListBindingDataSourceProxy!
     
     public override func nodeBlockForItem(at index: Int) -> ASCellNodeBlock {
-        let cellModel = self.viewModels[index]
-        let block: ASCellNodeBlock = { [weak self] in
-            guard let self = self else {return COCellNode<ListDiffable>()}
-            let cell = self.dataSource?.nodeBlockForViewModel(at: cellModel)
-            cell?.neverShowPlaceholders = true
+        let cellModel = viewModels[index]
+        weak var dts = dataSource
+        return { [weak self] in
+            guard let self = self, let dts else {return ASCellNode()}
+            let cell = dts.nodeBlockForViewModel(at: cellModel)
+            cell.neverShowPlaceholders = true
             if let cell = cell as? ListBindable {
                 cell.bindViewModel(cellModel)
             }
-            return cell ?? ASCellNode()
+            return cell
         }
-        return block
     }
     
     public override init() {
@@ -108,7 +108,9 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
         if !isVisible, let object = object {
             self.viewModels = self.dataSource?.viewModels(for: object) ?? []
-            self.reload(animated: animated)
+            self.reload(animated: animated) {
+                completion?(true)
+            }
             return
         }
         
