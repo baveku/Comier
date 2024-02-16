@@ -51,8 +51,8 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
         let cellModel = viewModels[index]
         weak var dts = dataSource
         return { [weak self] in
-            guard let self = self, let dts else {return ASCellNode()}
-            let cell = dts.nodeBlockForViewModel(at: cellModel)
+            guard let self = self else {return ASCellNode()}
+            let cell = dts?.nodeBlockForViewModel(at: cellModel) ?? ASMCellNode()
             cell.neverShowPlaceholders = true
             if let cell = cell as? ListBindable {
                 cell.bindViewModel(cellModel)
@@ -106,14 +106,6 @@ open class ASListBindingSectionController<Element: ListDiffable>: COSectionContr
     }
     
     public func updateAnimated(animated: Bool, shouldUpdateCell: Bool = true, completion: ((Bool) -> Void)? = nil) {
-        if !isVisible, let object = object {
-            self.viewModels = self.dataSource?.viewModels(for: object) ?? []
-            self.reload(animated: animated) {
-                completion?(true)
-            }
-            return
-        }
-        
         guard state == .idle else {
             completion?(false)
             return
