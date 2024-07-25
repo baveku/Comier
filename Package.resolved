@@ -19,21 +19,12 @@
       }
     },
     {
-      "identity" : "iglistkitspm",
+      "identity" : "iglistkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/baveku/IGListKitSPM",
+      "location" : "https://github.com/Instagram/IGListKit.git",
       "state" : {
-        "branch" : "spm",
-        "revision" : "cd3f84f22709dc6bd0153476372cade8167b9513"
-      }
-    },
-    {
-      "identity" : "libwebp-xcode",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SDWebImage/libwebp-Xcode.git",
-      "state" : {
-        "revision" : "4f52fc9b29600a03de6e05af16df0d694cb44301",
-        "version" : "1.2.4"
+        "revision" : "baf38ea4d438ef3cc6c6deb8615e1910e03f02bb",
+        "version" : "5.0.0"
       }
     },
     {
@@ -68,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pinterest/PINCache.git",
       "state" : {
-        "revision" : "875c654984fb52b47ca65ae70d24852b0003ccd9",
-        "version" : "3.0.3"
+        "revision" : "2fb85948463292c2e824148cf17dc62a4c217a94",
+        "version" : "3.0.4"
       }
     },
     {
@@ -77,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pinterest/PINOperation.git",
       "state" : {
-        "revision" : "40504c156a68b20f98f7ddc73a115cbb7893be25",
-        "version" : "1.2.2"
+        "revision" : "a74f978733bdaf982758bfa23d70a189f4b4c1b6",
+        "version" : "1.2.3"
       }
     },
     {
@@ -86,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pinterest/PINRemoteImage.git",
       "state" : {
-        "revision" : "611d8ab1c6937bcdfd9d59a967716b0370a332be",
-        "version" : "3.0.3"
+        "revision" : "37022d0fb9359ce33fa06028d03382c8b9957c62",
+        "version" : "3.0.4"
       }
     },
     {
@@ -131,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/baveku/TextureSPM",
       "state" : {
-        "branch" : "test_iglistkit",
-        "revision" : "087a5e7c623c3faf980feb9296e6776f19e16891"
+        "branch" : "xc15",
+        "revision" : "602012a1b66f02d808c0fb075d603a7ead35f517"
       }
     }
   ],
